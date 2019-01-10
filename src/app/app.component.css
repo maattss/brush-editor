@@ -4,5 +4,16 @@ table, th, td {
 }
 
 th, td {
-    padding: 1em;
+    padding: 0.5em;
+}
+table td {white-space: nowrap;}
+
+input {
+    width: 5em;
+    border: none;
+    text-align: center;
+
+}
+#desc {
+    width: 20em;
 }
