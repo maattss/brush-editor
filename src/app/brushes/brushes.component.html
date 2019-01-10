@@ -1,0 +1,20 @@
+<table>
+  <tr>
+    <th></th>
+    <th>Channel 1</th>
+    <th>Channel 2</th>
+    <th>Channel 3</th>
+    <th>Channel 4</th>
+    <th>Channel 5</th>
+    <th>Description</th>
+  </tr>
+  <tr *ngFor="let brush of brushes">
+    <td>{{brush.brushId}}</td>
+    <td><input value="{{brush.ch1}}" id="ch1"></td>
+    <td><input value="{{brush.ch2}}" id="ch2"></td>
+    <td><input value="{{brush.ch3}}" id="ch3"></td>
+    <td><input value="{{brush.ch4}}" id="ch4"></td>
+    <td><input value="{{brush.ch5}}" id="ch5"></td>
+    <td><input value="{{brush.desc}}" id="desc"></td>
+  </tr>
+</table>

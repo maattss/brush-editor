@@ -25,5 +25,5 @@ export class AppComponent {
     ch5: 75,
     desc: "Tak"
   }
-  allBrushes = [this.brush, this.brush2]
+  
 }

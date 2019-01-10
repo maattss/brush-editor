@@ -4,13 +4,6 @@ export class Brush {
     ch2: number;
     ch3: number;
     ch4: number;
+    ch5: number;
     desc: string
-
-    
-    //brushId: 2; 
-    //ch1: 0; 
-    //ch2: 0; 
-    //ch3: 0; 
-    //ch4: 0; 
-    //desc: "Heihei"
 }
