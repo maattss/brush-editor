@@ -1,5 +1,5 @@
 # Brush Editor
-Built with [Angular v7.2](https://angular.io/docs)
+Built with [Angular v7.2](https://angular.io/docs) by [Mats Tyldum](https://github.com/maattss) and [Tobias Sætre](https://github.com/Tobiasns). 
 
 ## Development server
 
