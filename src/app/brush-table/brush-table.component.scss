@@ -1,11 +1,17 @@
 table, th, td {
-    border: 1px solid black;
+    border: 1px groove lightblue;
     border-collapse: collapse;
 }
 
 th, td {
-    padding: 0.25em;
+    padding: 0.05em;
+    background-color: transparent;
 }
+
+input {
+    border: none;
+}
+
 table td {
     white-space: nowrap;
 }
@@ -14,4 +20,8 @@ table td {
 }
 #file-uploader, #table-container {
     margin-top: 10px;
+}
+
+textarea:focus, input:focus{
+    outline: none;
 }
