@@ -1,5 +1,5 @@
 <div id="file-uploader">
-  <label>File: </label>
+  <label>Brushfile: </label>
   <input type="file" (change)="fileChanged($event)">
   <button (click)="uploadFile()">Upload File</button>
 </div>
@@ -7,7 +7,7 @@
 <div id="table-container">
   <table *ngIf="brushes">
     <tr>
-      <th></th>
+      <th>Brush</th>
       <th *ngIf="brushes[0].ch1>=0">Channel 1</th>
       <th *ngIf="brushes[0].ch2>=0">Channel 2</th>
       <th *ngIf="brushes[0].ch3>=0">Channel 3</th>

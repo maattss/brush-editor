@@ -15,13 +15,15 @@ input {
 table td {
     white-space: nowrap;
 }
-#desc {
-    width: 20em;
-}
-#file-uploader, #table-container {
-    margin-top: 10px;
-}
 
 textarea:focus, input:focus{
     outline: none;
+}
+
+#desc {
+    width: 20em;
+}
+
+#file-uploader, #table-container {
+    margin-top: 10px;
 }
