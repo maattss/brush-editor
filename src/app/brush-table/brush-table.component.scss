@@ -6,14 +6,12 @@ table, th, td {
 th, td {
     padding: 0.5em;
 }
-table td {white-space: nowrap;}
-
-input {
-    width: 5em;
-    border: none;
-    text-align: center;
-
+table td {
+    white-space: nowrap;
 }
 #desc {
     width: 20em;
+}
+#file-uploader, #table-container {
+    margin-top: 10px;
 }
