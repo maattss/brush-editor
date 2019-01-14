@@ -9,13 +9,23 @@ import { Identifiers } from '@angular/compiler';
   styleUrls: ['./brush-table.component.scss']
 })
 export class BrushTableComponent implements OnInit {
-  file: any;
-  brushes: Brush[];
-
   constructor() { }
 
   ngOnInit() {
   }
+
+  file: any;
+  brushes: Brush[];
+
+  // Chart
+  public barChartOptions:any = {
+    scaleShowVerticalLines: false,
+    responsive: true
+  };
+  public barChartLabels:string[] = [];
+  public barChartData:any[] = [];
+  public barChartType:string = 'bar';
+  public barChartLegend:boolean = false;
 
   fileChanged(e) {
     this.file = e.target.files[0];
@@ -31,7 +41,6 @@ export class BrushTableComponent implements OnInit {
 
   parseFile(text: string) {
     this.brushes = [];
-    console.log(text);
       
     // Split read file by newline
     let list: string[] = text.split(/\r?\n/);
@@ -75,16 +84,6 @@ export class BrushTableComponent implements OnInit {
     return true;
   }
 
-  // Chart
-  public barChartOptions:any = {
-    scaleShowVerticalLines: false,
-    responsive: true
-  };
-  public barChartLabels:string[] = [];
-  public barChartData:any[] = [];
-  public barChartType:string = 'bar';
-  public barChartLegend:boolean = false;
- 
   addLabels() {
     this.barChartLabels = [];
     if (this.brushes != []) {
@@ -109,13 +108,13 @@ export class BrushTableComponent implements OnInit {
     }
     console.log(values)
     this.barChartData.push({
-      data: values
+      data: values,
+      label: "Test"
     });
 
     // For Angular to recognize the change in the dataset!
     let clone = JSON.parse(JSON.stringify(this.barChartData));
     clone[0].data = values;
     this.barChartData = clone;
-
   }
 }

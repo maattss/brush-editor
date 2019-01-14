@@ -3,7 +3,7 @@
 <div class="container" id="file-uploader">
   <label for="theFile">Brushfile: </label> 
   <input type="file" (change)="fileChanged($event)" id="theFile">
-  <button (click)="uploadFile()">Upload File</button>
+  <button (click)="uploadFile()" (click)="uploadFile()">Upload File</button>
 </div>
 
 <div class="container" id="charts" *ngIf="brushes">
@@ -12,9 +12,7 @@
     [labels]="barChartLabels"
     [options]="barChartOptions"
     [legend]="barChartLegend"
-    [chartType]="barChartType"
-    (chartHover)="chartHovered($event)"
-    (chartClick)="chartClicked($event)">
+    [chartType]="barChartType">
   </canvas>
 </div>
 
