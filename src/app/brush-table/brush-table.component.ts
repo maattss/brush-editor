@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Brush } from '../brush';
+//import { OnlyNumber } from '../onlynumber.directive';
 
 @Component({
   selector: 'app-brush-table',
@@ -60,5 +61,14 @@ export class BrushTableComponent implements OnInit {
       
       counter++;
     });
+  }
+
+  // Checks the values of the input fields. Allows numbers and "."
+  numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode != 46) {
+      return false;
+    }
+    return true;
   }
 }
