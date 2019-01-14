@@ -9,19 +9,29 @@ import { Identifiers } from '@angular/compiler';
   styleUrls: ['./brush-table.component.scss']
 })
 export class BrushTableComponent implements OnInit {
-  file: any;
-  brushes: Brush[];
-
   constructor() { }
 
   ngOnInit() {
   }
 
-  fileChanged(e) {
+  file: any;
+  brushes: Brush[];
+
+  // Chart
+  public barChartOptions:any = {
+    scaleShowVerticalLines: false,
+    responsive: true
+  };
+  public barChartLabels:string[] = [];
+  public barChartData:any[] = [];
+  public barChartType:string = 'bar';
+  public barChartLegend:boolean = false;
+
+  fileChanged(e: any) {
     this.file = e.target.files[0];
   }
 
-  uploadFile(file) {
+  uploadFile(file: any) {
     let fileReader = new FileReader();
     fileReader.onload = (e) => {
       this.parseFile(fileReader.result.toString());
@@ -31,7 +41,6 @@ export class BrushTableComponent implements OnInit {
 
   parseFile(text: string) {
     this.brushes = [];
-    console.log(text);
       
     // Split read file by newline
     let list: string[] = text.split(/\r?\n/);
@@ -67,7 +76,7 @@ export class BrushTableComponent implements OnInit {
   }
 
   // Checks the values of the input fields. Allows numbers and "."
-  numberOnly(event): boolean {
+  numberOnly(event: any): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode != 46) {
       return false;
@@ -75,20 +84,11 @@ export class BrushTableComponent implements OnInit {
     return true;
   }
 
-  // Chart
-  public barChartOptions:any = {
-    scaleShowVerticalLines: false,
-    responsive: true
-  };
-  public barChartLabels:string[] = [];
-  public barChartData:any[] = [];
-  public barChartType:string = 'bar';
-  public barChartLegend:boolean = false;
- 
   addLabels() {
-    this.barChartLabels = [];
+    this.barChartLabels.length = 0;
     if (this.brushes != []) {
       this.barChartLabels.push("Channel 1", "Channel 2", "Channel 3");
+      
       if(this.brushes[0].ch4 >=0) {
         this.barChartLabels.push("Channel 4");
       }
@@ -99,6 +99,7 @@ export class BrushTableComponent implements OnInit {
   }
 
   addData(brushID: number) {
+    this.barChartData = [];
     let br: Brush = this.brushes[brushID - 1];
     let values: number[] = [br.ch1, br.ch2, br.ch3]
     if (br.ch4 >= 0) {
@@ -107,15 +108,17 @@ export class BrushTableComponent implements OnInit {
     if (br.ch5 >= 0) {
       values.push(br.ch5);
     }
-    console.log(values)
+
     this.barChartData.push({
-      data: values
+      data: values,
+      label: "BrushID: " + brushID + ". Value" 
     });
 
     // For Angular to recognize the change in the dataset!
     let clone = JSON.parse(JSON.stringify(this.barChartData));
     clone[0].data = values;
+    clone[0].label = "BrushID: " + brushID + ". Value" ;
     this.barChartData = clone;
-
+    
   }
 }

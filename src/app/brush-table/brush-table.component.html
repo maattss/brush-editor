@@ -6,7 +6,7 @@
         <div class="col-sm form-group">
           <label for="theFile">Choose a brushfile and upload it</label> 
           <input type="file" class="form-control-file" (change)="fileChanged($event)" id="theFile"><br>
-          <input type="button" (click)="uploadFile()" class="btn btn-primary" value="Upload File">
+          <input type="button" (click)="uploadFile()" (click)="uploadFile()" class="btn btn-primary" value="Upload File">
         </div>
       </form>
   </div>
