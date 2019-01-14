@@ -12,6 +12,10 @@ input {
     border: none;
 }
 
+table input {
+    width: 100%;
+}
+
 table td {
     white-space: nowrap;
 }
@@ -21,17 +25,18 @@ textarea:focus, input:focus{
     outline: none;
 }
 
-#desc {
-    width: 20em;
-}
 
 #file-uploader, #table {
     margin-top: 10px;
-    margin-left: 0%;
 }
 
 #charts {
     width: 40%;
     display: block;
 }
+
+label {
+    font-weight: bold;
+}
+
 
