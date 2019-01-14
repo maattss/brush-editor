@@ -1,43 +1,48 @@
 <script src="../../../node_modules/chart.js/src/chart.js"></script> <!-- Chart.js -->
 
-<div id="file-uploader">
-  <label>Brushfile: </label>
-  <input type="file" (change)="fileChanged($event)">
+<div class="container" id="file-uploader">
+  <label for="theFile">Brushfile: </label> 
+  <input type="file" (change)="fileChanged($event)" id="theFile">
   <button (click)="uploadFile()" (click)="randomize()">Upload File</button>
 </div>
 
-<div style="width: 40%">
-  <div style="display: block" *ngIf="brushes">
-    <canvas baseChart
-            [data]="barChartData"
-            [labels]="barChartLabels"
-            [options]="barChartOptions"
-            [legend]="barChartLegend"
-            [chartType]="barChartType"
-            (chartHover)="chartHovered($event)"
-            (chartClick)="chartClicked($event)"></canvas>
-  </div>
+<div class="container" id="charts" *ngIf="brushes">
+  <canvas baseChart
+    [data]="barChartData"
+    [labels]="barChartLabels"
+    [options]="barChartOptions"
+    [legend]="barChartLegend"
+    [chartType]="barChartType"
+    (chartHover)="chartHovered($event)"
+    (chartClick)="chartClicked($event)">
+  </canvas>
 </div>
 
-<div id="table-container">
-  <table *ngIf="brushes">
-    <tr>
-      <th>Brush</th>
-      <th *ngIf="brushes[0].ch1>=0">Channel 1</th>
-      <th *ngIf="brushes[0].ch2>=0">Channel 2</th>
-      <th *ngIf="brushes[0].ch3>=0">Channel 3</th>
-      <th *ngIf="brushes[0].ch4>=0">Channel 4</th>
-      <th *ngIf="brushes[0].ch5>=0">Channel 5</th>
-      <th>Description</th>
-    </tr>
-    <tr *ngFor="let brush of brushes">
-      <td>{{brush.brushId}}</td>
-      <td *ngIf="brush.ch1>=0"><input type="text" (keypress)="numberOnly($event)" value="{{brush.ch1}}"></td>
-      <td *ngIf="brush.ch2>=0"><input type="text" (keypress)="numberOnly($event)" value="{{brush.ch2}}"></td>
-      <td *ngIf="brush.ch3>=0"><input type="text" (keypress)="numberOnly($event)" value="{{brush.ch3}}"></td>
-      <td *ngIf="brush.ch4>=0"><input type="text" (keypress)="numberOnly($event)" value="{{brush.ch4}}"></td>
-      <td *ngIf="brush.ch5>=0"><input type="text" (keypress)="numberOnly($event)" value="{{brush.ch5}}"></td>
-      <td><input value="{{brush.desc}}"></td>
-    </tr>
+
+
+<div class="container" id="table">
+  <table *ngIf="brushes" class="table">
+    <thead>
+      <tr>
+        <th scope="col">Brush</th>
+        <th scope="col" *ngIf="brushes[0].ch1>=0">Channel 1</th>
+        <th scope="col" *ngIf="brushes[0].ch2>=0">Channel 2</th>
+        <th scope="col" *ngIf="brushes[0].ch3>=0">Channel 3</th>
+        <th scope="col" *ngIf="brushes[0].ch4>=0">Channel 4</th>
+        <th scope="col" *ngIf="brushes[0].ch5>=0">Channel 5</th>
+        <th scope="col">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let brush of brushes">
+          <th scope="row">{{brush.brushId}}</th>
+          <td *ngIf="brush.ch1>=0"><input type="text" (keypress)="numberOnly($event)" value="{{brush.ch1}}"></td>
+          <td *ngIf="brush.ch2>=0"><input type="text" (keypress)="numberOnly($event)" value="{{brush.ch2}}"></td>
+          <td *ngIf="brush.ch3>=0"><input type="text" (keypress)="numberOnly($event)" value="{{brush.ch3}}"></td>
+          <td *ngIf="brush.ch4>=0"><input type="text" (keypress)="numberOnly($event)" value="{{brush.ch4}}"></td>
+          <td *ngIf="brush.ch5>=0"><input type="text" (keypress)="numberOnly($event)" value="{{brush.ch5}}"></td>
+          <td><input value="{{brush.desc}}"></td>
+        </tr>
+    </tbody>
   </table>
 </div>
