@@ -20,7 +20,16 @@ export class BrushTableComponent implements OnInit {
   // Chart
   public barChartOptions:any = {
     scaleShowVerticalLines: false,
-    responsive: true
+    responsive: true,
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true
+          }
+        }
+      ]
+    }
   };
   public barChartLabels:string[] = [];
   public barChartData:any[] = [];

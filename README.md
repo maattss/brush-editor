@@ -2,7 +2,7 @@
 Built with [Angular v7.2](https://angular.io/docs) by [Mats Tyldum](https://github.com/maattss) and [Tobias Sætre](https://github.com/Tobiasns). 
 
 ## Dependecies
-ng2-charts  and chart.js need to be installed. `npm install ng2-charts --save` and `npm install chart.js --save`
+ng2-charts and chart.js need to be installed. `npm install ng2-charts --save` and `npm install chart.js --save`
 
 ## Development server
 
