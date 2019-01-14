@@ -3,7 +3,7 @@
 <div class="container" id="file-uploader">
   <label for="theFile">Brushfile: </label> 
   <input type="file" (change)="fileChanged($event)" id="theFile">
-  <button (click)="uploadFile()" (click)="uploadFile()">Upload File</button>
+  <button (click)="uploadFile()" (click)="uploadFile()">Upload File</button> <!-- Chart rendering needs to uploadFile() call for some reason -->
 </div>
 
 <div class="container" id="charts" *ngIf="brushes">
