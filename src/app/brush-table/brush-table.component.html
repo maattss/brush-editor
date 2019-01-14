@@ -1,26 +1,25 @@
 <script src="../../../node_modules/chart.js/src/chart.js"></script> <!-- Chart.js -->
 
-<div id="file-uploader">
-  <label>Brushfile: </label>
-  <input type="file" (change)="fileChanged($event)">
+<div class="container" id="file-uploader">
+  <label for="theFile">Brushfile: </label> 
+  <input type="file" (change)="fileChanged($event)" id="theFile">
   <button (click)="uploadFile()">Upload File</button>
 </div>
 
-<div style="width: 40%">
-  <div style="display: block" *ngIf="brushes">
-    <canvas baseChart
-            [data]="barChartData"
-            [labels]="barChartLabels"
-            [options]="barChartOptions"
-            [legend]="barChartLegend"
-            [chartType]="barChartType"
-            (chartHover)="chartHovered($event)"
-            (chartClick)="chartClicked($event)"></canvas>
-  </div>
+<div class="container" id="charts" *ngIf="brushes">
+  <canvas baseChart
+    [data]="barChartData"
+    [labels]="barChartLabels"
+    [options]="barChartOptions"
+    [legend]="barChartLegend"
+    [chartType]="barChartType"
+    (chartHover)="chartHovered($event)"
+    (chartClick)="chartClicked($event)">
+  </canvas>
 </div>
 
-<div id="table-container">
-  <table *ngIf="brushes">
+<div class="container" id="table-container">
+  <table *ngIf="brushes" class="table">
     <tr>
       <th>Brush</th>
       <th *ngIf="brushes[0].ch1>=0">Channel 1</th>

@@ -1,5 +1,5 @@
 table, th, td {
-    border: 1px groove lightblue;
+    border: 1.5px groove lightblue;
     border-collapse: collapse;
 }
 
@@ -16,6 +16,7 @@ table td {
     white-space: nowrap;
 }
 
+
 textarea:focus, input:focus{
     outline: none;
 }
@@ -24,6 +25,13 @@ textarea:focus, input:focus{
     width: 20em;
 }
 
-#file-uploader, #table-container {
+#file-uploader, #table {
     margin-top: 10px;
+    margin-left: 0%;
 }
+
+#charts {
+    width: 40%;
+    display: block;
+}
+
