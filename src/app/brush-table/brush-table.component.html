@@ -3,7 +3,7 @@
 <div id="file-uploader">
   <label>Brushfile: </label>
   <input type="file" (change)="fileChanged($event)">
-  <button (click)="uploadFile()" (click)="randomize()">Upload File</button>
+  <button (click)="uploadFile()">Upload File</button>
 </div>
 
 <div style="width: 40%">
@@ -32,11 +32,11 @@
     </tr>
     <tr *ngFor="let brush of brushes">
       <td>{{brush.brushId}}</td>
-      <td *ngIf="brush.ch1>=0"><input type="text" (keypress)="numberOnly($event)" value="{{brush.ch1}}"></td>
-      <td *ngIf="brush.ch2>=0"><input type="text" (keypress)="numberOnly($event)" value="{{brush.ch2}}"></td>
-      <td *ngIf="brush.ch3>=0"><input type="text" (keypress)="numberOnly($event)" value="{{brush.ch3}}"></td>
-      <td *ngIf="brush.ch4>=0"><input type="text" (keypress)="numberOnly($event)" value="{{brush.ch4}}"></td>
-      <td *ngIf="brush.ch5>=0"><input type="text" (keypress)="numberOnly($event)" value="{{brush.ch5}}"></td>
+      <td *ngIf="brush.ch1>=0"><input type="text" (keypress)="numberOnly($event)" (click)="addData(brush.brushId)" value="{{brush.ch1}}"></td>
+      <td *ngIf="brush.ch2>=0"><input type="text" (keypress)="numberOnly($event)" (click)="addData(brush.brushId)" value="{{brush.ch2}}"></td>
+      <td *ngIf="brush.ch3>=0"><input type="text" (keypress)="numberOnly($event)" (click)="addData(brush.brushId)" value="{{brush.ch3}}"></td>
+      <td *ngIf="brush.ch4>=0"><input type="text" (keypress)="numberOnly($event)" (click)="addData(brush.brushId)" value="{{brush.ch4}}"></td>
+      <td *ngIf="brush.ch5>=0"><input type="text" (keypress)="numberOnly($event)" (click)="addData(brush.brushId)" value="{{brush.ch5}}"></td>
       <td><input value="{{brush.desc}}"></td>
     </tr>
   </table>

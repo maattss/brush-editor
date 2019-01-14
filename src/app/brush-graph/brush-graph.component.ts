@@ -11,5 +11,4 @@ export class BrushGraphComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }
