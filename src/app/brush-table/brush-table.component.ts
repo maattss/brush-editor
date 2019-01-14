@@ -25,7 +25,7 @@ export class BrushTableComponent implements OnInit {
   public barChartLabels:string[] = [];
   public barChartData:any[] = [];
   public barChartType:string = 'bar';
-  public barChartLegend:boolean = false;
+  public barChartLegend:boolean = true;
 
   fileChanged(e: any) {
     this.file = e.target.files[0];
@@ -111,13 +111,13 @@ export class BrushTableComponent implements OnInit {
 
     this.barChartData.push({
       data: values,
-      label: "BrushID: " + brushID + ". Value" 
+      label: "BrushID: " + brushID 
     });
 
     // For Angular to recognize the change in the dataset!
     let clone = JSON.parse(JSON.stringify(this.barChartData));
     clone[0].data = values;
-    clone[0].label = "BrushID: " + brushID + ". Value" ;
+    clone[0].label = "BrushID " + brushID;
     this.barChartData = clone;
     
   }
