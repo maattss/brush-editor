@@ -1,6 +1,9 @@
 # Brush Editor
 Built with [Angular v7.2](https://angular.io/docs) by [Mats Tyldum](https://github.com/maattss) and [Tobias Sætre](https://github.com/Tobiasns). 
 
+## Dependecies
+ng2-charts need to be installed. `npm install ng2-charts --save`
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.

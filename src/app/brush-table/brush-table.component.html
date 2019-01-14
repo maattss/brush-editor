@@ -1,7 +1,22 @@
+<script src="../../../node_modules/chart.js/src/chart.js"></script> <!-- Chart.js -->
+
 <div id="file-uploader">
   <label>Brushfile: </label>
   <input type="file" (change)="fileChanged($event)">
-  <button (click)="uploadFile()">Upload File</button>
+  <button (click)="uploadFile()" (click)="randomize()">Upload File</button>
+</div>
+
+<div style="width: 40%">
+  <div style="display: block" *ngIf="brushes">
+    <canvas baseChart
+            [data]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [chartType]="barChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+  </div>
 </div>
 
 <div id="table-container">

@@ -7,6 +7,7 @@ import { BrushTableComponent } from './brush-table/brush-table.component';
 import { NavComponent } from './nav/nav.component';
 import { BrushSettingsComponent } from './brush-settings/brush-settings.component';
 import { BrushGraphComponent } from './brush-graph/brush-graph.component';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { BrushGraphComponent } from './brush-graph/brush-graph.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
