@@ -148,8 +148,8 @@ export class BrushTableComponent implements OnInit {
     }
 
     // Setting color of the active row
-    for(var q=1; q<=5; q++) {
-      let chName = "ch" + q;
+    for(var chIndex=1; chIndex<=5; chIndex++) {
+      let chName = "ch" + chIndex;
       document.getElementById(rowId + chName).classList.add("bg-success");
     }
     document.getElementById(rowId).classList.add("bg-success");
