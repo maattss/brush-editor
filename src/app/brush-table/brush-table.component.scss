@@ -1,30 +1,21 @@
-table, th, td {
-    border: 1.5px groove lightblue;
-    border-collapse: collapse;
-}
-
 th, td {
-    padding: 0.05em;
-    background-color: transparent;
-}
-
-input {
-    border: none;
+    padding: 0.3em;
 }
 
 table input {
+    border: none;
+    background-color: transparent;
     width: 100%;
 }
 
-table td {
+/* Prevents table header to wrap multiple lines */
+th {
     white-space: nowrap;
 }
-
-
-textarea:focus, input:focus{
+/* Prevent outline of input when selected */
+input:focus{
     outline: none;
 }
-
 
 #file-uploader, #table {
     margin-top: 10px;

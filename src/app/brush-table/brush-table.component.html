@@ -1,11 +1,19 @@
 <script src="../../../node_modules/chart.js/src/chart.js"></script> <!-- Chart.js -->
+<script  type="application/javascript">
+  $('input[type="file"]').change(function(e){
+      var fileName = e.target.files[0].name;
+      console.log(fileName);
+      $('#theFileLabel').html(fileName);
+  });
+</script>
 
 <div class="container" id="file-uploader">
   <div class="row">
       <form>
         <div class="col-sm form-group">
-          <label for="theFile">Choose a brushfile to upload</label> 
-          <input type="file" class="form-control-file" (change)="fileChanged($event)" (change)="uploadFile()" (change)="uploadFile()" id="theFile"><br>
+          <label class="custom-file-label" for="theFile" id="theFileLabel">Choose a brushfile</label> 
+          <input type="file" class="custom-file-input" id="theFile" aria-describedby="fileUpload"
+          (change)="fileChanged($event)" (change)="uploadFile()" (change)="uploadFile()" ><br>
         </div>
       </form>
   </div>
@@ -15,7 +23,7 @@
   <div class="row">
       <div class="col" id="table-container">
         <h3>Brush data</h3>
-        <table class="table">
+        <table class="table table-hover">
           <thead>
               <tr>
                 <th>Brush</th>
