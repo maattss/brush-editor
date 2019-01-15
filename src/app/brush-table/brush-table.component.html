@@ -4,9 +4,8 @@
   <div class="row">
       <form>
         <div class="col-sm form-group">
-          <label for="theFile">Choose a brushfile and upload it</label> 
-          <input type="file" class="form-control-file" (change)="fileChanged($event)" id="theFile"><br>
-          <input type="button" (click)="uploadFile()" (click)="uploadFile()" class="btn btn-primary" value="Upload File">
+          <label for="theFile">Choose a brushfile to upload</label> 
+          <input type="file" class="form-control-file" (change)="fileChanged($event)" (change)="uploadFile()" (change)="uploadFile()" id="theFile"><br>
         </div>
       </form>
   </div>
