@@ -99,6 +99,7 @@ export class BrushTableComponent implements OnInit {
   }
 
   addData(brushID: number) {
+    let activeRow = document.getElementById("1");
     this.barChartData = [];
     let br: Brush = this.brushes[brushID - 1];
     let values: number[] = [br.ch1, br.ch2, br.ch3]
@@ -120,5 +121,26 @@ export class BrushTableComponent implements OnInit {
     clone[0].label = "BrushID: " + brushID + ". Value" ;
     this.barChartData = clone;
     
+  }
+
+  markRow(rowId) {
+    console.log("Marking " + rowId);
+    // Clear color of all inactive rows
+    for(var x=1; x<this.brushes.length; x++) {
+      for(var y=1; y<=5; y++) {
+        let chName = "ch" + y;
+        document.getElementById(x + chName).classList.remove("bg-success");
+      }
+      document.getElementById(x.toString()).classList.remove("bg-success");
+      document.getElementById(x + "desc").classList.remove("bg-success");
+    }
+
+    // Setting color of the active row
+    for(var q=1; q<=5; q++) {
+      let chName = "ch" + q;
+      document.getElementById(rowId + chName).classList.add("bg-success");
+    }
+    document.getElementById(rowId).classList.add("bg-success");
+    document.getElementById(rowId + "desc").classList.add("bg-success");
   }
 }

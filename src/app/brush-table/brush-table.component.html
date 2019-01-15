@@ -17,24 +17,28 @@
       <div class="col" id="table-container">
         <h3>Brush data</h3>
         <table class="table">
-          <tr>
-            <th>Brush</th>
-            <th *ngIf="brushes[0].ch1>=0">Channel 1</th>
-            <th *ngIf="brushes[0].ch2>=0">Channel 2</th>
-            <th *ngIf="brushes[0].ch3>=0">Channel 3</th>
-            <th *ngIf="brushes[0].ch4>=0">Channel 4</th>
-            <th *ngIf="brushes[0].ch5>=0">Channel 5</th>
-            <th>Description</th>
-          </tr>
-          <tr *ngFor="let brush of brushes">
-            <td>{{brush.brushId}}</td>
-            <td *ngIf="brush.ch1>=0"><input type="text" (keypress)="numberOnly($event)" (click)="addData(brush.brushId)" value="{{brush.ch1}}"></td>
-            <td *ngIf="brush.ch2>=0"><input type="text" (keypress)="numberOnly($event)" (click)="addData(brush.brushId)" value="{{brush.ch2}}"></td>
-            <td *ngIf="brush.ch3>=0"><input type="text" (keypress)="numberOnly($event)" (click)="addData(brush.brushId)" value="{{brush.ch3}}"></td>
-            <td *ngIf="brush.ch4>=0"><input type="text" (keypress)="numberOnly($event)" (click)="addData(brush.brushId)" value="{{brush.ch4}}"></td>
-            <td *ngIf="brush.ch5>=0"><input type="text" (keypress)="numberOnly($event)" (click)="addData(brush.brushId)" value="{{brush.ch5}}"></td>
-            <td><span contenteditable="true"><input type="text" class="desc" value="{{brush.desc}}"></span></td>
-          </tr>
+          <thead>
+              <tr>
+                <th>Brush</th>
+                <th *ngIf="brushes[0].ch1>=0">Channel 1</th>
+                <th *ngIf="brushes[0].ch2>=0">Channel 2</th>
+                <th *ngIf="brushes[0].ch3>=0">Channel 3</th>
+                <th *ngIf="brushes[0].ch4>=0">Channel 4</th>
+                <th *ngIf="brushes[0].ch5>=0">Channel 5</th>
+                <th>Description</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let brush of brushes" id="{{brush.brushId}}">
+                <td>{{brush.brushId}}</td>
+                <td *ngIf="brush.ch1>=0"><input type="text" id="{{brush.brushId}}ch1" (keypress)="numberOnly($event)" (mousedown)="addData(brush.brushId); markRow(brush.brushId)" value="{{brush.ch1}}"></td>
+                <td *ngIf="brush.ch2>=0"><input type="text" id="{{brush.brushId}}ch2" (keypress)="numberOnly($event)" (mousedown)="addData(brush.brushId); markRow(brush.brushId)" value="{{brush.ch2}}"></td>
+                <td *ngIf="brush.ch3>=0"><input type="text" id="{{brush.brushId}}ch3" (keypress)="numberOnly($event)" (mousedown)="addData(brush.brushId); markRow(brush.brushId)" value="{{brush.ch3}}"></td>
+                <td *ngIf="brush.ch4>=0"><input type="text" id="{{brush.brushId}}ch4" (keypress)="numberOnly($event)" (mousedown)="addData(brush.brushId); markRow(brush.brushId)" value="{{brush.ch4}}"></td>
+                <td *ngIf="brush.ch5>=0"><input type="text" id="{{brush.brushId}}ch5" (keypress)="numberOnly($event)" (mousedown)="addData(brush.brushId); markRow(brush.brushId)" value="{{brush.ch5}}"></td>
+                <td><span contenteditable="true"><input type="text" id="{{brush.brushId}}desc" class="desc" value="{{brush.desc}}"></span></td>
+              </tr>
+          </tbody>
         </table>
       </div>
     <div class="col" id="charts">
