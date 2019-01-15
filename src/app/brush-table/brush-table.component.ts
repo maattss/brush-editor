@@ -137,13 +137,13 @@ export class BrushTableComponent implements OnInit {
 
   returnAmountOfChannels() {
     let totalChannels = 0;
-    if(this.brushes[1].ch3>=0) {
+    if(this.brushes[0].ch3>=0) {
       totalChannels = 3;
     }
-    if(this.brushes[1].ch4>=0) {
+    if(this.brushes[0].ch4>=0) {
       totalChannels = 4;
     }
-    if(this.brushes[1].ch5>=0) {
+    if(this.brushes[0].ch5>=0) {
       totalChannels = 5;
     }
     return totalChannels;
@@ -165,8 +165,8 @@ export class BrushTableComponent implements OnInit {
     }
 
     // Setting color of the active row
-    for(var x=1; x<=totalChannels; x++) {
-      let chName = "ch" + x;
+    for(var chIndex=1; chIndex<=totalChannels; chIndex++) {
+      let chName = "ch" + chIndex;
       document.getElementById(rowId + chName).classList.add("bg-success");
     }
     document.getElementById(rowId).classList.add("bg-success");
