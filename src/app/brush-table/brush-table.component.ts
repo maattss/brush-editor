@@ -132,21 +132,38 @@ export class BrushTableComponent implements OnInit {
     
   }
 
+  returnAmountOfChannels() {
+    let totalChannels = 0;
+    if(this.brushes[1].ch3>=0) {
+      totalChannels = 3;
+    }
+    if(this.brushes[1].ch4>=0) {
+      totalChannels = 4;
+    }
+    if(this.brushes[1].ch5>=0) {
+      totalChannels = 5;
+    }
+    return totalChannels;
+  }
+
   markRow(rowId) {
-    console.log("Marking " + rowId);
+    let totalChannels = 0;
+    totalChannels = this.returnAmountOfChannels();  
+    console.log(totalChannels);
+
     // Clear color of all inactive rows
-    for(var x=1; x<this.brushes.length; x++) {
-      for(var y=1; y<=5; y++) {
-        let chName = "ch" + y;
-        document.getElementById(x + chName).classList.remove("bg-success");
+    for(var rowIndex=1; rowIndex<this.brushes.length; rowIndex++) {
+      for(var chIndex=1; chIndex<=totalChannels; chIndex++) {
+        let chName = "ch" + chIndex;
+        document.getElementById(rowIndex + chName).classList.remove("bg-success");
       }
-      document.getElementById(x.toString()).classList.remove("bg-success");
-      document.getElementById(x + "desc").classList.remove("bg-success");
+      document.getElementById(rowIndex.toString()).classList.remove("bg-success");
+      document.getElementById(rowIndex + "desc").classList.remove("bg-success");
     }
 
     // Setting color of the active row
-    for(var chIndex=1; chIndex<=5; chIndex++) {
-      let chName = "ch" + chIndex;
+    for(var x=1; x<=totalChannels; x++) {
+      let chName = "ch" + x;
       document.getElementById(rowId + chName).classList.add("bg-success");
     }
     document.getElementById(rowId).classList.add("bg-success");
