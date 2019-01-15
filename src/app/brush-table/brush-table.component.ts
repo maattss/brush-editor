@@ -93,6 +93,8 @@ export class BrushTableComponent implements OnInit {
     return true;
   }
 
+
+  // Add labels to graph
   addLabels() {
     this.barChartLabels.length = 0;
     if (this.brushes != []) {
@@ -107,6 +109,7 @@ export class BrushTableComponent implements OnInit {
     }
   }
 
+  // Add data to graph
   addData(brushID: number) {
     let activeRow = document.getElementById("1");
     this.barChartData = [];
