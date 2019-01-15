@@ -29,13 +29,13 @@
           </thead>
           <tbody>
               <tr *ngFor="let brush of brushes" id="{{brush.brushId}}">
-                <td>{{brush.brushId}}</td>
+                <td (mousedown)="addData(brush.brushId); markRow(brush.brushId)">{{brush.brushId}}</td>
                 <td *ngIf="brush.ch1>=0"><input type="text" id="{{brush.brushId}}ch1" (keypress)="numberOnly($event)" (mousedown)="addData(brush.brushId); markRow(brush.brushId)" value="{{brush.ch1}}"></td>
                 <td *ngIf="brush.ch2>=0"><input type="text" id="{{brush.brushId}}ch2" (keypress)="numberOnly($event)" (mousedown)="addData(brush.brushId); markRow(brush.brushId)" value="{{brush.ch2}}"></td>
                 <td *ngIf="brush.ch3>=0"><input type="text" id="{{brush.brushId}}ch3" (keypress)="numberOnly($event)" (mousedown)="addData(brush.brushId); markRow(brush.brushId)" value="{{brush.ch3}}"></td>
                 <td *ngIf="brush.ch4>=0"><input type="text" id="{{brush.brushId}}ch4" (keypress)="numberOnly($event)" (mousedown)="addData(brush.brushId); markRow(brush.brushId)" value="{{brush.ch4}}"></td>
                 <td *ngIf="brush.ch5>=0"><input type="text" id="{{brush.brushId}}ch5" (keypress)="numberOnly($event)" (mousedown)="addData(brush.brushId); markRow(brush.brushId)" value="{{brush.ch5}}"></td>
-                <td><span contenteditable="true"><input type="text" id="{{brush.brushId}}desc" class="desc" value="{{brush.desc}}"></span></td>
+                <td><span contenteditable="true"><input type="text" id="{{brush.brushId}}desc" class="desc" (mousedown)="addData(brush.brushId); markRow(brush.brushId)" value="{{brush.desc}}"></span></td>
               </tr>
           </tbody>
         </table>
