@@ -96,16 +96,13 @@ export class BrushTableComponent implements OnInit {
 
   // Add labels to graph
   addLabels() {
+    let totalChannels = this.returnAmountOfChannels();
+    let channelString = "";
     this.barChartLabels.length = 0;
-    if (this.brushes != []) {
-      this.barChartLabels.push("Channel 1", "Channel 2", "Channel 3");
-      
-      if(this.brushes[0].ch4 >=0) {
-        this.barChartLabels.push("Channel 4");
-      }
-      if(this.brushes[0].ch5 >=0) {
-        this.barChartLabels.push("Channel 5");
-      }
+
+    for(var channel=1; channel<=totalChannels; channel++) {
+      channelString = "Channel " + channel;
+      this.barChartLabels.push(channelString);
     }
   }
 
@@ -151,8 +148,7 @@ export class BrushTableComponent implements OnInit {
 
   markRow(rowId) {
     let totalChannels = 0;
-    totalChannels = this.returnAmountOfChannels();  
-    console.log(totalChannels);
+    totalChannels = this.returnAmountOfChannels();
 
     // Clear color of all inactive rows
     for(var rowIndex=1; rowIndex<this.brushes.length; rowIndex++) {
