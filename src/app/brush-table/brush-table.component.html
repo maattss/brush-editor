@@ -29,6 +29,18 @@
           </tbody>
         </table>
       </div>
+      <div class="col" id="charts">
+        <h3>Graphical representation</h3>
+        <canvas baseChart
+          [data]="barChartData"
+          [labels]="barChartLabels"
+          [options]="barChartOptions"
+          [legend]="barChartLegend"
+          [chartType]="barChartType"
+          (chartHover)="chartHovered($event)"
+          (chartClick)="chartClicked($event)">
+        </canvas>
+      </div>
   </div>
 </div>
 
