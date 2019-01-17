@@ -1,6 +1,5 @@
 import { Component, OnInit, Input} from '@angular/core';
 import { Brush } from '../brush';
-import { NavComponent } from "../nav/nav.component"
 import { BrushService } from '../brush.service';
 
 @Component({
@@ -11,6 +10,7 @@ import { BrushService } from '../brush.service';
 export class BrushTableComponent implements OnInit {
   brushes: Brush[];
   constructor(private data: BrushService) { }
+  currentBrushId: number = 1;
 
   ngOnInit() {
     this.data.currentBrush.subscribe(brushes => this.brushes = brushes);
@@ -60,7 +60,7 @@ export class BrushTableComponent implements OnInit {
 
   // Add data to graph
   addData(brushID: number) {
-    let activeRow = document.getElementById("1");
+    this.addLabels();
     this.barChartData = [];
     let br: Brush = this.brushes[brushID - 1];
     let values: number[] = [br.ch1, br.ch2, br.ch3]
@@ -86,7 +86,7 @@ export class BrushTableComponent implements OnInit {
 
   returnAmountOfChannels() {
     let totalChannels = 0;
-    if(this.brushes[0].ch3>=0) {
+    if(this.brushes[0].ch3>=0) { 
       totalChannels = 3;
     }
     if(this.brushes[0].ch4>=0) {
@@ -98,12 +98,13 @@ export class BrushTableComponent implements OnInit {
     return totalChannels;
   }
 
-  markRow(rowId) {
+  markRow(rowId: number) {
+    this.currentBrushId = rowId;
     let totalChannels = 0;
     totalChannels = this.returnAmountOfChannels();
 
     // Clear color of all inactive rows
-    for(var rowIndex=1; rowIndex<this.brushes.length; rowIndex++) {
+    for(var rowIndex=1; rowIndex<=this.brushes.length; rowIndex++) {
       for(var chIndex=1; chIndex<=totalChannels; chIndex++) {
         let chName = "ch" + chIndex;
         document.getElementById(rowIndex + chName).classList.remove("bg-success");
@@ -117,7 +118,7 @@ export class BrushTableComponent implements OnInit {
       let chName = "ch" + chIndex;
       document.getElementById(rowId + chName).classList.add("bg-success");
     }
-    document.getElementById(rowId).classList.add("bg-success");
+    document.getElementById(rowId.toString()).classList.add("bg-success");
     document.getElementById(rowId + "desc").classList.add("bg-success");
   }
 }

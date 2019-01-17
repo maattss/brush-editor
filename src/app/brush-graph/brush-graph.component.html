@@ -1,0 +1,16 @@
+<script type="text/javascript" src="../../../node_modules/chart.js/src/chart.js"></script>
+
+<h3>Graphical representation</h3>
+Current brushID: [{{currentBrushId}}]<br>
+Current labels: [{{barChartLabels}}]<br>
+Current data: {{barChartData[0].data}} <br>
+Chart:
+<canvas baseChart
+  [data]="barChartData"
+  [labels]="barChartLabels"
+  [options]="barChartOptions"
+  [legend]="barChartLegend"
+  [chartType]="barChartType"
+  (chartHover)="chartHovered($event)"
+    (chartClick)="chartClicked($event)">
+</canvas>  

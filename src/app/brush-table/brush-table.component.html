@@ -1,5 +1,3 @@
-<script src="../../../node_modules/chart.js/src/chart.js"></script> <!-- Chart.js -->
-
 <div class="container" *ngIf="brushes.length>0">
   <div class="row">
       <div class="col" id="table-container">
@@ -18,28 +16,26 @@
           </thead>
           <tbody>
               <tr *ngFor="let brush of brushes" id="{{brush.brushId}}">
-                <td (mousedown)="addData(brush.brushId); markRow(brush.brushId)">{{brush.brushId}}</td>
-                <td *ngIf="brush.ch1>=0"><input type="text" id="{{brush.brushId}}ch1" (keypress)="numberOnly($event)" (mousedown)="addData(brush.brushId); markRow(brush.brushId)" value="{{brush.ch1}}"></td>
-                <td *ngIf="brush.ch2>=0"><input type="text" id="{{brush.brushId}}ch2" (keypress)="numberOnly($event)" (mousedown)="addData(brush.brushId); markRow(brush.brushId)" value="{{brush.ch2}}"></td>
-                <td *ngIf="brush.ch3>=0"><input type="text" id="{{brush.brushId}}ch3" (keypress)="numberOnly($event)" (mousedown)="addData(brush.brushId); markRow(brush.brushId)" value="{{brush.ch3}}"></td>
-                <td *ngIf="brush.ch4>=0"><input type="text" id="{{brush.brushId}}ch4" (keypress)="numberOnly($event)" (mousedown)="addData(brush.brushId); markRow(brush.brushId)" value="{{brush.ch4}}"></td>
-                <td *ngIf="brush.ch5>=0"><input type="text" id="{{brush.brushId}}ch5" (keypress)="numberOnly($event)" (mousedown)="addData(brush.brushId); markRow(brush.brushId)" value="{{brush.ch5}}"></td>
-                <td><span contenteditable="true"><input type="text" id="{{brush.brushId}}desc" class="desc" (mousedown)="addData(brush.brushId); markRow(brush.brushId)" value="{{brush.desc}}"></span></td>
+                <td (mousedown)="addData(brush.brushId);markRow(brush.brushId)">{{brush.brushId}}</td>
+                <td *ngIf="brush.ch1>=0"><input type="text" id="{{brush.brushId}}ch1" (keypress)="numberOnly($event)" (mousedown)="addData(brush.brushId);markRow(brush.brushId)" value="{{brush.ch1}}"></td>
+                <td *ngIf="brush.ch2>=0"><input type="text" id="{{brush.brushId}}ch2" (keypress)="numberOnly($event)" (mousedown)="addData(brush.brushId);markRow(brush.brushId)" value="{{brush.ch2}}"></td>
+                <td *ngIf="brush.ch3>=0"><input type="text" id="{{brush.brushId}}ch3" (keypress)="numberOnly($event)" (mousedown)="addData(brush.brushId);markRow(brush.brushId)" value="{{brush.ch3}}"></td>
+                <td *ngIf="brush.ch4>=0"><input type="text" id="{{brush.brushId}}ch4" (keypress)="numberOnly($event)" (mousedown)="addData(brush.brushId);markRow(brush.brushId)" value="{{brush.ch4}}"></td>
+                <td *ngIf="brush.ch5>=0"><input type="text" id="{{brush.brushId}}ch5" (keypress)="numberOnly($event)" (mousedown)="addData(brush.brushId);markRow(brush.brushId)" value="{{brush.ch5}}"></td>
+                <td><span contenteditable="true"><input type="text" id="{{brush.brushId}}desc" class="desc" (mousedown)="addData(brush.brushId);markRow(brush.brushId)" value="{{brush.desc}}"></span></td>
               </tr>
           </tbody>
         </table>
       </div>
       <div class="col" id="charts">
-        <h3>Graphical representation</h3>
+        <!--<app-brush-graph [currentBrushId]="currentBrushId"></app-brush-graph>-->
         <canvas baseChart
-          [data]="barChartData"
-          [labels]="barChartLabels"
-          [options]="barChartOptions"
-          [legend]="barChartLegend"
-          [chartType]="barChartType"
-          (chartHover)="chartHovered($event)"
-          (chartClick)="chartClicked($event)">
-        </canvas>
+                [data]="barChartData"
+                [labels]="barChartLabels"
+                [options]="barChartOptions"
+                [legend]="barChartLegend"
+                [chartType]="barChartType">
+        </canvas>  
       </div>
   </div>
 </div>

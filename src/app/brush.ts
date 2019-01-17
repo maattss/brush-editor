@@ -7,3 +7,10 @@ export class Brush {
     ch5: number;
     desc: string
 }
+export class ChannelNames {
+    ch1: string;
+    ch2: string;
+    ch3: string;
+    ch4: string;
+    ch5: string;
+}

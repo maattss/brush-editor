@@ -7,6 +7,8 @@ import { Brush } from './brush';
 })
 export class BrushService {
   private brushSource  = new BehaviorSubject<Array<Brush>>([]);
+  
+
   currentBrush = this.brushSource.asObservable();
 
   constructor() { }
@@ -14,4 +16,6 @@ export class BrushService {
   changeBrush(brushes: Brush[]) {
     this.brushSource.next(brushes);
   }
+
+  
 }
