@@ -1,5 +1,6 @@
 import { Component, OnInit, Input} from '@angular/core';
 import { Brush } from '../brush';
+import { ChannelNames } from '../brush';
 import { BrushService } from '../brush.service';
 
 @Component({
@@ -9,6 +10,9 @@ import { BrushService } from '../brush.service';
 })
 export class BrushTableComponent implements OnInit {
   brushes: Brush[];
+
+  channelNames: ChannelNames = {ch1: "Channel 1", ch2: "Channel 2", ch3: "Channel 3", ch4: "Channel 4", ch5: "Channel 5"};
+
   constructor(private data: BrushService) { }
   currentBrushId: number = 1;
 
@@ -17,6 +21,12 @@ export class BrushTableComponent implements OnInit {
   }
 
   file: any;
+
+  // Returns default channel names
+  returnChannelDefaults() {
+    let defaultNames = {ch1: "Channel 1", ch2: "Channel 2", ch3: "Channel 3", ch4: "Channel 4", ch5: "Channel 5"};
+    return defaultNames;
+  }
 
   // Chart
   public barChartOptions:any = {
@@ -48,15 +58,21 @@ export class BrushTableComponent implements OnInit {
 
   // Add labels to graph
   addLabels() {
-    let totalChannels = this.returnAmountOfChannels();
-    let channelString = "";
+    let channelAmount = this.returnAmountOfChannels();
     this.barChartLabels.length = 0;
 
-    for(var channel=1; channel<=totalChannels; channel++) {
-      channelString = "Channel " + channel;
-      this.barChartLabels.push(channelString);
+    this.barChartLabels.push(
+      this.channelNames.ch1,
+      this.channelNames.ch2,
+      this.channelNames.ch3
+    );
+    if(channelAmount >= 4) {
+      this.barChartLabels.push(this.channelNames.ch4);
     }
-  }
+    if(channelAmount == 5) {
+      this.barChartLabels.push(this.channelNames.ch5)
+    }
+  } 
 
   // Add data to graph
   addData(brushID: number) {
@@ -100,25 +116,35 @@ export class BrushTableComponent implements OnInit {
 
   markRow(rowId: number) {
     this.currentBrushId = rowId;
-    let totalChannels = 0;
-    totalChannels = this.returnAmountOfChannels();
 
     // Clear color of all inactive rows
     for(var rowIndex=1; rowIndex<=this.brushes.length; rowIndex++) {
-      for(var chIndex=1; chIndex<=totalChannels; chIndex++) {
-        let chName = "ch" + chIndex;
-        document.getElementById(rowIndex + chName).classList.remove("bg-success");
-      }
       document.getElementById(rowIndex.toString()).classList.remove("bg-success");
-      document.getElementById(rowIndex + "desc").classList.remove("bg-success");
     }
 
     // Setting color of the active row
-    for(var chIndex=1; chIndex<=totalChannels; chIndex++) {
-      let chName = "ch" + chIndex;
-      document.getElementById(rowId + chName).classList.add("bg-success");
-    }
     document.getElementById(rowId.toString()).classList.add("bg-success");
-    document.getElementById(rowId + "desc").classList.add("bg-success");
+  }
+
+  changeChannelValue(channelId) {
+    let channelName = (<HTMLInputElement>document.getElementById("channelName" + channelId)).value;
+
+    if(channelId==1) {
+      this.channelNames.ch1 = channelName;
+    } else if(channelId==2) {
+      this.channelNames.ch2 = channelName;
+    } else if(channelId==3) {
+      this.channelNames.ch3 = channelName;
+    } else if(channelId==4) {
+      this.channelNames.ch4 = channelName;
+    } else if(channelId==5) {
+      this.channelNames.ch5 = channelName;
+    }
+  }
+
+  // If the user wants to reset his channel-name changes
+  resetChannelValues() {
+    let defaultVals = this.returnChannelDefaults();
+    this.channelNames = defaultVals;
   }
 }
