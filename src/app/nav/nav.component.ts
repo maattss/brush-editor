@@ -15,15 +15,17 @@ export class NavComponent implements OnInit {
   ngOnInit() {
   }
 
-
   file: any;
   brushes: Brush[];
 
-  fileChanged(e: any) {
-    this.file = e.target.files[0];
+  fileChanged(e: any) { // Triggers when file input changes
+    this.file = e.target.files[0]; 
+    
+    // Updates file name in file input label
+    (<HTMLLabelElement>document.getElementById("theFileLabel")).innerText = this.file.name;
   }
 
-  uploadFile(file: any) {
+  uploadFile(file: any) { // Triggers when file input changes
     let fileReader = new FileReader();
     fileReader.onload = (e) => {
       this.parseFile(fileReader.result.toString());
@@ -46,9 +48,7 @@ export class NavComponent implements OnInit {
       let lastCh = channels.length-1;
       let description: string = channels[lastCh].split("#")[1];
       channels[lastCh] = channels[lastCh].split("#")[0];
-      if (description === undefined) {
-        description = "";
-      }
+      if (description === undefined) { description = "" };
 
       // Add the correct amount of channels from file
       this.brushes.push({
@@ -60,13 +60,8 @@ export class NavComponent implements OnInit {
           ch5: +channels[4],
           desc: description
         });
-      
       counter++;
     });
     this.b.changeBrush(this.brushes);
-    //this.addLabels();
-    //this.addData(1);
   }
-
-
 }

@@ -1,19 +1,10 @@
-<script  type="application/javascript">
-  $('input[type="file"]').change(function(e){
-      var fileName = e.target.files[0].name;
-      console.log(fileName);
-      $('#theFileLabel').html(fileName);
-  });
-</script>
-
-
-<div class="container-fluid" id="file-uploader">
+<div class="container" id="file-uploader">
   <div class="row"> 
       <form>
         <div class="col">
           <label class="custom-file-label" for="theFile" id="theFileLabel">Choose a brushfile</label> 
           <input type="file" class="custom-file-input" id="theFile" aria-describedby="fileUpload"
-          (change)="fileChanged($event)" (change)="uploadFile()" (change)="uploadFile()" ><br>
+          (change)="fileChanged($event); uploadFile()"><br>
         </div>
       </form>
   </div>

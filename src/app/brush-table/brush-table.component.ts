@@ -9,17 +9,17 @@ import { BrushService } from '../brush.service';
   styleUrls: ['./brush-table.component.scss']
 })
 export class BrushTableComponent implements OnInit {
-  brushes: Brush[];
-
-  channelNames: ChannelNames = {ch1: "Channel 1", ch2: "Channel 2", ch3: "Channel 3", ch4: "Channel 4", ch5: "Channel 5"};
 
   constructor(private data: BrushService) { }
-  currentBrushId: number = 1;
 
   ngOnInit() {
     this.data.currentBrush.subscribe(brushes => this.brushes = brushes);
   }
 
+  // Local variables
+  brushes: Brush[];
+  channelNames: ChannelNames = {ch1: "Channel 1", ch2: "Channel 2", ch3: "Channel 3", ch4: "Channel 4", ch5: "Channel 5"};
+  currentBrushId: number = 1;
   file: any;
 
   // Returns default channel names
@@ -28,7 +28,7 @@ export class BrushTableComponent implements OnInit {
     return defaultNames;
   }
 
-  // Chart
+  // Chart variables
   public barChartOptions:any = {
     scaleShowVerticalLines: false,
     responsive: true,
@@ -42,10 +42,14 @@ export class BrushTableComponent implements OnInit {
       ]
     }
   };
-  public barChartLabels:string[] = [];
-  public barChartData:any[] = [];
+  public barChartLabels:string[] = ["No data"];
+  public barChartData:any[] = [{
+    data: 0,
+    label: "No data"
+  }];
   public barChartType:string = 'bar';
   public barChartLegend:boolean = true;
+  public isDataAvailable:boolean = false; // Controls if graph is displayed or not
 
   // Checks the values of the input fields. Allows numbers and "."
   numberOnly(event: any): boolean {
@@ -56,7 +60,7 @@ export class BrushTableComponent implements OnInit {
     return true;
   }
 
-  // Add labels to graph
+  // Add/update labels to graph
   addLabels() {
     let channelAmount = this.returnAmountOfChannels();
     this.barChartLabels.length = 0;
@@ -74,18 +78,16 @@ export class BrushTableComponent implements OnInit {
     }
   } 
 
-  // Add data to graph
+  // Add/update data to graph
   addData(brushID: number) {
     this.addLabels();
+    
+    this.isDataAvailable = true;
     this.barChartData = [];
     let br: Brush = this.brushes[brushID - 1];
     let values: number[] = [br.ch1, br.ch2, br.ch3]
-    if (br.ch4 >= 0) {
-      values.push(br.ch4);
-    }
-    if (br.ch5 >= 0) {
-      values.push(br.ch5);
-    }
+    if (br.ch4 >= 0) { values.push(br.ch4) };
+    if (br.ch5 >= 0) { values.push(br.ch5) };
 
     this.barChartData.push({
       data: values,
@@ -97,33 +99,28 @@ export class BrushTableComponent implements OnInit {
     clone[0].data = values;
     clone[0].label = "BrushID " + brushID;
     this.barChartData = clone;
-    
   }
 
   returnAmountOfChannels() {
     let totalChannels = 0;
-    if(this.brushes[0].ch3>=0) { 
-      totalChannels = 3;
-    }
-    if(this.brushes[0].ch4>=0) {
-      totalChannels = 4;
-    }
-    if(this.brushes[0].ch5>=0) {
-      totalChannels = 5;
-    }
+    if(this.brushes[0].ch3>=0) { totalChannels = 3 };
+    if(this.brushes[0].ch4>=0) { totalChannels = 4 };
+    if(this.brushes[0].ch5>=0) { totalChannels = 5 };
+    
     return totalChannels;
   }
 
   markRow(rowId: number) {
     this.currentBrushId = rowId;
+    var colorClass = "table-success";
 
     // Clear color of all inactive rows
     for(var rowIndex=1; rowIndex<=this.brushes.length; rowIndex++) {
-      document.getElementById(rowIndex.toString()).classList.remove("bg-success");
+      document.getElementById(rowIndex.toString()).classList.remove(colorClass);
     }
 
     // Setting color of the active row
-    document.getElementById(rowId.toString()).classList.add("bg-success");
+    document.getElementById(rowId.toString()).classList.add(colorClass);
   }
 
   changeChannelValue(channelId) {
@@ -140,6 +137,27 @@ export class BrushTableComponent implements OnInit {
     } else if(channelId==5) {
       this.channelNames.ch5 = channelName;
     }
+  }
+
+  updateBrushes(brushId: number, channel: string) {
+    let elementId = "" + brushId + channel;
+    let val = (<HTMLInputElement>document.getElementById(elementId)).value
+
+    var brush = this.brushes[brushId-1];
+    if (channel === "ch1") {
+      brush.ch1 = +val; // + parses string to number
+    } else if (channel === "ch2") {
+      brush.ch2 = +val;
+    } else if (channel === "ch3") {
+      brush.ch3 = +val;
+    } else if (channel === "ch4") {
+      brush.ch4 = +val;
+    } else if (channel === "ch5") {
+      brush.ch5 = +val;
+    } else {  // channel === "desc"
+      brush.desc = val;
+    }
+    this.addData(brushId);  // Update graph
   }
 
   // If the user wants to reset his channel-name changes
