@@ -1,9 +1,11 @@
-<div class="jumbotron">
+<div class="jumbotron container-fluid">
   <h1>{{appTitle}}</h1>
 </div>
 
-<app-nav></app-nav>
-<app-brush-table></app-brush-table>
+<div class="content">
+  <app-nav></app-nav>
+  <app-brush-table></app-brush-table>
+</div>
 
 <section>
   <router-outlet></router-outlet>
