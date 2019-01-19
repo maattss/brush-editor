@@ -3,10 +3,10 @@
 <!-- Show table and graph only if a file has been uploaded -->
 <div class="container" *ngIf="brushes.length>0"> 
   <div class="row">
-    <div class="col-sm-4 col-md-4 col-lg-4">
+    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
         <h3>Data</h3>
     </div>
-    <div class="col-sm-8 col-md-8 col-lg-4">
+    <div class="col-sm-8 col-md-8 col-lg-4 col-xl-4">
         <button class="btn btn-info" id="resetBtn" (click)="resetChannelValues()">Reset channel names to default</button>
     </div>
   </div>
@@ -29,19 +29,24 @@
               <tr *ngFor="let brush of brushes" id="{{brush.brushId}}">
                 <td (mousedown)="addData(brush.brushId); markRow(brush.brushId)">{{brush.brushId}}</td>
                 <td *ngIf="brush.ch1>=0"><input type="text" id="{{brush.brushId}}ch1" value="{{brush.ch1}}"
-                  (keyup)="numberOnly($event); updateBrushes(brush.brushId, 'ch1')" 
+                  (keypress)="numberOnly($event)"
+                  (keyup)="updateBrushes(brush.brushId, 'ch1')" 
                   (mousedown)="addData(brush.brushId); markRow(brush.brushId)"></td>
                 <td *ngIf="brush.ch2>=0"><input type="text" id="{{brush.brushId}}ch2" value="{{brush.ch2}}"
-                  (keyup)="numberOnly($event); updateBrushes(brush.brushId, 'ch2')" 
+                  (keypress)="numberOnly($event)"
+                  (keyup)="updateBrushes(brush.brushId, 'ch2')" 
                   (mousedown)="addData(brush.brushId); markRow(brush.brushId)"></td>
                 <td *ngIf="brush.ch3>=0"><input type="text" id="{{brush.brushId}}ch3" value="{{brush.ch3}}" 
-                  (keyup)="numberOnly($event); updateBrushes(brush.brushId, 'ch3')" 
+                  (keypress)="numberOnly($event)"
+                  (keyup)="updateBrushes(brush.brushId, 'ch3')" 
                   (mousedown)="addData(brush.brushId); markRow(brush.brushId)"></td>
                 <td *ngIf="brush.ch4>=0"><input type="text" id="{{brush.brushId}}ch4" value="{{brush.ch4}}"
-                  (keyup)="numberOnly($event); updateBrushes(brush.brushId, 'ch4')" 
+                  (keypress)="numberOnly($event)"
+                  (keyup)="updateBrushes(brush.brushId, 'ch4')" 
                   (mousedown)="addData(brush.brushId); markRow(brush.brushId)"></td>
                 <td *ngIf="brush.ch5>=0"><input type="text" id="{{brush.brushId}}ch5" value="{{brush.ch5}}"
-                  (keyup)="numberOnly($event); updateBrushes(brush.brushId, 'ch5')" 
+                  (keypress)="numberOnly($event)"
+                  (keyup)="updateBrushes(brush.brushId, 'ch5')" 
                   (mousedown)="addData(brush.brushId); markRow(brush.brushId)"></td>
                 <td><span contenteditable="true"><input type="text" id="{{brush.brushId}}desc" class="desc" value="{{brush.desc}}"
                   (keyup)="updateBrushes(brush.brushId, 'desc')"
