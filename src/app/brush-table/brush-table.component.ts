@@ -52,8 +52,20 @@ export class BrushTableComponent implements OnInit {
   public isDataAvailable:boolean = false; // Controls if graph is displayed or not
 
   // Checks the values of the input fields. Allows numbers and "."
-  numberOnly(event: any): boolean {
+  numberOnly(event: any, brushId: Number, channel: String): boolean {
+    let inputValue = (<HTMLInputElement>document.getElementById(brushId.toString() + channel)).value;
     const charCode = (event.which) ? event.which : event.keyCode;
+
+    if(inputValue.length<=0) {
+      console.log("It is empty");
+      (<HTMLInputElement>document.getElementById(brushId.toString() + channel)).value = "0";
+    }
+
+    for(var x=0; x<inputValue.length; x++) {
+      if(inputValue.charAt(x) == "." && charCode == 46) {
+        return false;
+      }
+    }
     if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode != 46) {
       return false;
     }
