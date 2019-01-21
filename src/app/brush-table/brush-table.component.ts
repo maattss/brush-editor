@@ -90,6 +90,10 @@ export class BrushTableComponent implements OnInit {
     }
   } 
 
+  addDataCurrentBrush() {
+    this.addData(this.currentBrushId);
+  }
+
   // Add/update data to graph
   addData(brushID: number) {
     this.addLabels();

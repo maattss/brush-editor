@@ -1,4 +1,5 @@
-<!-- Where is the chart.js script init? Not needed? -->
+<!-- Chart.js init script -->
+<!--<script type="text/javascript" src="node_modules/chart.js/src/chart.js"></script>-->
 
 <!-- Show table and graph only if a file has been uploaded -->
 <div class="container" *ngIf="brushes.length>0"> 
@@ -7,7 +8,7 @@
         <h3>Data</h3>
     </div>
     <div class="col-sm-8 col-md-8 col-lg-4 col-xl-4">
-        <button class="btn btn-info" id="resetBtn" (click)="resetChannelValues()">Reset channel names to default</button>
+        <button class="btn btn-info" id="resetBtn" (click)="resetChannelValues(); addDataCurrentBrush()">Reset channel names to default</button>
     </div>
   </div>
   <br>
@@ -17,11 +18,11 @@
           <thead>
               <tr>
                 <th>BrushID</th>
-                <th *ngIf="brushes[0].ch1>=0"><input type="text" id="channelName1" value="{{channelNames.ch1}}" (keyup)="changeChannelValue(1)"></th>
-                <th *ngIf="brushes[0].ch2>=0"><input type="text" id="channelName2" value="{{channelNames.ch2}}" (keyup)="changeChannelValue(2)"></th>
-                <th *ngIf="brushes[0].ch3>=0"><input type="text" id="channelName3" value="{{channelNames.ch3}}" (keyup)="changeChannelValue(3)"></th>
-                <th *ngIf="brushes[0].ch4>=0"><input type="text" id="channelName4" value="{{channelNames.ch4}}" (keyup)="changeChannelValue(4)"></th>
-                <th *ngIf="brushes[0].ch5>=0"><input type="text" id="channelName5" value="{{channelNames.ch5}}" (keyup)="changeChannelValue(5)"></th>
+                <th *ngIf="brushes[0].ch1>=0"><input type="text" id="channelName1" value="{{channelNames.ch1}}" (keyup)="changeChannelValue(1); addLabels(); addDataCurrentBrush()"></th>
+                <th *ngIf="brushes[0].ch2>=0"><input type="text" id="channelName2" value="{{channelNames.ch2}}" (keyup)="changeChannelValue(2); addLabels(); addDataCurrentBrush()"></th>
+                <th *ngIf="brushes[0].ch3>=0"><input type="text" id="channelName3" value="{{channelNames.ch3}}" (keyup)="changeChannelValue(3); addLabels(); addDataCurrentBrush()"></th>
+                <th *ngIf="brushes[0].ch4>=0"><input type="text" id="channelName4" value="{{channelNames.ch4}}" (keyup)="changeChannelValue(4); addLabels(); addDataCurrentBrush()"></th>
+                <th *ngIf="brushes[0].ch5>=0"><input type="text" id="channelName5" value="{{channelNames.ch5}}" (keyup)="changeChannelValue(5); addLabels(); addDataCurrentBrush()"></th>
                 <th>Info</th>
               </tr>
           </thead>
