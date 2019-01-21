@@ -21,8 +21,11 @@ export class NavComponent implements OnInit {
   fileChanged(e: any) { // Triggers when file input changes
     this.file = e.target.files[0]; 
     
-    // Updates file name in file input label
-    (<HTMLLabelElement>document.getElementById("theFileLabel")).innerText = this.file.name;
+    // Updates file name in file input label if neew file is read
+    if (this.file.name) {
+      (<HTMLLabelElement>document.getElementById("theFileLabel")).innerText = this.file.name;
+    }
+    
   }
 
   uploadFile(file: any) { // Triggers when file input changes
