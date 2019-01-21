@@ -1,16 +1,16 @@
+<!-- Chart.js init script -->
 <script type="text/javascript" src="../../../node_modules/chart.js/src/chart.js"></script>
 
-<h3>Graphical representation</h3>
-Current brushID: [{{currentBrushId}}]<br>
-Current labels: [{{barChartLabels}}]<br>
-Current data: {{barChartData[0].data}} <br>
-Chart:
-<canvas baseChart
-  [data]="barChartData"
-  [labels]="barChartLabels"
-  [options]="barChartOptions"
-  [legend]="barChartLegend"
-  [chartType]="barChartType"
-  (chartHover)="chartHovered($event)"
-    (chartClick)="chartClicked($event)">
-</canvas>  
+<div *ngIf="brushes.length>0" class="container-fluid" id="charts">
+  <h3>Graph</h3>
+   <!-- Display block if data is available, display none if not -->
+  <canvas baseChart [ngClass]="isDataAvailable ? 'd-block' : 'd-none'" 
+          [data]="barChartData"
+          [labels]="barChartLabels"
+          [options]="barChartOptions"
+          [legend]="barChartLegend"
+          [chartType]="barChartType">
+  </canvas> 
+  <!-- Add a helper text is no data is selected -->
+  <p class="text-center font-weight-bold" *ngIf="isDataAvailable==false">Select a brush to show graph</p>
+</div>
