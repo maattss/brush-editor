@@ -24,8 +24,6 @@ export class BrushTableComponent implements OnInit {
       this.channelNames = chNames;
       this.addChannelCookie();
     });
-
-    
   }
 
   // Local variables

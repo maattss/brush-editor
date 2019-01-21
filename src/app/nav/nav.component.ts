@@ -23,7 +23,7 @@ export class NavComponent implements OnInit {
     this.file = e.target.files[0]; 
     
     // Updates file name in file input label if neew file is read
-    if (this.file.name) {
+    if (this.file) {
       (<HTMLLabelElement>document.getElementById("theFileLabel")).innerText = this.file.name;
     }
     
@@ -33,7 +33,7 @@ export class NavComponent implements OnInit {
     let fileReader = new FileReader();
     fileReader.onload = (e) => {
       this.parseFile(fileReader.result.toString());
-      this.data.changeGlobals({currentBrushId: 1})
+      this.data.changeGlobals({currentBrushId: 0})
     }
     fileReader.readAsText(this.file);
   }

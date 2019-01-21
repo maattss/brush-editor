@@ -11,7 +11,7 @@ export class BrushGraphComponent implements OnInit {
 
   constructor(private data: BrushService) { }
 
-  // Variables
+  // Local variables
   chNames: ChannelNames;
   brushes: Brush[];
   chart: [];
@@ -41,7 +41,6 @@ export class BrushGraphComponent implements OnInit {
       if(this.brushes.length > 0) {
         this.initialized = true;
       }
-      
     });
   }
 
@@ -88,27 +87,31 @@ export class BrushGraphComponent implements OnInit {
     }
   } 
 
-
+  // Add/update data the graph 
   addData() {
-    console.log("Adding data");
-    this.addLabels();
-    this.isDataAvailable = true;
-    this.barChartData = [];
-    let br: Brush = this.brushes[this.globals.currentBrushId - 1];
-    let values: number[] = [br.ch1, br.ch2, br.ch3]
-    if (br.ch4 >= 0) { values.push(br.ch4) };
-    if (br.ch5 >= 0) { values.push(br.ch5) };
-
-    this.barChartData.push({
-      data: values,
-      label: "BrushID: " + this.globals.currentBrushId
-    });
-
-    // For Angular to recognize the change in the dataset!
-    let clone = JSON.parse(JSON.stringify(this.barChartData));
-    clone[0].data = values;
-    clone[0].label = "BrushID " + this.globals.currentBrushId;
-    this.barChartData = clone;
+    if (this.globals.currentBrushId > 0) {  // Do not draw garph if no brush is selected
+      console.log("Adding data");
+      this.addLabels();
+      this.isDataAvailable = true;
+      this.barChartData = [];
+      let br: Brush = this.brushes[this.globals.currentBrushId - 1];
+      let values: number[] = [br.ch1, br.ch2, br.ch3]
+      if (br.ch4 >= 0) { values.push(br.ch4) };
+      if (br.ch5 >= 0) { values.push(br.ch5) };
+  
+      this.barChartData.push({
+        data: values,
+        label: "BrushID: " + this.globals.currentBrushId
+      });
+  
+      // For Angular to recognize the change in the dataset!
+      let clone = JSON.parse(JSON.stringify(this.barChartData));
+      clone[0].data = values;
+      clone[0].label = "BrushID " + this.globals.currentBrushId;
+      this.barChartData = clone;
+    } else {
+      this.isDataAvailable = false;
+    }
   }
 
   returnAmountOfChannels() {
