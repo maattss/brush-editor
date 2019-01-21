@@ -8,6 +8,7 @@ import { NavComponent } from './nav/nav.component';
 import { BrushSettingsComponent } from './brush-settings/brush-settings.component';
 import { BrushGraphComponent } from './brush-graph/brush-graph.component';
 import { ChartsModule } from 'ng2-charts';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,7 @@ import { ChartsModule } from 'ng2-charts';
     AppRoutingModule,
     ChartsModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [ CookieService ],
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }

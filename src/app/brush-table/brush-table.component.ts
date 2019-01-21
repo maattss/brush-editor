@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 import { Brush, ChannelNames, GlobalVariables } from '../brush';
 import { BrushService } from '../brush.service';
 
@@ -9,12 +10,17 @@ import { BrushService } from '../brush.service';
 })
 
 export class BrushTableComponent implements OnInit {
-
-  constructor(private data: BrushService) { }
+  constructor(private cookieService: CookieService, private data: BrushService) { }
 
   ngOnInit() {
     this.data.currentBrush.subscribe(brushes => this.brushes = brushes);
     this.data.channelNames.subscribe(chNames => this.channelNames = chNames);
+
+    // True if our channelcookie already exists. Will then update stored names accordingly
+    if (this.cookieService.check('chNames')) {
+      console.log("We have a cookie with the value: " + this.cookieService.get('chNames'));
+      this.channelNames = JSON.parse(this.cookieService.get('chNames')); 
+    }
   }
 
   // Local variables
@@ -51,6 +57,7 @@ export class BrushTableComponent implements OnInit {
   markRow(rowId: number) {
     console.log("Marking row");
     this.data.changeGlobals({currentBrushId: rowId});
+    this.data.changeChannelName(this.channelNames); 
     var colorClass = "table-danger";
 
     // Clear color of all inactive rows
@@ -76,7 +83,16 @@ export class BrushTableComponent implements OnInit {
     } else if(channelId==5) { 
       this.channelNames.ch5 = channelName;
     }
-    this.data.changeChannelName(this.channelNames);
+    this.data.changeChannelName(this.channelNames); 
+    
+    // Saves values in the cookie
+    this.addChannelCookie();
+  }
+
+  // Add/customize a cookie containing users channelnames
+  addChannelCookie() {
+    var json_channelNames = JSON.stringify(this.channelNames);
+    this.cookieService.set('chNames', json_channelNames, 365); // Expires after 1 year
   }
 
   updateBrushes(brushId: number, channel: string) {
