@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Brush } from '../brush';
-import { BrushTableComponent } from '../brush-table/brush-table.component';
+import { Brush, ChannelNames } from '../brush';
 import { BrushService } from '../brush.service';
 
 @Component({
@@ -12,12 +11,13 @@ export class NavComponent implements OnInit {
 
   constructor(private data: BrushService) { }
 
-  ngOnInit() {
-
-  }
-
-  file: any;
+  // Local variables
   brushes: Brush[];
+  file: any;
+
+  ngOnInit() {
+    this.data.currentBrush.subscribe(brushes => this.brushes = brushes);
+  }
 
   fileChanged(e: any) { // Triggers when file input changes
     this.file = e.target.files[0]; 
@@ -33,6 +33,7 @@ export class NavComponent implements OnInit {
     let fileReader = new FileReader();
     fileReader.onload = (e) => {
       this.parseFile(fileReader.result.toString());
+      this.data.changeGlobals({currentBrushId: 1})
     }
     fileReader.readAsText(this.file);
   }
@@ -67,5 +68,10 @@ export class NavComponent implements OnInit {
       counter++;
     });
     this.data.changeBrush(this.brushes);
+  }
+
+  resetChannelNames() {
+    let defaultNames = {ch1: "Channel 1", ch2: "Channel 2", ch3: "Channel 3", ch4: "Channel 4", ch5: "Channel 5"};
+    this.data.changeChannelName(defaultNames); 
   }
 }

@@ -13,14 +13,19 @@ export class BrushTableComponent implements OnInit {
   constructor(private cookieService: CookieService, private data: BrushService) { }
 
   ngOnInit() {
-    this.data.currentBrush.subscribe(brushes => this.brushes = brushes);
-    this.data.channelNames.subscribe(chNames => this.channelNames = chNames);
-
     // True if our channelcookie already exists. Will then update stored names accordingly
     if (this.cookieService.check('chNames')) {
       console.log("We have a cookie with the value: " + this.cookieService.get('chNames'));
       this.channelNames = JSON.parse(this.cookieService.get('chNames')); 
     }
+    // Subscribe 
+    this.data.currentBrush.subscribe(brushes => this.brushes = brushes);
+    this.data.channelNames.subscribe(chNames => {
+      this.channelNames = chNames;
+      this.addChannelCookie();
+    });
+
+    
   }
 
   // Local variables
