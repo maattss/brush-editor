@@ -10,9 +10,10 @@ import { BrushService } from '../brush.service';
 })
 export class NavComponent implements OnInit {
 
-  constructor(private b: BrushService) { }
+  constructor(private data: BrushService) { }
 
   ngOnInit() {
+
   }
 
   file: any;
@@ -65,6 +66,6 @@ export class NavComponent implements OnInit {
         });
       counter++;
     });
-    this.b.changeBrush(this.brushes);
+    this.data.changeBrush(this.brushes);
   }
 }
