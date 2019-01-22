@@ -17,26 +17,26 @@ export class NavComponent implements OnInit {
   file: any;
 
   ngOnInit() {
+    // Subscribe
     this.data.currentBrush.subscribe(brushes => this.brushes = brushes);
   }
 
-  fileChanged(e: any) { // Triggers when file input changes
-    this.file = e.target.files[0]; 
+  fileChanged(event: any) { // Triggers when file input changes
+    this.file = event.target.files[0]; 
     
     // Updates file name in file input label if neew file is read
     if (this.file) {
       (<HTMLLabelElement>document.getElementById("theFileLabel")).innerText = this.file.name;
     }
     
-  }
-
-  uploadFile(file: any) { // Triggers when file input changes
+    // File reader
     let fileReader = new FileReader();
-    fileReader.onload = (e) => {
+    fileReader.onload = () => {
       this.parseFile(fileReader.result.toString());
       this.data.changeGlobals({currentBrushId: 0})
     }
     fileReader.readAsText(this.file);
+    
   }
 
   parseFile(text: string) {
@@ -78,6 +78,9 @@ export class NavComponent implements OnInit {
       if (brush.desc != "") {
         text += "#" + brush.desc;
       }
+      if (!(brush.brushId >= this.brushes.length)) {
+
+      }
       text += " \r\n"
     }
     var blob = new Blob([text], {type: "text/plain;charset=utf-8"});
@@ -86,6 +89,7 @@ export class NavComponent implements OnInit {
     } else {
       saveAs(blob, "default.bt");
     }
+
   }
 
   resetChannelNames() {
