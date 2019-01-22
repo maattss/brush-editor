@@ -1,49 +1,47 @@
 <!-- Show table and graph only if a file has been uploaded -->
-<div *ngIf="brushes.length>0"> 
-  <div class="row">
-    <div id="table-container">
-        <h3>Data</h3>
-      <table class="table table-hover">
-        <thead>
-            <tr>
-              <th></th>
-              <th *ngIf="brushes[0].ch1>=0"><input type="text" id="channelName1" value="{{channelNames.ch1}}" (keyup)="changeChannelValue(1)"></th>
-              <th *ngIf="brushes[0].ch2>=0"><input type="text" id="channelName2" value="{{channelNames.ch2}}" (keyup)="changeChannelValue(2)"></th>
-              <th *ngIf="brushes[0].ch3>=0"><input type="text" id="channelName3" value="{{channelNames.ch3}}" (keyup)="changeChannelValue(3)"></th>
-              <th *ngIf="brushes[0].ch4>=0"><input type="text" id="channelName4" value="{{channelNames.ch4}}" (keyup)="changeChannelValue(4)"></th>
-              <th *ngIf="brushes[0].ch5>=0"><input type="text" id="channelName5" value="{{channelNames.ch5}}" (keyup)="changeChannelValue(5)"></th>
-              <th>Info</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let brush of brushes" id="{{brush.brushId}}">
-              <td (mousedown)="markRow(brush.brushId)">{{brush.brushId}}</td>
-              <td *ngIf="brush.ch1>=0"><input type="text" id="{{brush.brushId}}ch1" value="{{brush.ch1}}"
-                (keypress)="numberOnly($event, brush.brushId, 'ch1')"
-                (keyup)="updateBrushes(brush.brushId, 'ch1'); numberOnly($event, brush.brushId, 'ch1')" 
-                (mousedown)="markRow(brush.brushId)"></td>
-              <td *ngIf="brush.ch2>=0"><input type="text" id="{{brush.brushId}}ch2" value="{{brush.ch2}}"
-                (keypress)="numberOnly($event, brush.brushId, 'ch2')"
-                (keyup)="updateBrushes(brush.brushId, 'ch2'); numberOnly($event, brush.brushId, 'ch2')" 
-                (mousedown)="markRow(brush.brushId)"></td>
-              <td *ngIf="brush.ch3>=0"><input type="text" id="{{brush.brushId}}ch3" value="{{brush.ch3}}" 
-                (keypress)="numberOnly($event, brush.brushId, 'ch3')"
-                (keyup)="updateBrushes(brush.brushId, 'ch3'); numberOnly($event, brush.brushId, 'ch3')" 
-                (mousedown)="markRow(brush.brushId)"></td>
-              <td *ngIf="brush.ch4>=0"><input type="text" id="{{brush.brushId}}ch4" value="{{brush.ch4}}"
-                (keypress)="numberOnly($event, brush.brushId, 'ch4')"
-                (keyup)="updateBrushes(brush.brushId, 'ch4'); numberOnly($event, brush.brushId, 'ch4')" 
-                (mousedown)="markRow(brush.brushId)"></td>
-              <td *ngIf="brush.ch5>=0"><input type="text" id="{{brush.brushId}}ch5" value="{{brush.ch5}}"
-                (keypress)="numberOnly($event, brush.brushId, 'ch5')"
-                (keyup)="updateBrushes(brush.brushId, 'ch5'); numberOnly($event, brush.brushId, 'ch5')" 
-                (mousedown)="markRow(brush.brushId)"></td>
-              <td><span contenteditable="true"><input type="text" id="{{brush.brushId}}desc" class="desc" value="{{brush.desc}}"
-                (keyup)="updateBrushes(brush.brushId, 'desc')"
-                (mousedown)="markRow(brush.brushId)"></span></td>
-            </tr>
-        </tbody>
-      </table>
-    </div>
+<div *ngIf="brushes.length>0" style="display:table"> 
+  <div id="table-container">
+      <h3>Data</h3>
+    <table class="table table-hover">
+      <thead>
+          <tr>
+            <th></th>
+            <th *ngIf="brushes[0].ch1>=0"><input type="text" id="channelName1" value="{{channelNames.ch1}}" (keyup)="changeChannelValue(1)"></th>
+            <th *ngIf="brushes[0].ch2>=0"><input type="text" id="channelName2" value="{{channelNames.ch2}}" (keyup)="changeChannelValue(2)"></th>
+            <th *ngIf="brushes[0].ch3>=0"><input type="text" id="channelName3" value="{{channelNames.ch3}}" (keyup)="changeChannelValue(3)"></th>
+            <th *ngIf="brushes[0].ch4>=0"><input type="text" id="channelName4" value="{{channelNames.ch4}}" (keyup)="changeChannelValue(4)"></th>
+            <th *ngIf="brushes[0].ch5>=0"><input type="text" id="channelName5" value="{{channelNames.ch5}}" (keyup)="changeChannelValue(5)"></th>
+            <th>Info</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let brush of brushes" id="{{brush.brushId}}">
+            <td (mousedown)="markRow(brush.brushId)">{{brush.brushId}}</td>
+            <td *ngIf="brush.ch1>=0"><input type="text" style="display:table-cell" id="{{brush.brushId}}ch1" value="{{brush.ch1}}"
+              (keypress)="numberOnly($event, brush.brushId, 'ch1')"
+              (keyup)="updateBrushes(brush.brushId, 'ch1'); numberOnly($event, brush.brushId, 'ch1')" 
+              (mousedown)="markRow(brush.brushId)"></td>
+            <td *ngIf="brush.ch2>=0"><input type="text" style="display:table-cell" id="{{brush.brushId}}ch2" value="{{brush.ch2}}"
+              (keypress)="numberOnly($event, brush.brushId, 'ch2')"
+              (keyup)="updateBrushes(brush.brushId, 'ch2'); numberOnly($event, brush.brushId, 'ch2')" 
+              (mousedown)="markRow(brush.brushId)"></td>
+            <td *ngIf="brush.ch3>=0"><input type="text" style="display:table-cell" id="{{brush.brushId}}ch3" value="{{brush.ch3}}" 
+              (keypress)="numberOnly($event, brush.brushId, 'ch3')"
+              (keyup)="updateBrushes(brush.brushId, 'ch3'); numberOnly($event, brush.brushId, 'ch3')" 
+              (mousedown)="markRow(brush.brushId)"></td>
+            <td *ngIf="brush.ch4>=0"><input type="text" style="display:table-cell" id="{{brush.brushId}}ch4" value="{{brush.ch4}}"
+              (keypress)="numberOnly($event, brush.brushId, 'ch4')"
+              (keyup)="updateBrushes(brush.brushId, 'ch4'); numberOnly($event, brush.brushId, 'ch4')" 
+              (mousedown)="markRow(brush.brushId)"></td>
+            <td *ngIf="brush.ch5>=0"><input type="text" style="display:table-cell" id="{{brush.brushId}}ch5" value="{{brush.ch5}}"
+              (keypress)="numberOnly($event, brush.brushId, 'ch5')"
+              (keyup)="updateBrushes(brush.brushId, 'ch5'); numberOnly($event, brush.brushId, 'ch5')" 
+              (mousedown)="markRow(brush.brushId)"></td>
+            <td><span contenteditable="true"><input type="text" style="display:table-cell" id="{{brush.brushId}}desc" class="desc" value="{{brush.desc}}"
+              (keyup)="updateBrushes(brush.brushId, 'desc')"
+              (mousedown)="markRow(brush.brushId)"></span></td>
+          </tr>
+      </tbody>
+    </table>
   </div>
 </div>

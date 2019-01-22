@@ -1,7 +1,7 @@
 <!-- Chart.js init script -->
-<script type="text/javascript" src="../../../node_modules/chart.js/src/chart.js"></script>
+<!--<script type="text/javascript" src="../../../node_modules/chart.js/src/chart.js"></script>-->
 
-<div *ngIf="brushes.length>0" class="container-fluid" id="charts">
+<div *ngIf="brushes.length>0" id="charts">
   <h3>Graph</h3>
    <!-- Display block if data is available, display none if not -->
   <canvas baseChart [ngClass]="isDataAvailable ? 'd-block' : 'd-none'" 
