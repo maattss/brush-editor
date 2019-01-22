@@ -9,7 +9,7 @@
           </div>
         </form>
       </div>
-      <button *ngIf="brushes.length>0" class="btn btn-info" id="exportBtn">Export brush file</button>
+      <button *ngIf="brushes.length>0" class="btn btn-info" id="exportBtn" (click)="saveFileAs()">Export brush file</button>
       <button *ngIf="brushes.length>0" class="btn btn-info" id="resetBtn" (click)="resetChannelNames()">Reset channel names</button>
       
   </div>

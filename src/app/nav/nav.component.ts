@@ -71,6 +71,23 @@ export class NavComponent implements OnInit {
     this.data.changeBrush(this.brushes);
   }
 
+  saveFileAs() {
+    var text:string = "";
+    for(let brush of this.brushes) {
+      text += (brush.ch1 + ","+ brush.ch2 + "," + brush.ch3 + "," + brush.ch4 + "," + brush.ch5);
+      if (brush.desc != "") {
+        text += "#" + brush.desc;
+      }
+      text += " \r\n"
+    }
+    var blob = new Blob([text], {type: "text/plain;charset=utf-8"});
+    if (this.file.name != "") {
+      saveAs(blob, this.file.name);
+    } else {
+      saveAs(blob, "default.bt");
+    }
+  }
+
   resetChannelNames() {
     let defaultNames = {ch1: "Channel 1", ch2: "Channel 2", ch3: "Channel 3", ch4: "Channel 4", ch5: "Channel 5"};
     this.data.changeChannelName(defaultNames); 
