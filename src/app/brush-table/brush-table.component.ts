@@ -22,7 +22,10 @@ export class BrushTableComponent implements OnInit {
     this.data.currentBrush.subscribe(brushes => this.brushes = brushes);
     this.data.channelNames.subscribe(chNames => {
       this.channelNames = chNames;
-      console.log("Changes in channelnames: " + this.channelNames);
+      if(this.initialized == true) { // Page is fully initialized
+        this.addChannelCookie();
+      }
+      this.initialized = true;
     });
     
     // Check if a cookie named chNames exist
@@ -89,13 +92,10 @@ export class BrushTableComponent implements OnInit {
       this.channelNames.ch5 = channelName;
     }
     this.data.changeChannelName(this.channelNames);
-    
-    this.addChannelCookie();
   }
 
   // Add/customize a cookie containing users channelnames
   addChannelCookie() {
-    console.log("Adding cookie with vals: " + this.channelNames); 
     var json_channelNames = JSON.stringify(this.channelNames);
     this.cookieService.set('chNames', json_channelNames, 365); // Expires after 1 year
   }
