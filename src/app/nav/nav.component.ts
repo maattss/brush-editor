@@ -35,7 +35,13 @@ export class NavComponent implements OnInit {
       this.parseFile(fileReader.result.toString());
       this.data.changeGlobals({currentBrushId: 0})
     }
-    fileReader.readAsText(this.file);
+    
+    // Prevents error in console when cancelling file upload
+    try {
+      fileReader.readAsText(this.file);
+    } catch(error) {
+      return;
+    }
     
   }
 
