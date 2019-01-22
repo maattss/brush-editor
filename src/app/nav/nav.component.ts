@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Brush } from '../brush';
-import { BrushTableComponent } from '../brush-table/brush-table.component';
 import { BrushService } from '../brush.service';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-nav',
@@ -10,27 +10,33 @@ import { BrushService } from '../brush.service';
 })
 export class NavComponent implements OnInit {
 
-  constructor(private b: BrushService) { }
+  constructor(private data: BrushService) { }
+
+  // Local variables
+  brushes: Brush[];
+  file: any;
 
   ngOnInit() {
+    // Subscribe
+    this.data.currentBrush.subscribe(brushes => this.brushes = brushes);
   }
 
-  file: any;
-  brushes: Brush[];
-
-  fileChanged(e: any) { // Triggers when file input changes
-    this.file = e.target.files[0]; 
+  fileChanged(event: any) { // Triggers when file input changes
+    this.file = event.target.files[0]; 
     
-    // Updates file name in file input label
-    (<HTMLLabelElement>document.getElementById("theFileLabel")).innerText = this.file.name;
-  }
-
-  uploadFile(file: any) { // Triggers when file input changes
+    // Updates file name in file input label if neew file is read
+    if (this.file) {
+      (<HTMLLabelElement>document.getElementById("theFileLabel")).innerText = this.file.name;
+    }
+    
+    // File reader
     let fileReader = new FileReader();
-    fileReader.onload = (e) => {
+    fileReader.onload = () => {
       this.parseFile(fileReader.result.toString());
+      this.data.changeGlobals({currentBrushId: 0})
     }
     fileReader.readAsText(this.file);
+    
   }
 
   parseFile(text: string) {
@@ -62,6 +68,32 @@ export class NavComponent implements OnInit {
         });
       counter++;
     });
-    this.b.changeBrush(this.brushes);
+    this.data.changeBrush(this.brushes);
+  }
+
+  saveFileAs() {
+    var text:string = "";
+    for(let brush of this.brushes) {
+      text += (brush.ch1 + ","+ brush.ch2 + "," + brush.ch3 + "," + brush.ch4 + "," + brush.ch5);
+      if (brush.desc != "") {
+        text += "#" + brush.desc;
+      }
+      if (!(brush.brushId >= this.brushes.length)) {
+
+      }
+      text += " \r\n"
+    }
+    var blob = new Blob([text], {type: "text/plain;charset=utf-8"});
+    if (this.file.name != "") {
+      saveAs(blob, this.file.name);
+    } else {
+      saveAs(blob, "default.bt");
+    }
+
+  }
+
+  resetChannelNames() {
+    let defaultNames = {ch1: "Channel 1", ch2: "Channel 2", ch3: "Channel 3", ch4: "Channel 4", ch5: "Channel 5"};
+    this.data.changeChannelName(defaultNames); 
   }
 }

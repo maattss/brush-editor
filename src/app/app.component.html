@@ -1,10 +1,20 @@
-<div class="jumbotron container-fluid">
-  <h1>{{appTitle}}</h1>
+<div class="jumbotron jumbotron-fluid">
+  <h1 class="display-4 text-center">{{appTitle}}</h1>
 </div>
 
-<div class="content">
-  <app-nav></app-nav>
-  <app-brush-table></app-brush-table>
+<div class="container">
+  <div class="row">
+    <app-nav></app-nav>  
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-xl-7">
+      <app-brush-table></app-brush-table>
+    </div>
+    <div class="col-xs-12 col-xl-5">
+      <app-brush-graph></app-brush-graph>
+    </div>
+  </div>
 </div>
 
 <section>

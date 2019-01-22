@@ -1,12 +1,15 @@
-<div class="container" id="file-uploader">
+<div id="file-uploader">
   <div class="row"> 
-      <form>
-        <div class="col">
-          <label class="custom-file-label" for="theFile" id="theFileLabel">Choose a brushfile</label> 
-          <input type="file" class="custom-file-input" id="theFile" aria-describedby="fileUpload"
-          (change)="fileChanged($event); uploadFile()"><br>
-        </div>
-      </form>
+      <div class="col">
+        <form>
+          <div class="custom-file">
+            <label class="custom-file-label" for="theFile" id="theFileLabel">Choose a brushfile</label> 
+            <input type="file" class="custom-file-input" id="theFile" aria-describedby="fileUpload"
+            (change)="fileChanged($event)"><br>
+          </div>
+        </form>
+      </div>
+      <button *ngIf="brushes.length>0" class="btn btn-info" id="exportBtn" (click)="saveFileAs()">Export brush file</button>
+      <button *ngIf="brushes.length>0" class="btn btn-info" id="resetBtn" (click)="resetChannelNames()">Reset channel names</button>
   </div>
 </div>
-<br>
