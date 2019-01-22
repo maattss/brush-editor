@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Brush, ChannelNames } from '../brush';
+import { Component, OnInit } from '@angular/core';
+import { Brush } from '../brush';
 import { BrushService } from '../brush.service';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-nav',

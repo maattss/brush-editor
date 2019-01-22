@@ -12,22 +12,25 @@ import { BrushService } from '../brush.service';
 export class BrushTableComponent implements OnInit {
   constructor(private cookieService: CookieService, private data: BrushService) { }
 
+   // Local variables
+   brushes: Brush[];
+   channelNames: ChannelNames;
+   initialized: boolean = false;
+
   ngOnInit() {
-    // True if our channelcookie already exists. Will then update stored names accordingly
     // Subscribe 
     this.data.currentBrush.subscribe(brushes => this.brushes = brushes);
     this.data.channelNames.subscribe(chNames => {
       this.channelNames = chNames;
+      console.log("Changes in channelnames: " + this.channelNames);
     });
+    
+    // Check if a cookie named chNames exist
     if (this.cookieService.check('chNames')) {
       console.log("We have a cookie with the value: " + this.cookieService.get('chNames'));
       this.channelNames = JSON.parse(this.cookieService.get('chNames')); 
     }
   }
-
-  // Local variables
-  brushes: Brush[];
-  channelNames: ChannelNames;
 
   // Returns default channel names
   returnChannelDefaults() {
@@ -85,14 +88,14 @@ export class BrushTableComponent implements OnInit {
     } else if(channelId==5) { 
       this.channelNames.ch5 = channelName;
     }
-    this.data.changeChannelName(this.channelNames); 
+    this.data.changeChannelName(this.channelNames);
     
-    // Saves values in the cookie
     this.addChannelCookie();
   }
 
   // Add/customize a cookie containing users channelnames
   addChannelCookie() {
+    console.log("Adding cookie with vals: " + this.channelNames); 
     var json_channelNames = JSON.stringify(this.channelNames);
     this.cookieService.set('chNames', json_channelNames, 365); // Expires after 1 year
   }
