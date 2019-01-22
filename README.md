@@ -2,9 +2,10 @@
 Built with [Angular v7.2](https://angular.io/docs) by [Mats Tyldum](https://github.com/maattss) and [Tobias Sætre](https://github.com/Tobiasns). 
 
 ## Dependecies
-ng2-charts `npm install ng2-charts --save`
-chart.js `npm install chart.js --save`
-ngx-cookie-service `npm install ngx-cookie-service --save`
+- ng2-charts `npm install ng2-charts --save`
+- chart.js `npm install chart.js --save`
+- ngx-cookie-service `npm install ngx-cookie-service --save`
+- FileSaver.js `npm install file-saver --save` and `npm install @types/file-saver --save-dev`
 
 ## Development server
 
