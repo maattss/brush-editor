@@ -1,3 +1,6 @@
+table {
+    width: 100%;
+}
 table input {
     border: none;
     background-color: transparent;
@@ -18,6 +21,10 @@ th input {
     margin-left: 1em;
     margin-bottom: 0.2em;
 }
+#pager {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
 
 /* Prevents table header to wrap multiple lines */
 th {
@@ -26,9 +33,4 @@ th {
 /* Prevent outline of input when selected */
 input:focus{
     outline: none;
-}
-
-/* Add scroll bar to table when screen is to small */
-#table-container {
-    overflow-x: auto;
 }
