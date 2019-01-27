@@ -15,12 +15,12 @@ export class BrushTableComponent implements OnInit {
               private pagerService: PagerService) { }
 
   // Local variables
-  private brushes: Brush[];
+  brushes: Brush[];
   channelNames: ChannelNames;
   initialized: boolean = false;
 
-  // Array of items being paged
-  private allItems: any[];
+  // Keep track ogf current page
+  currentPage: number = 1;
 
   // pager object
   pager: any = {};
@@ -35,8 +35,8 @@ export class BrushTableComponent implements OnInit {
       this.brushes = brushes;
 
       if(this.initialized == true) { // Page is fully initialized
-       // Initialize to page 1 
-       this.setPage(1);
+        // Initialize to page 1 
+        this.setPage(1);
       }
      
     });
@@ -56,12 +56,13 @@ export class BrushTableComponent implements OnInit {
   }
 
   setPage(page: number) {
+    this.currentPage = page;
     // get pager object from service
     this.pager = this.pagerService.getPager(this.brushes.length, page);
 
     // get current page of items
     this.pagedItems = this.brushes.slice(this.pager.startIndex, this.pager.endIndex + 1);
-    console.log("Paged items: " + this.pagedItems[0].ch1);
+    console.log("Paged items: " + this.pagedItems);
   }
 
   // Returns default channel names
@@ -93,14 +94,18 @@ export class BrushTableComponent implements OnInit {
 
   markRow(rowId: number) {
     console.log("Marking row");
+    
     this.data.changeGlobals({currentBrushId: rowId});
     this.data.changeChannelName(this.channelNames); 
     var colorClass = "table-danger";
 
+    var index = 10*(this.currentPage - 1) + 1; // Current first row index
+    var indexEnd = index + this.pagedItems.length - 1; // Last index for current page
+
     // Clear color of all inactive rows
-    for(var rowIndex=1; rowIndex<=this.pagedItems.length; rowIndex++) {
-      console.log(rowIndex.toString());
-      document.getElementById(rowIndex.toString()).classList.remove(colorClass);
+    for (index; index<=indexEnd; index++) {
+      console.log (index.toString());
+      document.getElementById(index.toString()).classList.remove(colorClass);
     }
 
     // Setting color of the active row
