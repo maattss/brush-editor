@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { Brush, ChannelNames, GlobalVariables } from '../brush';
+import { Brush, ChannelNames } from '../brush';
 import { BrushService } from '../brush.service';
+import { PagerService } from '../_services/index';
 
 @Component({
   selector: 'app-brush-table',
@@ -10,16 +11,35 @@ import { BrushService } from '../brush.service';
 })
 
 export class BrushTableComponent implements OnInit {
-  constructor(private cookieService: CookieService, private data: BrushService) { }
+  constructor(private cookieService: CookieService, private data: BrushService, 
+              private pagerService: PagerService) { }
 
-   // Local variables
-   brushes: Brush[];
-   channelNames: ChannelNames;
-   initialized: boolean = false;
+  // Local variables
+  private brushes: Brush[];
+  channelNames: ChannelNames;
+  initialized: boolean = false;
+
+  // Array of items being paged
+  private allItems: any[];
+
+  // pager object
+  pager: any = {};
+
+  // paged items
+  pagedItems: Brush[];
 
   ngOnInit() {
+    
     // Subscribe 
-    this.data.currentBrush.subscribe(brushes => this.brushes = brushes);
+    this.data.currentBrush.subscribe(brushes => {
+      this.brushes = brushes;
+
+      if(this.initialized == true) { // Page is fully initialized
+       // Initialize to page 1 
+       this.setPage(1);
+      }
+     
+    });
     this.data.channelNames.subscribe(chNames => {
       this.channelNames = chNames;
       if(this.initialized == true) { // Page is fully initialized
@@ -33,6 +53,15 @@ export class BrushTableComponent implements OnInit {
       console.log("We have a cookie with the value: " + this.cookieService.get('chNames'));
       this.channelNames = JSON.parse(this.cookieService.get('chNames')); 
     }
+  }
+
+  setPage(page: number) {
+    // get pager object from service
+    this.pager = this.pagerService.getPager(this.brushes.length, page);
+
+    // get current page of items
+    this.pagedItems = this.brushes.slice(this.pager.startIndex, this.pager.endIndex + 1);
+    console.log("Paged items: " + this.pagedItems[0].ch1);
   }
 
   // Returns default channel names
@@ -69,7 +98,8 @@ export class BrushTableComponent implements OnInit {
     var colorClass = "table-danger";
 
     // Clear color of all inactive rows
-    for(var rowIndex=1; rowIndex<=this.brushes.length; rowIndex++) {
+    for(var rowIndex=1; rowIndex<=this.pagedItems.length; rowIndex++) {
+      console.log(rowIndex.toString());
       document.getElementById(rowIndex.toString()).classList.remove(colorClass);
     }
 

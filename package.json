@@ -19,7 +19,11 @@
     "@angular/platform-browser": "~7.2.0",
     "@angular/platform-browser-dynamic": "~7.2.0",
     "@angular/router": "~7.2.0",
+<<<<<<< HEAD
     "bootstrap": "^4.2.1",
+=======
+    "@angular/http": "^5.0.0",
+>>>>>>> c1fa14a4ab9a256b65281708fc5f55760a7bba77
     "chart.js": "^2.7.3",
     "core-js": "^2.5.4",
     "file-saver": "^2.0.0",
