@@ -22,45 +22,45 @@ export class NavComponent implements OnInit {
   }
 
   fileChanged(event: any) { // Triggers when file input changes
-    this.file = event.target.files[0]; 
-    
+    this.file = event.target.files[0];
+
     // Updates file name in file input label if neew file is read
     if (this.file) {
-      (<HTMLLabelElement>document.getElementById("theFileLabel")).innerText = this.file.name;
+      (<HTMLLabelElement>document.getElementById('theFileLabel')).innerText = this.file.name;
     }
-    
+
     // File reader
-    let fileReader = new FileReader();
+    const fileReader = new FileReader();
     fileReader.onload = () => {
       this.parseFile(fileReader.result.toString());
-      this.data.changeGlobals({currentBrushId: 0})
-    }
-    
+      this.data.changeGlobals({currentBrushId: 0});
+    };
+
     // Prevents error in console when cancelling file upload
     try {
       fileReader.readAsText(this.file);
-    } catch(error) {
+    } catch (error) {
       return;
     }
-    
+
   }
 
   parseFile(text: string) {
     this.brushes = [];
-      
+
     // Split read file by newline
-    let list: string[] = text.split(/\r?\n/);
-    let counter: number = 1;
-    
+    const list: string[] = text.split(/\r?\n/);
+    let counter = 1;
+
     // Loop through brushes from file and push to brush-object
     list.forEach(element => {
-      let channels: string[] = element.split(",");
-      
+      const channels: string[] = element.split(',');
+
       // Handle potential comments in brush file
-      let lastCh = channels.length-1;
-      let description: string = channels[lastCh].split("#")[1];
-      channels[lastCh] = channels[lastCh].split("#")[0];
-      if (description === undefined) { description = "" };
+      const lastCh = channels.length - 1;
+      let description: string = channels[lastCh].split('#')[1];
+      channels[lastCh] = channels[lastCh].split('#')[0];
+      if (description === undefined) { description = ''; }
 
       // Add the correct amount of channels from file
       this.brushes.push({
@@ -78,28 +78,28 @@ export class NavComponent implements OnInit {
   }
 
   saveFileAs() {
-    var text:string = "";
-    for(let brush of this.brushes) {
-      text += (brush.ch1 + ","+ brush.ch2 + "," + brush.ch3 + "," + brush.ch4 + "," + brush.ch5);
-      if (brush.desc != "") {
-        text += "#" + brush.desc;
+    let text = '';
+    for (const brush of this.brushes) {
+      text += (brush.ch1 + ',' + brush.ch2 + ',' + brush.ch3 + ',' + brush.ch4 + ',' + brush.ch5);
+      if (brush.desc !== '') {
+        text += '#' + brush.desc;
       }
       if (!(brush.brushId >= this.brushes.length)) {
 
       }
-      text += " \r\n"
+      text += ' \r\n';
     }
-    var blob = new Blob([text], {type: "text/plain;charset=utf-8"});
-    if (this.file.name != "") {
+    const blob = new Blob([text], {type: 'text/plain;charset=utf-8'});
+    if (this.file.name !== '') {
       saveAs(blob, this.file.name);
     } else {
-      saveAs(blob, "default.bt");
+      saveAs(blob, 'default.bt');
     }
 
   }
 
   resetChannelNames() {
-    let defaultNames = {ch1: "Channel 1", ch2: "Channel 2", ch3: "Channel 3", ch4: "Channel 4", ch5: "Channel 5"};
-    this.data.changeChannelName(defaultNames); 
+    const defaultNames = {ch1: 'Channel 1', ch2: 'Channel 2', ch3: 'Channel 3', ch4: 'Channel 4', ch5: 'Channel 5'};
+    this.data.changeChannelName(defaultNames);
   }
 }

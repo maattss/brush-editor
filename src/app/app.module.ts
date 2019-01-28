@@ -25,9 +25,9 @@ import { PagerService } from './_services/index';
     AppRoutingModule,
     ChartsModule
   ],
-  providers: [ 
-    CookieService, 
-    PagerService 
+  providers: [
+    CookieService,
+    PagerService
   ],
   bootstrap: [ AppComponent ]
 })

@@ -5,7 +5,7 @@ export class Brush {
     ch3: number;
     ch4: number;
     ch5: number;
-    desc: string
+    desc: string;
 }
 export class ChannelNames {
     ch1: string;
