@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { Brush, ChannelNames } from '../brush';
+import { Brush, ChannelNames, GlobalVariables } from '../brush';
 import { BrushService } from '../brush.service';
 import { PagerService } from '../_services/index';
 
@@ -11,13 +11,14 @@ import { PagerService } from '../_services/index';
 })
 
 export class BrushTableComponent implements OnInit {
-  constructor(private cookieService: CookieService, private data: BrushService, 
+  constructor(private cookieService: CookieService, private data: BrushService,
               private pagerService: PagerService) { }
 
   // Local variables
   brushes: Brush[];
   channelNames: ChannelNames;
   initialized: boolean = false;
+  globals: GlobalVariables; 
 
   // Keep track ogf current page
   currentPage: number = 1;
@@ -29,16 +30,14 @@ export class BrushTableComponent implements OnInit {
   pagedItems: Brush[];
 
   ngOnInit() {
-    
-    // Subscribe 
+    // Subscribe
     this.data.currentBrush.subscribe(brushes => {
       this.brushes = brushes;
 
-      if(this.initialized == true) { // Page is fully initialized
+      if (this.initialized === true) { // Page is fully initialized
         // Initialize to page 1 
         this.setPage(1);
       }
-     
     });
     this.data.channelNames.subscribe(chNames => {
       this.channelNames = chNames;
@@ -47,7 +46,11 @@ export class BrushTableComponent implements OnInit {
       }
       this.initialized = true;
     });
-    
+
+    this.data.changeGlobals({currentBrushId: 1});
+    this.data.globals.subscribe(globalVars => {
+      this.globals = globalVars;
+    });
     // Check if a cookie named chNames exist
     if (this.cookieService.check('chNames')) {
       console.log("We have a cookie with the value: " + this.cookieService.get('chNames'));
@@ -62,12 +65,22 @@ export class BrushTableComponent implements OnInit {
 
     // get current page of items
     this.pagedItems = this.brushes.slice(this.pager.startIndex, this.pager.endIndex + 1);
-    console.log("Paged items: " + this.pagedItems);
+    
+    // Check if a row on this page needs to be marked
+    if(this.initialized = true) {
+      let index = 10*(this.currentPage - 1) + 1; // Current first row index
+      let indexEnd = index + this.pagedItems.length - 1; // Last index for current page
+
+      if(this.globals.currentBrushId >= index && this.globals.currentBrushId <= indexEnd )
+      console.log("SetPage currentID: " + this.globals.currentBrushId);
+      console.log("SetPage indexes: " + index + ", " + indexEnd);
+      this.markRow(this.globals.currentBrushId);
+    }
   }
 
   // Returns default channel names
   returnChannelDefaults() {
-    let defaultNames = {ch1: "Channel 1", ch2: "Channel 2", ch3: "Channel 3", ch4: "Channel 4", ch5: "Channel 5"};
+    const defaultNames = {ch1: 'Channel 1', ch2: "Channel 2", ch3: "Channel 3", ch4: "Channel 4", ch5: "Channel 5"};
     return defaultNames;
   }
 
@@ -99,12 +112,12 @@ export class BrushTableComponent implements OnInit {
     this.data.changeChannelName(this.channelNames); 
     var colorClass = "table-danger";
 
-    var index = 10*(this.currentPage - 1) + 1; // Current first row index
-    var indexEnd = index + this.pagedItems.length - 1; // Last index for current page
+    let index = 10*(this.currentPage - 1) + 1; // Current first row index
+    let indexEnd = index + this.pagedItems.length - 1; // Last index for current page
+    console.log("MarkRow: " + index + ", " + indexEnd);
 
     // Clear color of all inactive rows
     for (index; index<=indexEnd; index++) {
-      console.log (index.toString());
       document.getElementById(index.toString()).classList.remove(colorClass);
     }
 
