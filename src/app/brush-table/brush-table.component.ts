@@ -3,7 +3,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { Brush, ChannelNames } from '../brush';
 import { BrushService } from '../brush.service';
 import { PagerService } from '../_services/index';
-import { constants } from 'os';
 
 @Component({
   selector: 'app-brush-table',
