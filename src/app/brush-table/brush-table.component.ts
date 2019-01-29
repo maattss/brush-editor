@@ -85,26 +85,6 @@ export class BrushTableComponent implements OnInit {
     return defaultNames;
   }
 
-  // Checks the values of the input fields. Allows numbers and "."
-  numberOnly(event: any, brushId: Number, channel: String): boolean {
-    const inputValue = (<HTMLInputElement>document.getElementById(brushId.toString() + channel)).value;
-    const charCode = (event.which) ? event.which : event.keyCode;
-
-    if (inputValue.length <= 0) {
-      (<HTMLInputElement>document.getElementById(brushId.toString() + channel)).value = '0';
-    }
-
-    for (let x = 0; x < inputValue.length; x++) {
-      if (inputValue.charAt(x) === '.' && charCode === 46) {
-        return false;
-      }
-    }
-    if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode !== 46) {
-      return false;
-    }
-    return true;
-  }
-
   markRow(rowId: number) {
     console.log('Marking row');
 
