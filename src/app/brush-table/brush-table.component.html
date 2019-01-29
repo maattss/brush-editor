@@ -13,6 +13,7 @@
           <th *ngIf="brushes[0].ch4>=0"><input type="text" id="channelName4" value="{{channelNames.ch4}}" (keyup)="changeChannelValue(4)"></th>
           <th *ngIf="brushes[0].ch5>=0"><input type="text" id="channelName5" value="{{channelNames.ch5}}" (keyup)="changeChannelValue(5)"></th>
           <th>Info</th>
+          <th>Remove</th>
         </tr>
       </thead>
       
@@ -68,12 +69,19 @@
               (mousedown)="markRow(brush.brushId)">
             </td>
 
-            <td><input type="text" 
+            <td><input 
+              type="text" 
               id="{{brush.brushId}}desc" 
               class="desc" 
               value="{{brush.desc}}"
               (keyup)="updateBrushes(brush.brushId, 'desc')"
               (mousedown)="markRow(brush.brushId)">
+            </td>
+
+            <td>
+              <button type="button" id="btnDelete" class="btn btn-link" (mousedown)="deleteRow(brush.brushId)">
+                <i class="fas fa-trash-alt"></i>
+              </button>
             </td>
           </tr>
       </tbody>

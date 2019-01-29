@@ -151,4 +151,15 @@ export class BrushTableComponent implements OnInit {
     this.channelNames = defaultVals;
     this.data.changeChannelName(this.channelNames);
   }
+
+  deleteRow(brushId: number) {
+    const brush = this.brushes[brushId - 1];
+    brush.ch1 = 0;
+    brush.ch2 = 0;
+    brush.ch3 = 0;
+    brush.ch4 = 0;
+    brush.ch5 = 0;
+    brush.desc = '';
+    this.data.changeBrush(this.brushes);
+  }
 }
