@@ -13,21 +13,20 @@ export class BrushTableComponent implements OnInit {
   constructor(private cookieService: CookieService, private data: BrushService,
               private pagerService: PagerService) { }
 
-  // Local variables
-  brushes: Brush[];
-  channelNames: ChannelNames;
-  initialized = false;
-  globals: GlobalVariables;
-  colorClassTable = 'table-danger';
+  // Class variables
+  private brushes: Brush[];
+  private channelNames: ChannelNames;
+  private initialized = false;
+  private globals: GlobalVariables; // Maybe remove this if markrow fix is not possible
 
   // Keep track of current page
-  currentPage = 1;
+  private currentPage = 1;
 
   // pager object
-  pager: any = {};
+  private pager: any = {};
 
   // paged items
-  pagedItems: Brush[];
+  private pagedItems: Brush[];
 
   ngOnInit() {
     // Subscribe
