@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, Input } from '@angular/core';
-import { BrushService } from '../brush.service';
+import { BrushService } from '../_services/index';
 import { Brush, ChannelNames, GlobalVariables } from '../brush';
 
 @Component({
@@ -42,11 +42,11 @@ export class BrushGraphComponent implements OnInit {
   globals: GlobalVariables;
 
   ngOnInit() {
-    this.data.changeGlobals({currentBrushId: 1});
     this.data.globals.subscribe(globalVars => {
       this.globals = globalVars;
       if (this.initialized === true) {
         this.addData();
+        console.log('Current brush ID updated to: ' + globalVars.currentBrushId);
       }
     });
 
@@ -54,11 +54,13 @@ export class BrushGraphComponent implements OnInit {
       this.chNames = chNames;
       if (this.initialized === true) {
         this.addData();
+        console.log('Channel names updated');
       }
     });
     this.data.currentBrush.subscribe(brushes => {
       if (this.initialized === true) {
         this.addData();
+        console.log('brushes updated');
       }
       this.brushes = brushes;
       if (this.brushes.length > 0) {
@@ -66,9 +68,6 @@ export class BrushGraphComponent implements OnInit {
       }
     });
   }
-
-
-
 
   // Add/update labels to graph
   addLabels() {
@@ -91,7 +90,7 @@ export class BrushGraphComponent implements OnInit {
 
   // Add/update data the graph
   addData() {
-    if (this.globals.currentBrushId > 0) {  // Do not draw garph if no brush is selected
+    if (this.globals.currentBrushId > 0) {  // Do not draw graph if no brush is selected
       console.log('Adding data');
       this.addLabels();
       this.isDataAvailable = true;

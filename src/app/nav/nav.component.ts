@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Brush } from '../brush';
-import { BrushService } from '../brush.service';
+import { BrushService } from '../_services/index';
 import { saveAs } from 'file-saver';
 
 @Component({
