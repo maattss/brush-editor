@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Brush, ChannelNames, GlobalVariables } from '../brush';
-import { BrushService } from '../brush.service';
-import { PagerService } from '../_services/index';
+import { PagerService, BrushService } from '../_services/index';
 
 @Component({
   selector: 'app-brush-table',
@@ -14,20 +13,20 @@ export class BrushTableComponent implements OnInit {
   constructor(private cookieService: CookieService, private data: BrushService,
               private pagerService: PagerService) { }
 
-  // Local variables
-  brushes: Brush[];
-  channelNames: ChannelNames;
-  initialized = false;
-  globals: GlobalVariables;
+  // Class variables
+  private brushes: Brush[];
+  private channelNames: ChannelNames;
+  private initialized = false;
+  private globals: GlobalVariables; // Maybe remove this if markrow fix is not possible
 
-  // Keep track ogf current page
-  currentPage = 1;
+  // Keep track of current page
+  private currentPage = 1;
 
   // pager object
-  pager: any = {};
+  private pager: any = {};
 
   // paged items
-  pagedItems: Brush[];
+  private pagedItems: Brush[];
 
   ngOnInit() {
     // Subscribe
@@ -47,7 +46,6 @@ export class BrushTableComponent implements OnInit {
       }
       this.initialized = true;
     });
-    this.data.changeGlobals({currentBrushId: 1});
     this.data.globals.subscribe(globalVars => {
       this.globals = globalVars;
     });
@@ -66,17 +64,16 @@ export class BrushTableComponent implements OnInit {
     // get current page of items
     this.pagedItems = this.brushes.slice(this.pager.startIndex, this.pager.endIndex + 1);
 
-    // Check if a row on this page needs to be marked
-    if (this.initialized = true) {
-      const index = 10 * (this.currentPage - 1) + 1; // Current first row index
-      const indexEnd = index + this.pagedItems.length - 1; // Last index for current page
+    // Mark row when changing page. Does not work
+    // // Check if a row on this page needs to be marked
+    // if (this.globals.currentBrushId > 0) {
+    //   const index = 10 * (this.currentPage - 1) + 1; // Current first row index
+    //   const indexEnd = index + this.pagedItems.length - 1; // Last index for current page
 
-      if ( this.globals.currentBrushId >= index && this.globals.currentBrushId <= indexEnd ) {
-        console.log('SetPage currentID: ' + this.globals.currentBrushId);
-        console.log('SetPage indexes: ' + index + ', ' + indexEnd);
-        this.markRow(this.globals.currentBrushId);
-      }
-    }
+    //   if (this.globals.currentBrushId >= index && this.globals.currentBrushId <= indexEnd) {
+    //     // this.markRow(this.globals.currentBrushId); Problem: Fires before table is loaded
+    //   }
+    // }
   }
 
   // Returns default channel names
@@ -86,7 +83,7 @@ export class BrushTableComponent implements OnInit {
   }
 
   markRow(rowId: number) {
-    console.log('Marking row');
+    console.log('Marking row ' + rowId);
 
     this.data.changeGlobals({currentBrushId: rowId});
     this.data.changeChannelName(this.channelNames);
@@ -97,7 +94,6 @@ export class BrushTableComponent implements OnInit {
 
     // Clear color of all inactive rows
     for (index; index <= indexEnd; index++) {
-      console.log (index.toString());
       document.getElementById(index.toString()).classList.remove(colorClass);
     }
 
