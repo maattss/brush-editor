@@ -46,7 +46,6 @@ export class BrushGraphComponent implements OnInit {
       this.globals = globalVars;
       if (this.initialized === true) {
         this.addData();
-        console.log('Current brush ID updated to: ' + globalVars.currentBrushId);
       }
     });
 
@@ -54,13 +53,11 @@ export class BrushGraphComponent implements OnInit {
       this.chNames = chNames;
       if (this.initialized === true) {
         this.addData();
-        console.log('Channel names updated');
       }
     });
     this.data.currentBrush.subscribe(brushes => {
       if (this.initialized === true) {
         this.addData();
-        console.log('brushes updated');
       }
       this.brushes = brushes;
       if (this.brushes.length > 0) {
@@ -71,7 +68,6 @@ export class BrushGraphComponent implements OnInit {
 
   // Add/update labels to graph
   addLabels() {
-    console.log('Adding labels');
     const channelAmount = this.returnAmountOfChannels();
     this.barChartLabels.length = 0;
 
@@ -91,7 +87,6 @@ export class BrushGraphComponent implements OnInit {
   // Add/update data the graph
   addData() {
     if (this.globals.currentBrushId > 0) {  // Do not draw graph if no brush is selected
-      console.log('Adding data');
       this.addLabels();
       this.isDataAvailable = true;
       this.barChartData = [];

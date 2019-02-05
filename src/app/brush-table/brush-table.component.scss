@@ -1,25 +1,19 @@
-table {
+/*table {
     width: 100%;
-}
+}*/
 table input {
     border: none;
     background-color: transparent;
-    min-width: 4.5em;
     max-width: 6em;
 }
-
 th, td {
     padding: 0.3em;
-    min-width: 4.5em;
     max-width: 6em;
 }
 
 th input {
     font-weight: bold;
-}
-#resetBtn {
-    margin-left: 1em;
-    margin-bottom: 0.2em;
+    padding-right: 0.5em;
 }
 #pager {
     margin-top: 1em;
@@ -27,9 +21,9 @@ th input {
 }
 
 /* Prevents table header to wrap multiple lines */
-th {
+/*th {
     white-space: nowrap;
-}
+}*/
 /* Prevent outline of input when selected */
 input:focus{
     outline: none;

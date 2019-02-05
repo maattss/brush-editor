@@ -83,8 +83,6 @@ export class BrushTableComponent implements OnInit {
   }
 
   markRow(rowId: number) {
-    console.log('Marking row ' + rowId);
-
     this.data.changeGlobals({currentBrushId: rowId});
     this.data.changeChannelName(this.channelNames);
     const colorClass = 'table-danger';
@@ -126,21 +124,22 @@ export class BrushTableComponent implements OnInit {
 
   updateBrushes(brushId: number, channel: string) {
     const elementId = '' + brushId + channel;
-    const val = (<HTMLInputElement>document.getElementById(elementId)).value;
+    const inputValue = (<HTMLInputElement>document.getElementById(elementId)).value;
 
     const brush = this.brushes[brushId - 1];
     if (channel === 'ch1') {
-      brush.ch1 = +val; // + parses string to number
+      console.log(inputValue);
+      brush.ch1 = +inputValue; // + parses string to number
     } else if (channel === 'ch2') {
-      brush.ch2 = +val;
+      brush.ch2 = +inputValue;
     } else if (channel === 'ch3') {
-      brush.ch3 = +val;
+      brush.ch3 = +inputValue;
     } else if (channel === 'ch4') {
-      brush.ch4 = +val;
+      brush.ch4 = +inputValue;
     } else if (channel === 'ch5') {
-      brush.ch5 = +val;
+      brush.ch5 = +inputValue;
     } else {  // channel === "desc"
-      brush.desc = val;
+      brush.desc = inputValue;
     }
     this.data.changeBrush(this.brushes);
   }
