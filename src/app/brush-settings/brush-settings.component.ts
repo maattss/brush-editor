@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Brush } from '../brush';
+import { BrushService } from '../_services/index';
 
 @Component({
   selector: 'app-brush-settings',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BrushSettingsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private data: BrushService) { }
+
+   // Class variables
+   private brushes: Brush[];
 
   ngOnInit() {
+    // Subscribe
+    this.data.currentBrush.subscribe(brushes => {
+      this.brushes = brushes;
+    });
   }
 
 }
