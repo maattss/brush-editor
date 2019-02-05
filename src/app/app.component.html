@@ -1,22 +1,17 @@
-<div class="jumbotron jumbotron-fluid">
-  <h1 class="display-4 text-center">{{appTitle}}</h1>
-</div>
-
-<div class="container">
-  <div class="row">
-    <app-nav></app-nav>  
-  </div>
 
   <div class="row">
-    <div class="col-xs-12 col-xl-7 padding-0">
-      <app-brush-table></app-brush-table>
-    </div>
-    <div class="col-xs-12 col-xl-5 padding-0">
-      <app-brush-graph></app-brush-graph>
+    <app-nav id="app-nav" class="mb-3"></app-nav>  
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-lg-7">
+        <app-brush-table id="app-table"></app-brush-table>
+      </div>
+      <div class="col-xs-12 col-lg-5">
+        <app-brush-graph id="app-graph"></app-brush-graph>
+      </div>
     </div>
   </div>
-</div>
-
 <section>
   <router-outlet></router-outlet>
 </section>
