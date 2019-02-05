@@ -1,17 +1,21 @@
-
+<div class="container-fluid">
+<div class="row">
+  <app-nav id="app-nav"></app-nav>  
+</div>
+</div>
+<div class="container">
   <div class="row">
-    <app-nav id="app-nav" class="mb-3"></app-nav>  
+    <app-brush-settings id="app-settings"></app-brush-settings>
   </div>
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-12 col-lg-7">
-        <app-brush-table id="app-table"></app-brush-table>
-      </div>
-      <div class="col-xs-12 col-lg-5">
-        <app-brush-graph id="app-graph"></app-brush-graph>
-      </div>
+  <div class="row">
+    <div class="col-xs-12 col-lg-7">
+      <app-brush-table id="app-table"></app-brush-table>
+    </div>
+    <div class="col-xs-12 col-lg-5">
+      <app-brush-graph id="app-graph"></app-brush-graph>
     </div>
   </div>
+</div>
 <section>
   <router-outlet></router-outlet>
 </section>
