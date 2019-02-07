@@ -1,6 +1,3 @@
-/*table {
-    width: 100%;
-}*/
 table input {
     border: none;
     background-color: transparent;
@@ -20,10 +17,6 @@ th input {
     margin-bottom: 1em;
 }
 
-/* Prevents table header to wrap multiple lines */
-/*th {
-    white-space: nowrap;
-}*/
 /* Prevent outline of input when selected */
 input:focus{
     outline: none;
