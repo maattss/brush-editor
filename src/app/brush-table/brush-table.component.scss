@@ -27,6 +27,13 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none; 
   margin: 0; 
 }
+/* Keeps input background white when autofilling values */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    transition: background-color 5000s ease-in-out 0s;
+}
 button {
     font-size: 0.75em;
 }
