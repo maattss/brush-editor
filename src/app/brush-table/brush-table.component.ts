@@ -35,7 +35,7 @@ export class BrushTableComponent implements OnInit {
 
       if (this.initialized === true) { // Page is fully initialized
         // Initialize to page 1
-        this.setPage(1);
+        this.setPage(this.currentPage);
       }
     });
 
