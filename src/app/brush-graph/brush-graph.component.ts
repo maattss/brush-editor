@@ -13,7 +13,13 @@ export class BrushGraphComponent implements OnInit {
   public barChartOptions = {
     scaleShowVerticalLines: false,
     responsive: true,
+    maintainAspectRatio: false,
     scales: {
+      xAxes: [{
+        ticks: {
+          autoSkip: false // Stops labels from disappearing at certain resolutions
+        }
+      }],
       yAxes: [
         {
           ticks: {
@@ -40,12 +46,18 @@ export class BrushGraphComponent implements OnInit {
   chart: [];
   initialized = false;
   globals: GlobalVariables;
+  widePage = true; // If screen of user is wide (>=995px) = true
 
   ngOnInit() {
     this.data.globals.subscribe(globalVars => {
       this.globals = globalVars;
       if (this.initialized === true) {
         this.addData();
+        if (this.getWidthOfScreen() >= 995) { // If pixels of users screen >= 995px
+          this.widePage = true;
+        } else {
+          this.widePage = false;
+        }
       }
     });
 
@@ -64,6 +76,16 @@ export class BrushGraphComponent implements OnInit {
         this.initialized = true;
       }
     });
+  }
+
+  getWidthOfScreen() {
+    return Math.max(
+      document.body.scrollWidth,
+      document.documentElement.scrollWidth,
+      document.body.offsetWidth,
+      document.documentElement.offsetWidth,
+      document.documentElement.clientWidth
+    );
   }
 
   // Add/update labels to graph
