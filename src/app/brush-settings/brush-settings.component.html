@@ -1,10 +1,8 @@
-
-<div *ngIf="brushes.length>0"> <!-- May neew class row to align buttons -->
-    <div class="mr-2 d-inline-block">
+<div class="row ml-0" *ngIf="brushes.length>0"> <!-- May neew class row to align buttons -->
+    <div class="mr-2 mt-2 d-inline-block">
         <button type="button" class="nav-link btn btn-primary" id="resetBtn" (click)="resetChannelNames()" style="padding: 6px 12px 6px 12px">Reset channel names</button>
     </div>
 
-    <!-- Settings
     <div class="dropdown mr-2 mt-2 d-inline-block">
         <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Brush Device
@@ -41,7 +39,6 @@
             <input class="form-control" type="search" value="Go to table number" id="example-search-input">
         </div>
     </div>
-  -->
 </div>
 
 <div *ngIf="fileComment">

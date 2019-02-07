@@ -1,4 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3 py-4"> <!-- navbar-dark bg-dark ?? -->
+  
   <span class="navbar-brand mb-0 h1 text-muted">Brush Editor</span>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -6,11 +7,38 @@
   <div class="collapse show navbar-collapse" id="navbarNav">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item" *ngIf="brushes.length>0">
-        <a class="nav-link" href="#" data-toggle="collapse" data-target=".navbar-collapse.show" (click)="saveFileAs()">
-          <span class="d-lg-none">Export file</span> <!-- Text only when navbar is collapsed -->
+          <span class="h6 text-muted d-none d-lg-block mt-3">Robot</span>
+      </li>
+      <li class="nav-item" *ngIf="brushes.length>0">
+        <a class="nav-link" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">
+          <span class="d-lg-none">Robot: Export file</span> <!-- Text only when navbar is collapsed -->
           <i class="fas fa-file-download fa-2x d-none d-lg-block navbar-icons"></i> <!-- Icon only on larger screens -->
         </a>
       </li>
+      <li class="nav-item" *ngIf="brushes.length>0">
+          <a class="nav-link" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">
+            <span class="d-lg-none">Robot: Choose brushfile</span>
+            <i class="fas fa-file-upload fa-2x d-none d-lg-block navbar-icons"></i>
+          </a>
+      </li>
+      <li class="nav-item" *ngIf="brushes.length>0">
+          <span class="h6 text-muted d-none d-lg-block ml-5 mt-3">Local</span>
+      </li>
+      <li class="nav-item" *ngIf="brushes.length>0">
+        <a class="nav-link" href="#" data-toggle="collapse" data-target=".navbar-collapse.show" (click)="saveFileAs()">
+          <span class="d-lg-none">Local: Export brushfile</span>
+         <i class="fas fa-file-download fa-2x d-none d-lg-block navbar-icons"></i>
+        </a>
+      </li>
+      <!-- Removing file uploader
+        https://stackoverflow.com/questions/8350927/file-upload-button-without-input-field
+      <li class="nav-item" *ngIf="brushes.length>0">
+          <a class="nav-link" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">
+            <span class="d-lg-none">Robot: Choose brushfile</span>
+            <i class="fas fa-file-upload fa-2x d-none d-lg-block navbar-icons"></i>
+          </a>
+      </li>
+      -->
       <li class="nav-item">
         <a class="nav-link" href="#">
           <div class="custom-file" id="custom-input" data-toggle="collapse" data-target=".navbar-collapse.show">
@@ -23,24 +51,7 @@
   </div>
 
   <!-- Robot API -->
-  <!--
-  <div class="collapse navbar-collapse" id="navbarNav"> 
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item" *ngIf="brushes.length>0">
-        <a class="nav-link" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">
-          <span class="d-lg-none">Export file <i class="fas fa-file-download"></i></span>
-          <i class="fas fa-file-download fa-2x d-none d-lg-block navbar-icons"></i>
-        </a>
-      </li>
-      <li class="nav-item" *ngIf="brushes.length>0">
-          <a class="nav-link" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">
-            <span class="d-lg-none">File upload <i class="fas fa-file-upload"></i></span>
-            <i class="fas fa-file-upload fa-2x d-none d-lg-block navbar-icons"></i>
-          </a>
-      </li>
-    </ul>
-  </div>
-  -->
+  
 
 </nav>
 <div class="container mt-5 text-center" *ngIf="brushes.length<=0">
