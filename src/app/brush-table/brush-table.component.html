@@ -118,6 +118,10 @@
             <a (click)="setPage(pager.totalPages)" class="page-link">Last</a>
         </li> -->
     </ul>
+    <!-- Marks the row displayed in graph -->
+    <div *ngIf="currentBrushId >= currentPage*10-9 && currentBrushId < currentPage*10+1">
+      {{ markRow(currentBrushId) }}
+    </div>
   </nav>
 
 </div>

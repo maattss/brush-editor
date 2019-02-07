@@ -63,17 +63,6 @@ export class BrushTableComponent implements OnInit {
 
     // get current page of items
     this.pagedItems = this.brushes.slice(this.pager.startIndex, this.pager.endIndex + 1);
-
-    // Mark row when changing page. Does not work
-    // // Check if a row on this page needs to be marked
-    // if (this.globals.currentBrushId > 0) {
-    //   const index = 10 * (this.currentPage - 1) + 1; // Current first row index
-    //   const indexEnd = index + this.pagedItems.length - 1; // Last index for current page
-
-    //   if (this.globals.currentBrushId >= index && this.globals.currentBrushId <= indexEnd) {
-    //     // this.markRow(this.globals.currentBrushId); Problem: Fires before table is loaded
-    //   }
-    // }
   }
 
   markRow(rowId: number) {
