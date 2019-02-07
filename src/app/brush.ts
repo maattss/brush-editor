@@ -16,5 +16,4 @@ export class ChannelNames {
 }
 export class GlobalVariables {
     currentBrushId: number;
-    // fileComment: string;
 }

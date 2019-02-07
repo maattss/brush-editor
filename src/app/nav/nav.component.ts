@@ -15,7 +15,7 @@ export class NavComponent implements OnInit {
   // Class variables
   private brushes: Brush[];
   private file: any;
-  private fileComment = '';
+  private fileComment: string;
 
   ngOnInit() {
     // Subscribe
@@ -34,7 +34,7 @@ export class NavComponent implements OnInit {
     const fileReader = new FileReader();
     fileReader.onload = () => {
       this.parseFile(fileReader.result.toString());
-      this.data.changeGlobals({currentBrushId: 0});
+      this.data.changeCurrentBrushID(0);
     };
 
     // Prevents error in console when cancelling file upload
@@ -57,7 +57,8 @@ export class NavComponent implements OnInit {
     list.forEach(element => {
       // Handle file comment
       if (element.substring(0, 1) === '#') {
-        this.fileComment = element.substring(1);
+        const comment = element.substring(1).trim();
+        this.data.changeFileComment(comment);
       } else {
         const channels: string[] = element.split(',');
 

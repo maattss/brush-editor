@@ -34,21 +34,15 @@ export class BrushGraphComponent implements OnInit {
 
   constructor(private data: BrushService) { }
 
-  // Local variables
-  chNames: ChannelNames;
-  brushes: Brush[];
-  chart: [];
-  initialized = false;
-  globals: GlobalVariables;
+  // Class variables
+  private chNames: ChannelNames;
+  private brushes: Brush[];
+  private chart: [];
+  private initialized = false;
+  private currentBrushId: number;
 
   ngOnInit() {
-    this.data.globals.subscribe(globalVars => {
-      this.globals = globalVars;
-      if (this.initialized === true) {
-        this.addData();
-      }
-    });
-
+    // Subscriptions
     this.data.channelNames.subscribe(chNames => {
       this.chNames = chNames;
       if (this.initialized === true) {
@@ -62,6 +56,12 @@ export class BrushGraphComponent implements OnInit {
       this.brushes = brushes;
       if (this.brushes.length > 0) {
         this.initialized = true;
+      }
+    });
+    this.data.currentBrushId.subscribe(brushId => {
+      this.currentBrushId = brushId;
+      if (this.initialized === true) {
+        this.addData();
       }
     });
   }
@@ -86,24 +86,24 @@ export class BrushGraphComponent implements OnInit {
 
   // Add/update data the graph
   addData() {
-    if (this.globals.currentBrushId > 0) {  // Do not draw graph if no brush is selected
+    if (this.currentBrushId > 0) {  // Do not draw graph if no brush is selected
       this.addLabels();
       this.isDataAvailable = true;
       this.barChartData = [];
-      const br: Brush = this.brushes[this.globals.currentBrushId - 1];
+      const br: Brush = this.brushes[this.currentBrushId - 1];
       const values: number[] = [br.ch1, br.ch2, br.ch3];
       if (br.ch4 >= 0) { values.push(br.ch4); }
       if (br.ch5 >= 0) { values.push(br.ch5); }
 
       this.barChartData.push({
         data: values,
-        label: 'BrushID: ' + this.globals.currentBrushId
+        label: 'BrushID: ' + this.currentBrushId
       });
 
       // For Angular to recognize the change in the dataset!
       const clone = JSON.parse(JSON.stringify(this.barChartData));
       clone[0].data = values;
-      clone[0].label = 'BrushID ' + this.globals.currentBrushId;
+      clone[0].label = 'BrushID ' + this.currentBrushId;
       this.barChartData = clone;
     } else {
       this.isDataAvailable = false;

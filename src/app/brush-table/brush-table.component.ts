@@ -17,7 +17,7 @@ export class BrushTableComponent implements OnInit {
   private brushes: Brush[];
   private channelNames: ChannelNames;
   private initialized = false;
-  private globals: GlobalVariables; // Maybe remove this if markrow fix is not possible
+  private currentBrushId: number;
 
   // Keep track of current page
   private currentPage = 1;
@@ -37,8 +37,8 @@ export class BrushTableComponent implements OnInit {
         // Initialize to page 1
         this.setPage(1);
       }
-
     });
+
     this.data.channelNames.subscribe(chNames => {
       this.channelNames = chNames;
       if (this.initialized === true) { // Page is fully initialized
@@ -46,9 +46,9 @@ export class BrushTableComponent implements OnInit {
       }
       this.initialized = true;
     });
-    this.data.globals.subscribe(globalVars => {
-      this.globals = globalVars;
-    });
+
+    this.data.currentBrushId.subscribe(brushId => this.currentBrushId = brushId);
+
     // Check if a cookie named chNames exist
     if (this.cookieService.check('chNames')) {
       console.log('We have a cookie with the value: ' + this.cookieService.get('chNames'));
@@ -76,14 +76,8 @@ export class BrushTableComponent implements OnInit {
     // }
   }
 
-  // Returns default channel names
-  returnChannelDefaults() {
-    const defaultNames = {ch1: 'Channel 1', ch2: 'Channel 2', ch3: 'Channel 3', ch4: 'Channel 4', ch5: 'Channel 5'};
-    return defaultNames;
-  }
-
   markRow(rowId: number) {
-    this.data.changeGlobals({currentBrushId: rowId});
+    this.data.changeCurrentBrushID(rowId);
     this.data.changeChannelName(this.channelNames);
     const colorClass = 'table-danger';
 
@@ -142,13 +136,6 @@ export class BrushTableComponent implements OnInit {
       brush.desc = inputValue;
     }
     this.data.changeBrush(this.brushes);
-  }
-
-  // If the user wants to reset his channel-name changes
-  resetChannelValues() {
-    const defaultVals = this.returnChannelDefaults();
-    this.channelNames = defaultVals;
-    this.data.changeChannelName(this.channelNames);
   }
 
   deleteRow(brushId: number) {

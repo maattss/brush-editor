@@ -13,12 +13,23 @@ export class BrushSettingsComponent implements OnInit {
 
    // Class variables
    private brushes: Brush[];
+   fileComment =  'tests';
 
   ngOnInit() {
     // Subscribe
-    this.data.currentBrush.subscribe(brushes => {
-      this.brushes = brushes;
+    this.data.currentBrush.subscribe(brushes => this.brushes = brushes);
+    this.data.fileComment.subscribe(fileComment => {
+      this.fileComment = fileComment;
+      if (fileComment !== '' || null) {
+        console.log(fileComment);
+      }
     });
+  }
+
+  resetChannelNames() {
+    console.log('Channel names reset');
+    const defaultNames = {ch1: 'Channel 1', ch2: 'Channel 2', ch3: 'Channel 3', ch4: 'Channel 4', ch5: 'Channel 5'};
+    this.data.changeChannelName(defaultNames);
   }
 
 }

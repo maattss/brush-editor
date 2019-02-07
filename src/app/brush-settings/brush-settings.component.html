@@ -1,4 +1,42 @@
 <div *ngIf="brushes.length>0">
-    <button type="button" class="nav-link btn btn-outline-secondary" id="resetBtn" (click)="resetChannelNames()">Reset channel names</button>
-    <p>File comment</p>
+    <div class="row">
+        <div class="m-2 d-inline-block">
+            <button type="button" class="nav-link btn btn-primary" id="resetBtn" (click)="resetChannelNames()" style="padding: 6px 12px 6px 12px">Reset channel names</button>
+        </div>
+        <div class="dropdown m-2 d-inline-block">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Brush Device
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+        </div>
+        <div class="dropdown m-2 d-inline-block">
+            <button class="btn btn-primary dropdown-toggle btn-md" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Brush Table
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+        </div>
+        <div class="dropdown m-2 d-inline-block">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Material
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <blockquote class="blockquote py-2">
+            <p class="mb-0">File comment: "{{fileComment}}"</p>
+        </blockquote>
+    </div>
 </div>

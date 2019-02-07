@@ -6,24 +6,29 @@ import { Brush, ChannelNames, GlobalVariables } from '../brush';
   providedIn: 'root'
 })
 export class BrushService {
-  private brushSource        = new BehaviorSubject<Array<Brush>>([]);
+  private brushSrc           = new BehaviorSubject<Array<Brush>>([]);
   private channelNamesSrc    = new BehaviorSubject<ChannelNames>
   ({ch1: 'Channel 1', ch2: 'Channel 2', ch3: 'Channel 3', ch4: 'Channel 4', ch5: 'Channel 5'});
-  private globalsSrc         = new BehaviorSubject<GlobalVariables>({currentBrushId: 0});
+  private currentBrushIdSrc  = new BehaviorSubject<number>(0);
+  private fileCommentSrc     = new BehaviorSubject<string>('');
 
-  currentBrush   = this.brushSource.asObservable();
+  currentBrush   = this.brushSrc.asObservable();
   channelNames   = this.channelNamesSrc.asObservable();
-  globals        = this.globalsSrc.asObservable();
+  fileComment    = this.fileCommentSrc.asObservable();
+  currentBrushId = this.currentBrushIdSrc.asObservable();
 
   constructor() { }
 
   changeBrush(brushes: Brush[]) {
-    this.brushSource.next(brushes);
+    this.brushSrc.next(brushes);
   }
   changeChannelName(chNames: ChannelNames) {
     this.channelNamesSrc.next(chNames);
   }
-  changeGlobals(globalVars: GlobalVariables) {
-    this.globalsSrc.next(globalVars);
+  changeCurrentBrushID(id: number) {
+    this.currentBrushIdSrc.next(id);
+  }
+  changeFileComment(comment: string) {
+    this.fileCommentSrc.next(comment);
   }
 }
