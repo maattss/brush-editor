@@ -1,34 +1,39 @@
 table input {
     border: none;
     background-color: transparent;
-    min-width: 4.5em;
     max-width: 6em;
 }
-
 th, td {
     padding: 0.3em;
-    min-width: 4.5em;
     max-width: 6em;
 }
 
 th input {
     font-weight: bold;
+    padding-right: 0.5em;
 }
-#resetBtn {
-    margin-left: 1em;
-    margin-bottom: 0.2em;
+#pager {
+    margin-top: 1em;
+    margin-bottom: 1em;
 }
 
-/* Prevents table header to wrap multiple lines */
-th {
-    white-space: nowrap;
-}
 /* Prevent outline of input when selected */
 input:focus{
     outline: none;
 }
-
-/* Add scroll bar to table when screen is to small */
-#table-container {
-    overflow-x: auto;
+/* Remove number input spinners */
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+/* Keeps input background white when autofilling values */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    transition: background-color 5000s ease-in-out 0s;
+}
+button {
+    font-size: 0.75em;
 }

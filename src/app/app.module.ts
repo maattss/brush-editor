@@ -10,6 +10,8 @@ import { BrushGraphComponent } from './brush-graph/brush-graph.component';
 import { ChartsModule } from 'ng2-charts';
 import { CookieService } from 'ngx-cookie-service';
 
+import { PagerService } from './_services/index';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +25,10 @@ import { CookieService } from 'ngx-cookie-service';
     AppRoutingModule,
     ChartsModule
   ],
-  providers: [ CookieService ],
+  providers: [
+    CookieService,
+    PagerService
+  ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }
