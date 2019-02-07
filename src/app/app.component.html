@@ -1,12 +1,18 @@
 <div class="container-fluid">
-<div class="row">
-  <app-nav id="app-nav"></app-nav>  
-</div>
-</div>
-<div class="container-fluid">
   <div class="row">
-    <app-brush-settings id="app-settings"></app-brush-settings>
+    <app-nav id="app-nav"></app-nav>  
   </div>
+</div>
+
+<div class="container">
+    <div class="row">
+      <div class="col-12">
+        <app-brush-settings id="app-settings"></app-brush-settings>
+      </div>
+    </div>
+  </div>
+
+<div class="container-fluid">
   <div class="row">
     <div class="col-12 col-sm-12 col-lg-8">
       <app-brush-table id="app-table"></app-brush-table>
@@ -16,6 +22,7 @@
     </div>
   </div>
 </div>
+
 <section>
   <router-outlet></router-outlet>
 </section>
