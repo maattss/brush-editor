@@ -1,7 +1,6 @@
 <!-- Chart.js init script -->
 <!--<script type="text/javascript" src="../../../node_modules/chart.js/src/chart.js"></script>-->
-
-<div *ngIf="brushes.length>0" id="charts">
+<div *ngIf="brushes.length>0" class="chart-container mb-5 ml-2 position-relative" id="chart{{widePage}}">
   <h3>Graph</h3>
    <!-- Display block if data is available, display none if not -->
   <canvas baseChart [ngClass]="isDataAvailable ? 'd-block' : 'd-none'" 
