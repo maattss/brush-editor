@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Brush } from '../brush';
-import { BrushService } from '../_services/index';
+import { BrushService, ViewService } from '../_services/index';
 import { saveAs } from 'file-saver';
 
 @Component({
@@ -10,7 +10,7 @@ import { saveAs } from 'file-saver';
 })
 export class NavComponent implements OnInit {
 
-  constructor(private data: BrushService) { }
+  constructor(private data: BrushService, private view: ViewService) { }
 
   // Class variables
   private brushes: Brush[];
@@ -21,6 +21,14 @@ export class NavComponent implements OnInit {
     // Subscribe
     this.data.currentBrush.subscribe(brushes => this.brushes = brushes);
     this.data.fileComment.subscribe(fileComment => this.fileComment = fileComment);
+  }
+
+  showFileInfo() {
+    this.view.toggleFileInfoView();
+  }
+
+  showSettings() {
+    this.view.toggleSettingsView();
   }
 
   fileChanged(event: any) { // Triggers when file input changes
@@ -103,10 +111,5 @@ export class NavComponent implements OnInit {
       saveAs(blob, 'default.bt');
     }
 
-  }
-
-  resetChannelNames() {
-    const defaultNames = {ch1: 'Channel 1', ch2: 'Channel 2', ch3: 'Channel 3', ch4: 'Channel 4', ch5: 'Channel 5'};
-    this.data.changeChannelName(defaultNames);
   }
 }

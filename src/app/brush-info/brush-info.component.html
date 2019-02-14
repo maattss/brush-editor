@@ -1,19 +1,21 @@
-<!-- File name         
-    <li class="nav-item">
-      <a class="nav-link" href="#">
-        <span id="theFileLabel" class="text-muted mt-3"></span>
-      </a>
-    </li>
-    -->
-    <blockquote class="blockquote">
-      <p class="mb-0 text-muted">File comment: "{{fileComment}}"</p>
-    </blockquote>
-    <blockquote class="blockquote">
-        <p class="mb-0 text-muted">File name: "{{fileName}}"</p>
-    </blockquote>
-   
-    <!-- File comment
-    <li class="nav-item d-lg-none" *ngIf="fileComment">
-        <p class="mb-0 text-muted">File comment: "{{fileComment}}"</p>
-    </li>
-  -->
+<div class="alert alert-secondary fade show" role="alert" *ngIf="showFileInfo"> <!-- alert-dismissible class may be needed -->
+  <button type="button" class="close mb-3" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  
+  <div class="input-group mb-2">
+      <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">Filename</span>
+      </div>
+      <input type="text" class="form-control"  value="{{fileName}}">
+  </div>
+  <div class="input-group mb-2">
+      <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">Filecomment</span>
+      </div>
+      <textarea class="form-control">{{fileComment}}</textarea>
+  </div>
+  <button type="button" class="btn btn-primary" (click)="saveFileInfo()">
+      Save file info
+  </button>
+</div>

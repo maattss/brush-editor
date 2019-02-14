@@ -1,36 +1,42 @@
 <div class="container-fluid">
+  <!-- Nav -->
   <div class="row">
     <app-nav id="app-nav"></app-nav>  
   </div>
 </div>
 
 <div class="container-fluid"> 
-  <!--
-  <div class="row">
+  <!-- Settings -->
+  <div class="row mt-3">
     <div class="col-12">
       <app-brush-settings id="app-settings"></app-brush-settings>
     </div>
   </div>
-  -->
-  <div class="row">
+
+  <!-- File info -->
+  <div class="row mt-3">
     <div class="col-12">
       <app-brush-info id="app-info"></app-brush-info>
     </div>
   </div>
-  <div class="row">
+
+  <div class="row mt-3">
+    <!-- Table -->
     <div class="col-12 col-sm-12 col-lg-8">
       <app-brush-table id="app-table"></app-brush-table>
     </div>
+
+    <!-- Graph -->
     <div class="col-12 col-sm-12 col-lg-4">
       <app-brush-graph id="app-graph"></app-brush-graph>
     </div>
   </div>
 </div>
 
- <!-- If no brushfile is chosen -->
- <div class="container mt-5 text-center" *ngIf="brushes.length<=0">
-    <h3>Please choose a file in the menu</h3>
-  </div>
+<!-- If no brushfile is choosed -->
+<div class="container mt-5 text-center" *ngIf="brushes.length<=0">
+  <h3>Please choose a file in the menu</h3>
+</div>
 
 <section>
   <router-outlet></router-outlet>

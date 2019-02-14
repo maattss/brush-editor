@@ -58,7 +58,6 @@ export class BrushTableComponent implements OnInit {
 
   setPage(page: number) {
     this.currentPage = page;
-    console.log(this.currentPage);
     // get pager object from service
     this.pager = this.pagerService.getPager(this.brushes.length, page);
 
