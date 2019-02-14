@@ -11,6 +11,7 @@ import { ChartsModule } from 'ng2-charts';
 import { CookieService } from 'ngx-cookie-service';
 
 import { PagerService } from './_services/index';
+import { BrushInfoComponent } from './brush-info/brush-info.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { PagerService } from './_services/index';
     BrushTableComponent,
     NavComponent,
     BrushSettingsComponent,
-    BrushGraphComponent
+    BrushGraphComponent,
+    BrushInfoComponent
   ],
   imports: [
     BrowserModule,

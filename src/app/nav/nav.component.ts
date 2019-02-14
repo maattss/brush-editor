@@ -26,9 +26,9 @@ export class NavComponent implements OnInit {
   fileChanged(event: any) { // Triggers when file input changes
     this.file = event.target.files[0];
 
-    // Updates file name in file input label if neew file is read
+    // Updates file name if new file is read
     if (this.file) {
-      (<HTMLLabelElement>document.getElementById('theFileLabel')).innerText = 'Filename: ' + this.file.name;
+      this.data.changeFileName(this.file.name);
     }
 
     // File reader
@@ -44,7 +44,6 @@ export class NavComponent implements OnInit {
     } catch (error) {
       return;
     }
-
   }
 
   parseFile(text: string) {
