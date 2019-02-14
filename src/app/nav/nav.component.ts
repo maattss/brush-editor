@@ -20,6 +20,7 @@ export class NavComponent implements OnInit {
   ngOnInit() {
     // Subscribe
     this.data.currentBrush.subscribe(brushes => this.brushes = brushes);
+    this.data.fileComment.subscribe(fileComment => this.fileComment = fileComment);
   }
 
   fileChanged(event: any) { // Triggers when file input changes
@@ -27,7 +28,7 @@ export class NavComponent implements OnInit {
 
     // Updates file name in file input label if neew file is read
     if (this.file) {
-      (<HTMLLabelElement>document.getElementById('theFileLabel')).innerText = this.file.name;
+      (<HTMLLabelElement>document.getElementById('theFileLabel')).innerText = 'Filename: ' + this.file.name;
     }
 
     // File reader
