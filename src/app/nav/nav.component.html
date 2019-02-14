@@ -55,8 +55,8 @@
        </li>
        <li class="nav-item text-muted" *ngIf="brushes.length>0">
          <a class="nav-link" href="#">
-           <span class="d-lg-none">File info</span> <!-- Text only when navbar is collapsed -->
-           <i class="fas fa-info-circle fa-2x d-none d-lg-block navbar-icons"></i> <!-- Icon only on larger screens -->
+           <span class="d-lg-none" (click)="showFileInfo()">File info</span> <!-- Text only when navbar is collapsed -->
+           <i class="fas fa-info-circle fa-2x d-none d-lg-block navbar-icons" (click)="showFileInfo()"></i> <!-- Icon only on larger screens -->
          </a>
        </li>
 
@@ -69,8 +69,8 @@
       </li>
       <li class="nav-item text-muted">
         <a class="nav-link" href="#">
-          <span class="d-lg-none">Settings</span> <!-- Text only when navbar is collapsed -->
-          <i class="fas fa-cog fa-2x d-none d-lg-block navbar-icons"></i> <!-- Icon only on larger screens -->
+          <span class="d-lg-none" (click)="showSettings()">Settings</span> <!-- Text only when navbar is collapsed -->
+          <i class="fas fa-cog fa-2x d-none d-lg-block navbar-icons" (click)="showSettings()"></i> <!-- Icon only on larger screens -->
         </a>
       </li>
     </ul>

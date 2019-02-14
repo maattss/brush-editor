@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject} from 'rxjs';
-import { Brush, ChannelNames, GlobalVariables } from '../brush';
+import { Brush, ChannelNames } from '../brush';
 
 @Injectable({
   providedIn: 'root'
