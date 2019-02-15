@@ -5,7 +5,7 @@ import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-nav',
-  templateUrl: './nav.component.html',
+  templateUrl: './nav.component2.html',
   styleUrls: ['./nav.component.scss']
 })
 export class NavComponent implements OnInit {

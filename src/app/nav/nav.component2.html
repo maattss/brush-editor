@@ -1,0 +1,96 @@
+<!-- Alternative version of navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light py-4">
+        <span class="navbar-brand mb-0 h1 text-muted"><img src="..\..\assets\img\paint-brush.svg" height="45px" class="mr-3">Brush Editor</span>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse show navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+      
+            <!-- File upload/download setting large screen-->
+            <li class="nav-item d-none d-lg-block">
+                <div>
+                    <span class="h6 text-muted ml-3 mt-3">Robot</span>
+                </div>
+            </li>
+            <li class="nav-item d-none d-lg-block" *ngIf="brushes.length>0"> <!--  Hidden when no brushfile is choosed -->
+              <a class="nav-link" href="#">
+                <i class="fas fa-file-download fa-2x navbar-icons"></i>
+              </a>
+            </li>
+            <li class="nav-item d-none d-lg-block">
+                <a class="nav-link" href="#">
+                  <i class="fas fa-file-upload fa-2x navbar-icons"></i>
+                </a>
+            </li>
+
+            <li class="nav-item d-none d-lg-block" > <!--  Hidden when no brushfile is choosed -->
+                <a *ngIf="brushes.length>0" class="nav-link d-inline-block" href="#" (click)="saveFileAs()">
+                    <i class="fas fa-file-download fa-2x navbar-icons"></i>
+                </a>
+                <a class="nav-link pointer d-inline-block" href="#">
+                    <label for="theFile" class="chooseFile">
+                        <i class="fas fa-file-upload fa-2x navbar-icons"></i>
+                    </label>
+                    <div class="fileupload">
+                        <input type="file" id="theFile" aria-describedby="fileUpload" (change)="fileChanged($event)">
+                    </div>
+                    </a>
+                <span class="h6 text-muted ml-3 mt-3">Local</span>
+            </li>
+
+            <!-- File upload/download setting small screen-->
+            <li class="nav-item d-lg-none" *ngIf="brushes.length>0"> <!--  Hidden when no brushfile is choosed -->
+                <a class="nav-link" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">
+                    <span >Robot: Export file</span> <!-- Text only when navbar is collapsed -->
+                </a>
+            </li>
+            <li class="nav-item d-lg-none">
+                <a class="nav-link" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">
+                    <span *ngIf="brushes.length<=0">Robot: Choose file</span> <!-- Text only when navbar is collapsed -->
+                    <span *ngIf="brushes.length>0">Robot: Choose new file</span>
+                </a>
+            </li>
+            <li class="nav-item d-lg-none" *ngIf="brushes.length>0"> <!--  Hidden when no brushfile is choosed -->
+                <a class="nav-link" href="#" data-toggle="collapse" data-target=".navbar-collapse.show" (click)="saveFileAs()">
+                <span class="d-lg-none">Local: Export file</span> <!-- Text only when navbar is collapsed -->
+                </a>
+            </li>
+            <li class="nav-item d-lg-none">
+                <a class="nav-link pointer" href="#">
+                <label for="theFile" class="chooseFile">
+                    <span *ngIf="brushes.length<=0">Local: Choose file</span> <!-- Text only when navbar is collapsed -->
+                    <span *ngIf="brushes.length>0">Local: Choose new file</span>
+                </label>
+                    <div class="fileupload">
+                    <input type="file" id="theFile" aria-describedby="fileUpload" (change)="fileChanged($event)" data-toggle="collapse" data-target=".navbar-collapse.show">
+                    </div>
+                </a>
+            </li>
+      
+            <!-- Divider -->
+            <li class="dropdown-divider d-lg-none" *ngIf="brushes.length>0"></li>
+    
+            <!-- File info -->
+            <li class="nav-item text-muted" *ngIf="brushes.length>0">
+            <a class="nav-link pt-0 pb-0" href="#">
+            <span class="d-lg-none" (click)="toggleFileInfo()" data-toggle="collapse" data-target=".navbar-collapse.show">File info</span> <!-- Text only when navbar is collapsed -->
+            <i class="fas fa-info-circle fa-2x d-none d-lg-block navbar-icons text-center" (click)="toggleFileInfo()"></i> <!-- Icon only on larger screens -->
+            <span class="h6 text-muted d-none d-lg-block mt-1 mb-0">File info</span> <!-- This text only on larger screens -->
+            </a>
+            </li>
+      
+            <!-- Divider -->
+            <li class="dropdown-divider d-lg-none" *ngIf="brushes.length>0"></li>
+      
+            <!-- Settings -->
+            <li class="nav-item text-muted" *ngIf="brushes.length>0">
+              <a class="nav-link pt-0 pb-0" href="#">
+                <span class="d-lg-none" (click)="toggleSettings()" data-toggle="collapse" data-target=".navbar-collapse.show">Settings</span> <!-- Text only when navbar is collapsed -->
+                <i class="fas fa-cog fa-2x d-none d-lg-block navbar-icons text-center" (click)="toggleSettings()"></i> <!-- Icon only on larger screens -->
+                <span class="h6 text-muted d-none d-lg-block mt-1 mb-0">Settings</span> <!-- This text only on larger screens -->
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
