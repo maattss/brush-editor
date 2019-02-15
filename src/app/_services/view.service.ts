@@ -5,8 +5,8 @@ import { BehaviorSubject} from 'rxjs';
   providedIn: 'root'
 })
 export class ViewService {
-  private showSettingsSrc = new BehaviorSubject<boolean>(true);
-  private showFileInfoSrc = new BehaviorSubject<boolean>(true);
+  private showSettingsSrc = new BehaviorSubject<boolean>(false);
+  private showFileInfoSrc = new BehaviorSubject<boolean>(false);
 
   showSettings = this.showSettingsSrc.asObservable();
   showFileInfo = this.showFileInfoSrc.asObservable();
@@ -14,9 +14,9 @@ export class ViewService {
   constructor() { }
 
   toggleSettingsView() {
-    console.log('How/hide settings. Does not work yet:(');
+    this.showSettingsSrc.next(!this.showSettingsSrc.value);
   }
   toggleFileInfoView() {
-    console.log('Show/hide file info. Does not work yet:(');
+    this.showFileInfoSrc.next(!this.showFileInfoSrc.value);
   }
 }

@@ -16,18 +16,20 @@ export class NavComponent implements OnInit {
   private brushes: Brush[];
   private file: any;
   private fileComment: string;
+  private fileName: string;
 
   ngOnInit() {
     // Subscribe
     this.data.currentBrush.subscribe(brushes => this.brushes = brushes);
     this.data.fileComment.subscribe(fileComment => this.fileComment = fileComment);
+    this.data.fileName.subscribe(fileName => this.fileName = fileName);
   }
 
-  showFileInfo() {
+  toggleFileInfo() {
     this.view.toggleFileInfoView();
   }
 
-  showSettings() {
+  toggleSettings() {
     this.view.toggleSettingsView();
   }
 
@@ -106,7 +108,7 @@ export class NavComponent implements OnInit {
     }
     const blob = new Blob([text], {type: 'text/plain;charset=utf-8'});
     if (this.file.name !== '') {
-      saveAs(blob, this.file.name);
+      saveAs(blob, this.fileName);
     } else {
       saveAs(blob, 'default.bt');
     }
