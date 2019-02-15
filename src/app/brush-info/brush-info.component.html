@@ -1,21 +1,24 @@
-<div class="alert alert-secondary fade show" role="alert" *ngIf="showFileInfo"> <!-- alert-dismissible class may be needed -->
-  <button type="button" class="close mb-3" data-dismiss="alert" aria-label="Close">
+<div class="alert alert-secondary fade show" role="alert" *ngIf="showFileInfo">
+  <!-- If we want to be able to update file name and comment (https://angular.io/guide/forms)
+  <button type="button" class="close mb-3" aria-label="Close" (click)="toggleFileInfo()">
     <span aria-hidden="true">&times;</span>
   </button>
-  
-  <div class="input-group mb-2">
-      <div class="input-group-prepend">
-          <span class="input-group-text" id="basic-addon1">Filename</span>
-      </div>
-      <input type="text" class="form-control"  value="{{fileName}}">
-  </div>
-  <div class="input-group mb-2">
-      <div class="input-group-prepend">
-          <span class="input-group-text" id="basic-addon1">Filecomment</span>
-      </div>
-      <textarea class="form-control">{{fileComment}}</textarea>
-  </div>
-  <button type="button" class="btn btn-primary" (click)="saveFileInfo()">
-      Save file info
-  </button>
+  <form>
+    <div class="input-group mb-2">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Filename</span>
+        </div>
+        <input type="text" id="fileNameInput" class="form-control" value="{{fileName}}" disabled>
+    </div>
+    <div class="input-group mb-2">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Filecomment</span>
+        </div>
+        <textarea id="fileCommentInput" class="form-control" disabled>{{fileComment}}</textarea>
+    </div>
+    <input type="button" class="btn btn-primary" (click)="saveFileInfo()" value="Save file info" disabled>
+  </form>-->
+  <h5>File info</h5>
+  <p>Name: "<i>{{fileName}}</i>"</p>
+  <p>Comment: "<i>{{fileComment}}</i>"</p>
 </div>

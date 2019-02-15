@@ -1,51 +1,51 @@
 <div class="alert alert-secondary fade show mb-1 mt-1" role="alert" *ngIf="showSettings">
-    <button type="button" class="close mb-3" data-dismiss="alert" aria-label="Close">
+    <button type="button" class="close mb-3" aria-label="Close" (click)="toggleSettings()">
         <span aria-hidden="true">&times;</span>
     </button>
-    <!--<div class="row">-->
-        <div class="mb-1 mr-1 d-md-inline-block d-block">
-            <button class="btn btn-secondary " type="button" aria-haspopup="true" (click)="resetChannelNames()">
-                Reset channel names
-            </button>
+    <div class="mb-1 mr-1 d-md-inline-block d-block">
+        <button class="btn btn-secondary " type="button" aria-haspopup="true" (click)="resetChannelNames()">
+            Reset channel names
+        </button>
+    </div>
+
+    <!-- Brush table settings. Uncomment and add logic to implement
+    <div class="dropdown mb-1 mr-1 d-md-inline-block d-block">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true">
+            Brush Device
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">A1Brush</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">A2Brush</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">A3Brush</a>
         </div>
-        
-        <div class="dropdown mb-1 mr-1 d-md-inline-block d-block">
-            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true">
-                Brush Device
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">A1Brush</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">A2Brush</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">A3Brush</a>
-            </div>
-        </div> 
+    </div> 
 
-        <div class="dropdown mb-1 mr-1 d-md-inline-block d-block">
-            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true">
-                Brush Table
-                </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">Table1</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">Table2</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">Table3</a>
-            </div>
-        </div> 
-
-        <div class="dropdown mb-1 mr-1 d-md-inline-block d-block">
-            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true">
-                Material
+    <div class="dropdown mb-1 mr-1 d-md-inline-block d-block">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true">
+            Brush Table
             </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">Material1</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">Material2</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">Material3</a>
-            </div>
-        </div> 
-    <!--</div>-->
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">Table1</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">Table2</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">Table3</a>
+        </div>
+    </div> 
+
+    <div class="dropdown mb-1 mr-1 d-md-inline-block d-block">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true">
+            Material
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">Material1</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">Material2</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">Material3</a>
+        </div>
+    </div>
+    -->
 </div>
