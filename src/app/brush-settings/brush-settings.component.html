@@ -1,4 +1,4 @@
-<div class="alert alert-secondary fade show mb-1 mt-1" role="alert"> <!-- *ngIf="showSettings" -->
+<div class="alert alert-secondary fade show mb-1 mt-1" role="alert" *ngIf="showSettings">
     <button type="button" class="close mb-3" aria-label="Close" (click)="toggleSettings()">
         <span aria-hidden="true">&times;</span>
     </button>
@@ -7,7 +7,7 @@
         <form>
             <div class="form-group">
                 <label for="maxChannelvalue">Max channel value</label>
-                <input type="number" class="form-control" id="maxChannelvalue" aria-describedby="maxChannelValue" placeholder=0>
+                <input type="number" class="form-control" id="maxChannelvalue" aria-describedby="maxChannelValue" placeholder=0 value="{{maxChannelValue}}">
             </div>
             <button type="button" class="btn btn-primary" (click)="updateSettings()" title="Update brush editor settings">
                 Update settings
