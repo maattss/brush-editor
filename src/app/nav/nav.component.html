@@ -1,18 +1,19 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <span class="navbar-brand mb-0 h1 text-muted"><img src="..\..\assets\img\paint-brush.svg" height="45px" class="mr-3">Brush Editor</span>
+    <span class="navbar-brand mb-0 pt-0 h1 text-muted"><img src="..\..\assets\img\paint-brush.svg" height="45px" class="mr-3">Brush Editor</span>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse show navbar-collapse mr-3" id="navbarNav">
+    
+    <div class="collapse show navbar-collapse mr-3 mt-2" id="navbarNav">
         <ul class="navbar-nav ml-auto">
     
         <!-- File upload/download setting large screen-->
         <li class="nav-item d-none d-lg-block ml-2" > 
             <div>
-                <a class="nav-link d-inline-block pt-0 pb-0" href="#" *ngIf="brushes.length>0"> <!-- Hidden when no brushfile is choosed -->
+                <a class="nav-link d-inline-block pt-0 pb-0" href="#" *ngIf="brushes.length>0" title="Export file to robot"> <!-- Hidden when no brushfile is choosed -->
                     <i class="fas fa-file-download fa-2x navbar-icons"></i>
                 </a>
-                <a class="nav-link d-inline-block pt-0 pb-0" href="#">
+                <a class="nav-link d-inline-block pt-0 pb-0" href="#" title="Choose file from a robot to display">
                     <i class="fas fa-file-upload fa-2x navbar-icons"></i>
                 </a>
             </div>
@@ -23,10 +24,10 @@
 
         <li class="nav-item d-none d-lg-block ml-2" >
             <div>
-                <a class="nav-link d-inline-block pt-0 pb-0" href="#" (click)="saveFileAs()" *ngIf="brushes.length>0"> <!-- Hidden when no brushfile is choosed -->
+                <a class="nav-link d-inline-block pt-0 pb-0" href="#" (click)="saveFileAs()" *ngIf="brushes.length>0" title="Export file to yout device"> <!-- Hidden when no brushfile is choosed -->
                     <i class="fas fa-file-download fa-2x navbar-icons"></i>
                 </a>
-                <a class="nav-link d-inline-block pt-0 pb-0" href="#">
+                <a class="nav-link d-inline-block pt-0 pb-0" href="#" title="Choose local file to display">
                     <div class="fileupload">
                         <input type="file" id="theFile" aria-describedby="fileUpload" (change)="fileChanged($event)">
                     </div>
@@ -77,7 +78,7 @@
             <a class="nav-link d-lg-none" href="#">
                 <span (click)="toggleFileInfo()" data-toggle="collapse" data-target=".navbar-collapse.show">File info</span> <!-- Navbar collapsed: Text only --> 
             </a>
-            <a class="nav-link pt-0 pb-0 ml-2 d-none d-lg-block" href="#"> <!-- Navbar expandes: Icon and text --> 
+            <a class="nav-link pt-0 pb-0 ml-2 d-none d-lg-block" href="#" title="Show/hide file infomration"> <!-- Navbar expandes: Icon and text --> 
                 <i class="fas fa-info-circle fa-2x navbar-icons text-center d-block" (click)="toggleFileInfo()"></i>
                 <span class="h6 text-muted mt-1 mb-0 d-block">File info</span>
             </a>
@@ -91,7 +92,7 @@
             <a class="nav-link d-lg-none" href="#">  <!-- Navbar collapsed: Text only --> 
                 <span (click)="toggleSettings()" data-toggle="collapse" data-target=".navbar-collapse.show">Settings</span>
             </a>
-            <a class="nav-link pt-0 pb-0 ml-2 d-none d-lg-block" href="#" > <!-- Navbar expandes: Icon and text --> 
+            <a class="nav-link pt-0 pb-0 ml-2 d-none d-lg-block" href="#" title="Show/hide settings menu"> <!-- Navbar expandes: Icon and text --> 
                 <i class="fas fa-cog fa-2x navbar-icons text-center d-block" (click)="toggleSettings()"></i>
                 <span class="h6 text-muted mt-1 mb-0 d-block">Settings</span>
             </a>
