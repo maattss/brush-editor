@@ -9,7 +9,7 @@
       <table class="table table-hover">
         <thead>
           <tr>
-            <th> <!--Brush ID ?--> </th>
+            <th> <!-- Empty --> </th>
             <th *ngIf="brushes[0].ch1>=0"><input type="text" id="channelName1" value="{{channelNames.ch1}}" (keyup)="changeChannelValue(1)"></th>
             <th *ngIf="brushes[0].ch2>=0"><input type="text" id="channelName2" value="{{channelNames.ch2}}" (keyup)="changeChannelValue(2)"></th>
             <th *ngIf="brushes[0].ch3>=0"><input type="text" id="channelName3" value="{{channelNames.ch3}}" (keyup)="changeChannelValue(3)"></th>
@@ -86,9 +86,9 @@
                 (focus)="markRow(brush.brushId)">
               </td>
   
-              <td>
-                <button mat-raised-button matTooltip="Clear content of row" id="btnDelete" class="btn btn-link" (mousedown)="deleteRow(brush.brushId)">
-                  <i class="fas fa-times"></i>
+              <td class="clearField align-middle">
+                <button mat-raised-button matTooltip="Clear content of row" id="btnClear" class="btn btn-link" (mousedown)="deleteRow(brush.brushId)">
+                  <i class="fas fa-times fa-2x"></i>
                 </button>
               </td>
             </tr>
