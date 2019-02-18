@@ -38,7 +38,7 @@
             </div>
             <div class="text-center mt-1">
                 <p class="h6 text-muted">Local</p>
-            </div>
+            </div>  
         </li>
 
         <!-- File upload/download setting small screen-->
@@ -59,19 +59,19 @@
             </a>
         </li>
         <li class="nav-item d-lg-none">
-            <a class="nav-link pointer" href="#">
-            <label for="theFile" class="chooseFile">
-                <span *ngIf="brushes.length<=0">Local: Choose file</span> <!-- Text only when navbar is collapsed -->
-                <span *ngIf="brushes.length>0">Local: Choose new file</span>
-            </label>
+            <a class="nav-link d-inline-block pt-0 pb-0" href="#" title="Choose local file to display">
                 <div class="fileupload">
-                <input type="file" id="theFile" aria-describedby="fileUpload" (change)="fileChanged($event)" data-toggle="collapse" data-target=".navbar-collapse.show">
+                    <input type="file" id="theFile" aria-describedby="fileUpload" (change)="fileChanged($event)">
                 </div>
+                <label for="theFile" class="chooseFileLabel pt-1 pb-1">
+                    <span *ngIf="brushes.length<=0">Local: Choose file</span> <!-- Text only when navbar is collapsed -->
+                    <span *ngIf="brushes.length>0">Local: Choose new file</span>
+                </label>
             </a>
         </li>
     
         <!-- Divider for collapsed navbar -->
-        <li class="dropdown-divider d-lg-none pb-0 pt-0 mb-0 mt-0" *ngIf="brushes.length>0"></li>
+        <li class="dropdown-divider d-lg-none pb-0 pt-0 mb-0" *ngIf="brushes.length>0"></li>
 
         <!-- File info -->
         <li class="nav-item text-muted" *ngIf="brushes.length>0">
