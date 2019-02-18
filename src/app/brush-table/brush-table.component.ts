@@ -10,14 +10,14 @@ import { PagerService, BrushService } from '../_services/index';
 })
 
 export class BrushTableComponent implements OnInit {
-  constructor(private cookieService: CookieService, private data: BrushService,
-              private pagerService: PagerService) { }
 
   // Class variables
   private brushes: Brush[];
   private channelNames: ChannelNames;
   private initialized = false;
   private currentBrushId: number;
+  private maxInputValue = 1000;
+  private inputError = false;
 
   // Keep track of current page
   private currentPage = 1;
@@ -27,6 +27,11 @@ export class BrushTableComponent implements OnInit {
 
   // paged items
   private pagedItems: Brush[];
+
+  constructor(
+    private cookieService: CookieService,
+    private data: BrushService,
+    private pagerService: PagerService) { }
 
   ngOnInit() {
     // Subscribe
@@ -53,6 +58,33 @@ export class BrushTableComponent implements OnInit {
     if (this.cookieService.check('chNames')) {
       console.log('We have a cookie with the value: ' + this.cookieService.get('chNames'));
       this.channelNames = JSON.parse(this.cookieService.get('chNames'));
+    }
+  }
+
+  private inputValidation(): void {
+    this.inputError = true;
+    if (this.brushes[this.currentBrushId - 1].ch1 > this.maxInputValue) {
+      while (this.brushes[this.currentBrushId - 1].ch1 > this.maxInputValue) { // In case user holds button
+        this.brushes[this.currentBrushId - 1].ch1 = Math.floor(this.brushes[this.currentBrushId - 1].ch1 / 10);
+      }
+    } else if (this.brushes[this.currentBrushId - 1].ch2 > this.maxInputValue) {
+      while (this.brushes[this.currentBrushId - 1].ch2 > this.maxInputValue) {
+        this.brushes[this.currentBrushId - 1].ch2 = Math.floor(this.brushes[this.currentBrushId - 1].ch2 / 10);
+      }
+    } else if (this.brushes[this.currentBrushId - 1].ch3 > this.maxInputValue) {
+      while (this.brushes[this.currentBrushId - 1].ch3 > this.maxInputValue) {
+        this.brushes[this.currentBrushId - 1].ch3 = Math.floor(this.brushes[this.currentBrushId - 1].ch3 / 10);
+      }
+    } else if (this.brushes[this.currentBrushId - 1].ch4 > this.maxInputValue) {
+      while (this.brushes[this.currentBrushId - 1].ch4 > this.maxInputValue) {
+        this.brushes[this.currentBrushId - 1].ch4 = Math.floor(this.brushes[this.currentBrushId - 1].ch4 / 10);
+      }
+    } else if (this.brushes[this.currentBrushId - 1].ch5 > this.maxInputValue) {
+      while (this.brushes[this.currentBrushId - 1].ch5 > this.maxInputValue) {
+        this.brushes[this.currentBrushId - 1].ch5 = Math.floor(this.brushes[this.currentBrushId - 1].ch5 / 10);
+      }
+    } else {
+      this.inputError = false;
     }
   }
 
@@ -111,7 +143,6 @@ export class BrushTableComponent implements OnInit {
 
     const brush = this.brushes[brushId - 1];
     if (channel === 'ch1') {
-      console.log(inputValue);
       brush.ch1 = +inputValue; // + parses string to number
     } else if (channel === 'ch2') {
       brush.ch2 = +inputValue;
@@ -124,6 +155,7 @@ export class BrushTableComponent implements OnInit {
     } else {  // channel === "desc"
       brush.desc = inputValue;
     }
+    console.log(this.brushes[0].ch1);
     this.data.changeBrush(this.brushes);
   }
 
