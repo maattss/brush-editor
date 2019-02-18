@@ -3,9 +3,20 @@
         <span aria-hidden="true">&times;</span>
     </button>
     <div class="mb-1 mr-1 d-md-inline-block d-block">
-        <button class="btn btn-secondary " type="button" aria-haspopup="true" (click)="resetChannelNames()" title="Reset channel names to default: Channel 1, Channel 2...">
-            Reset channel names
-        </button>
+        
+        <form>
+            <div class="form-group">
+                <label for="maxChannelvalue">Max channel value</label>
+                <input type="number" class="form-control" id="maxChannelvalue" aria-describedby="maxChannelValue" placeholder=0 value="{{maxChannelValue}}">
+            </div>
+            <button type="button" class="btn btn-primary" (click)="updateSettings()" title="Update brush editor settings">
+                Update settings
+            </button>
+            <button type="button" class="btn btn-secondary ml-1" (click)="resetSettings()" 
+                title="Reset all settings to default (channel names, max channel value etc... )">
+                Reset all
+            </button>
+        </form>
     </div>
 
     <!-- Brush table settings. Uncomment and add logic to implement

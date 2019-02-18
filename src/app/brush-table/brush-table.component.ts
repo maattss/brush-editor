@@ -16,7 +16,7 @@ export class BrushTableComponent implements OnInit {
   private channelNames: ChannelNames;
   private initialized = false;
   private currentBrushId: number;
-  private maxInputValue = 1000;
+  private maxChannelValue: number;
   private inputError = false;
 
   // Keep track of current page
@@ -52,7 +52,9 @@ export class BrushTableComponent implements OnInit {
       this.initialized = true;
     });
 
-    this.data.currentBrushId.subscribe(brushId => this.currentBrushId = brushId);
+    // Do NOT subscribe to currentBrushId => Creates infinite loop!
+    // this.data.currentBrushId.subscribe(brushId => this.currentBrushId = brushId);
+    this.data.maxChannelValue.subscribe(maxChannelValue => this.maxChannelValue = maxChannelValue);
 
     // Check if a cookie named chNames exist
     if (this.cookieService.check('chNames')) {
@@ -61,27 +63,27 @@ export class BrushTableComponent implements OnInit {
     }
   }
 
-  private inputValidation(): void {
+  private inputValidation(brushId: number): void {
     this.inputError = true;
-    if (this.brushes[this.currentBrushId - 1].ch1 > this.maxInputValue) {
-      while (this.brushes[this.currentBrushId - 1].ch1 > this.maxInputValue) { // In case user holds button
-        this.brushes[this.currentBrushId - 1].ch1 = Math.floor(this.brushes[this.currentBrushId - 1].ch1 / 10);
+    if (this.brushes[brushId - 1].ch1 > this.maxChannelValue) {
+      while (this.brushes[brushId - 1].ch1 > this.maxChannelValue) { // In case user holds button
+        this.brushes[brushId - 1].ch1 = Math.floor(this.brushes[brushId - 1].ch1 / 10);
       }
-    } else if (this.brushes[this.currentBrushId - 1].ch2 > this.maxInputValue) {
-      while (this.brushes[this.currentBrushId - 1].ch2 > this.maxInputValue) {
-        this.brushes[this.currentBrushId - 1].ch2 = Math.floor(this.brushes[this.currentBrushId - 1].ch2 / 10);
+    } else if (this.brushes[brushId - 1].ch2 > this.maxChannelValue) {
+      while (this.brushes[brushId - 1].ch2 > this.maxChannelValue) {
+        this.brushes[brushId - 1].ch2 = Math.floor(this.brushes[brushId - 1].ch2 / 10);
       }
-    } else if (this.brushes[this.currentBrushId - 1].ch3 > this.maxInputValue) {
-      while (this.brushes[this.currentBrushId - 1].ch3 > this.maxInputValue) {
-        this.brushes[this.currentBrushId - 1].ch3 = Math.floor(this.brushes[this.currentBrushId - 1].ch3 / 10);
+    } else if (this.brushes[brushId - 1].ch3 > this.maxChannelValue) {
+      while (this.brushes[brushId - 1].ch3 > this.maxChannelValue) {
+        this.brushes[brushId - 1].ch3 = Math.floor(this.brushes[brushId - 1].ch3 / 10);
       }
-    } else if (this.brushes[this.currentBrushId - 1].ch4 > this.maxInputValue) {
-      while (this.brushes[this.currentBrushId - 1].ch4 > this.maxInputValue) {
-        this.brushes[this.currentBrushId - 1].ch4 = Math.floor(this.brushes[this.currentBrushId - 1].ch4 / 10);
+    } else if (this.brushes[brushId - 1].ch4 > this.maxChannelValue) {
+      while (this.brushes[brushId - 1].ch4 > this.maxChannelValue) {
+        this.brushes[brushId - 1].ch4 = Math.floor(this.brushes[brushId - 1].ch4 / 10);
       }
-    } else if (this.brushes[this.currentBrushId - 1].ch5 > this.maxInputValue) {
-      while (this.brushes[this.currentBrushId - 1].ch5 > this.maxInputValue) {
-        this.brushes[this.currentBrushId - 1].ch5 = Math.floor(this.brushes[this.currentBrushId - 1].ch5 / 10);
+    } else if (this.brushes[brushId - 1].ch5 > this.maxChannelValue) {
+      while (this.brushes[brushId - 1].ch5 > this.maxChannelValue) {
+        this.brushes[brushId - 1].ch5 = Math.floor(this.brushes[brushId - 1].ch5 / 10);
       }
     } else {
       this.inputError = false;
@@ -99,7 +101,6 @@ export class BrushTableComponent implements OnInit {
 
   markRow(rowId: number) {
     this.data.changeCurrentBrushID(rowId);
-    this.data.changeChannelName(this.channelNames);
     const colorClass = 'table-danger';
 
     let index = 10 * (this.currentPage - 1) + 1; // Current first row index

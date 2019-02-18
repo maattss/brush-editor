@@ -23,7 +23,8 @@ export class BrushGraphComponent implements OnInit {
       yAxes: [
         {
           ticks: {
-            beginAtZero: true
+            beginAtZero: true,
+            max: 100
           }
         }
       ]
@@ -46,6 +47,7 @@ export class BrushGraphComponent implements OnInit {
   private chart: [];
   private initialized = false;
   private currentBrushId: number;
+  private maxChannelValue: number;
   private widePage = true; // If screen of user is wide (>=995px) = true
 
   ngOnInit() {
@@ -66,6 +68,18 @@ export class BrushGraphComponent implements OnInit {
       }
     });
     this.data.currentBrushId.subscribe(brushId => {
+      this.currentBrushId = brushId;
+      if (this.initialized === true) {
+        this.addData();
+        if (this.getWidthOfScreen() >= 995) { // If pixels of users screen >= 995px
+          this.widePage = true;
+        } else {
+          this.widePage = false;
+        }
+      }
+    });
+    this.data.maxChannelValue.subscribe(maxChannelValue => this.maxChannelValue = maxChannelValue);
+    this.data.newBrushId.subscribe(brushId => {
       this.currentBrushId = brushId;
       if (this.initialized === true) {
         this.addData();
@@ -113,9 +127,18 @@ export class BrushGraphComponent implements OnInit {
       this.isDataAvailable = true;
       this.barChartData = [];
       const br: Brush = this.brushes[this.currentBrushId - 1];
-      const values: number[] = [br.ch1, br.ch2, br.ch3];
-      if (br.ch4 >= 0) { values.push(br.ch4); }
-      if (br.ch5 >= 0) { values.push(br.ch5); }
+      const ch1Percent: number = (br.ch1 / this.maxChannelValue) * 100;
+      const ch2Percent: number = (br.ch2 / this.maxChannelValue) * 100;
+      const ch3Percent: number = (br.ch3 / this.maxChannelValue) * 100;
+      const values: number[] = [ch1Percent, ch2Percent, ch3Percent];
+      if (br.ch4 >= 0) {
+        const ch4Percent: number = (br.ch4 / this.maxChannelValue) * 100;
+        values.push(ch4Percent);
+      }
+      if (br.ch5 >= 0) {
+        const ch5Percent: number = (br.ch5 / this.maxChannelValue) * 100;
+        values.push(ch5Percent);
+      }
 
       this.barChartData.push({
         data: values,

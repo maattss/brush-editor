@@ -1,5 +1,5 @@
 <!-- Show table and graph only if a file has been uploaded -->
-<div *ngIf="inputError" class="alert alert-danger">Maximum input value is {{maxInputValue}}!</div>
+<div *ngIf="inputError" class="alert alert-danger">Maximum input value is {{maxChannelValue}}!</div>
 
 <div *ngIf="brushes.length>0"> 
   <div id="tableContainer">
@@ -33,7 +33,7 @@
                 placeholder="0"
                 value="{{brush.ch1 || ''}}"
                 [(ngModel)]="brush.ch1"
-                (keyup)="updateBrushes(brush.brushId, 'ch1'); inputValidation()" 
+                (keyup)="updateBrushes(brush.brushId, 'ch1'); inputValidation(brush.brushId)" 
                 (focus)="markRow(brush.brushId)">
               </td>
   
@@ -43,7 +43,7 @@
                 value="{{brush.ch2 || ''}}"
                 placeholder="0"
                 [(ngModel)]="brush.ch2"
-                (keyup)="updateBrushes(brush.brushId, 'ch2'); inputValidation()" 
+                (keyup)="updateBrushes(brush.brushId, 'ch2'); inputValidation(brush.brushId)" 
                 (focus)="markRow(brush.brushId)">
               </td>
   
@@ -53,7 +53,7 @@
                 value="{{brush.ch3 || ''}}" 
                 placeholder="0"
                 [(ngModel)]="brush.ch3"
-                (keyup)="updateBrushes(brush.brushId, 'ch3'); inputValidation()" 
+                (keyup)="updateBrushes(brush.brushId, 'ch3'); inputValidation(brush.brushId)" 
                 (focus)="markRow(brush.brushId)">
               </td>
   
@@ -63,7 +63,7 @@
                 value="{{brush.ch4 || ''}}"
                 placeholder="0"
                 [(ngModel)]="brush.ch4"
-                (keyup)="updateBrushes(brush.brushId, 'ch4'); inputValidation()" 
+                (keyup)="updateBrushes(brush.brushId, 'ch4'); inputValidation(brush.brushId)" 
                 (focus)="markRow(brush.brushId)">
               </td>
   
@@ -73,7 +73,7 @@
                 value="{{brush.ch5 || ''}}"
                 placeholder="0"
                 [(ngModel)]="brush.ch5"
-                (keyup)="updateBrushes(brush.brushId, 'ch5'); inputValidation()" 
+                (keyup)="updateBrushes(brush.brushId, 'ch5'); inputValidation(brush.brushId)" 
                 (focus)="markRow(brush.brushId)">
               </td>
   
@@ -82,7 +82,7 @@
                 id="{{brush.brushId}}desc" 
                 class="desc" 
                 value="{{brush.desc}}"
-                (keyup)="updateBrushes(brush.brushId, 'desc'); inputValidation()"
+                (keyup)="updateBrushes(brush.brushId, 'desc'); inputValidation(brush.brushId)"
                 (focus)="markRow(brush.brushId)">
               </td>
   
