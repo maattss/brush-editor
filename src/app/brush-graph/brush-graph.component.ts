@@ -46,6 +46,7 @@ export class BrushGraphComponent implements OnInit {
   private chart: [];
   private initialized = false;
   private currentBrushId: number;
+  private maxChannelValue: number;
   private widePage = true; // If screen of user is wide (>=995px) = true
 
   ngOnInit() {
@@ -76,6 +77,7 @@ export class BrushGraphComponent implements OnInit {
         }
       }
     });
+    this.data.maxChannelValue.subscribe(maxChannelValue => this.maxChannelValue = maxChannelValue);
   }
 
   getWidthOfScreen() {
@@ -113,6 +115,10 @@ export class BrushGraphComponent implements OnInit {
       this.isDataAvailable = true;
       this.barChartData = [];
       const br: Brush = this.brushes[this.currentBrushId - 1];
+      // const ch1Percent: number = Math.round(br.ch1 / this.maxChannelValue);
+      // const ch2Percent: number = Math.round(br.ch2 / this.maxChannelValue);
+      // const ch3Percent: number = Math.round(br.ch3 / this.maxChannelValue);
+      console.log(br.ch1 + ' / ' + this.maxChannelValue + ' = ');
       const values: number[] = [br.ch1, br.ch2, br.ch3];
       if (br.ch4 >= 0) { values.push(br.ch4); }
       if (br.ch5 >= 0) { values.push(br.ch5); }

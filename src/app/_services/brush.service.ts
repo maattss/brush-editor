@@ -11,13 +11,15 @@ export class BrushService {
   ({ch1: 'Channel 1', ch2: 'Channel 2', ch3: 'Channel 3', ch4: 'Channel 4', ch5: 'Channel 5'});
   private currentBrushIdSrc  = new BehaviorSubject<number>(0);
   private fileCommentSrc     = new BehaviorSubject<string>('');
-  private fileNameSrc     = new BehaviorSubject<string>('');
+  private fileNameSrc        = new BehaviorSubject<string>('');
+  private maxChannelValueSrc = new BehaviorSubject<number>(1000);
 
-  currentBrush   = this.brushSrc.asObservable();
-  channelNames   = this.channelNamesSrc.asObservable();
-  fileComment    = this.fileCommentSrc.asObservable();
-  fileName       = this.fileNameSrc.asObservable();
-  currentBrushId = this.currentBrushIdSrc.asObservable();
+  currentBrush    = this.brushSrc.asObservable();
+  channelNames    = this.channelNamesSrc.asObservable();
+  fileComment     = this.fileCommentSrc.asObservable();
+  fileName        = this.fileNameSrc.asObservable();
+  currentBrushId  = this.currentBrushIdSrc.asObservable();
+  maxChannelValue = this.maxChannelValueSrc.asObservable();
 
   constructor() { }
 
@@ -35,5 +37,8 @@ export class BrushService {
   }
   changeCurrentBrushID(id: number) {
     this.currentBrushIdSrc.next(id);
+  }
+  changeMaxChannelValue(value: number) {
+    this.maxChannelValueSrc.next(value);
   }
 }
