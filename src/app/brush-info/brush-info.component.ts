@@ -23,7 +23,6 @@ export class BrushInfoComponent implements OnInit {
     this.view.showFileInfo.subscribe(showFileInfo => this.showFileInfo = showFileInfo);
   }
   saveFileInfo() {
-    // TODO: Add ability to change filecomment and filename
     this.toggleFileInfo();
   }
 

@@ -12,11 +12,11 @@ export class BrushSettingsComponent implements OnInit {
 
   constructor(private data: BrushService, private view: ViewService, private cookieService: CookieService) { }
 
-   // Class variables
-   private brushes: Brush[];
-   private showSettings: boolean;
-   private maxChannelValue: number;
-   private initialized: boolean;
+  // Class variables
+  private brushes: Brush[];
+  private showSettings: boolean;
+  private maxChannelValue: number;
+  private initialized: boolean;
 
   ngOnInit() {
     // Subscriptions
@@ -32,7 +32,6 @@ export class BrushSettingsComponent implements OnInit {
 
      // Check if a cookie named maxChannelValue exist
      if (this.cookieService.check('maxChannelValue')) {
-      console.log('Max channel value cookie: ' + this.cookieService.get('maxChannelValue'));
       this.data.changeMaxChannelValue(JSON.parse(this.cookieService.get('maxChannelValue')));
     }
   }
@@ -41,12 +40,14 @@ export class BrushSettingsComponent implements OnInit {
     this.data.changeMaxChannelValue(+inputValue);
     this.addChannelCookie();
     this.view.toggleSettingsView();
+    this.view.showInfoSuccess('Settings updated successfully!');
   }
 
   resetSettings() {
     this.resetChannelNames();
     this.data.changeMaxChannelValue(1000);
     this.view.toggleSettingsView();
+    this.view.showInfoSuccess('Settings reset successfully!');
   }
 
   resetChannelNames() {

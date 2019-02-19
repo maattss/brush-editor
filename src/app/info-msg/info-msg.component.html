@@ -1,0 +1,12 @@
+<div class="alert alert-danger fade show mt-1 mb-1" role="alert" *ngIf="showError">
+    <button type="button" class="close" (click)="closeError()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    {{infoMsg || 'Undefined error'}}
+</div>
+<div class="alert alert-success fade show mt-1 mb-1" role="alert" *ngIf="showSuccess">
+    <button type="button" class="close" (click)="closeSuccess()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    {{infoMsg || 'Undefined success'}}
+</div>

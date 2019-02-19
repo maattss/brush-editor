@@ -18,6 +18,7 @@ import { BrushInfoComponent } from './brush-info/brush-info.component';
 // Services
 import { CookieService } from 'ngx-cookie-service';
 import { PagerService } from './_services/index';
+import { InfoMsgComponent } from './info-msg/info-msg.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { PagerService } from './_services/index';
     NavComponent,
     BrushSettingsComponent,
     BrushGraphComponent,
-    BrushInfoComponent
+    BrushInfoComponent,
+    InfoMsgComponent
   ],
   imports: [
     BrowserModule,
