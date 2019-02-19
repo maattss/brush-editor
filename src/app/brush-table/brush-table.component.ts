@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Brush, ChannelNames, GlobalVariables } from '../brush';
-import { PagerService, BrushService } from '../_services/index';
+import { PagerService, BrushService, ViewService } from '../_services/index';
 
 @Component({
   selector: 'app-brush-table',
@@ -17,7 +17,6 @@ export class BrushTableComponent implements OnInit {
   private initialized = false;
   private currentBrushId: number;
   private maxChannelValue: number;
-  private inputError = false;
 
   // Keep track of current page
   private currentPage = 1;
@@ -31,6 +30,7 @@ export class BrushTableComponent implements OnInit {
   constructor(
     private cookieService: CookieService,
     private data: BrushService,
+    private view: ViewService,
     private pagerService: PagerService) { }
 
   ngOnInit() {
@@ -58,13 +58,12 @@ export class BrushTableComponent implements OnInit {
 
     // Check if a cookie named chNames exist
     if (this.cookieService.check('chNames')) {
-      console.log('We have a cookie with the value: ' + this.cookieService.get('chNames'));
-      this.channelNames = JSON.parse(this.cookieService.get('chNames'));
+      this.data.changeChannelName(JSON.parse(this.cookieService.get('chNames')));
     }
   }
 
   private inputValidation(brushId: number): void {
-    this.inputError = true;
+    this.view.showInfoError('Maximum input value is ' + this.maxChannelValue);
     if (this.brushes[brushId - 1].ch1 > this.maxChannelValue) {
       while (this.brushes[brushId - 1].ch1 > this.maxChannelValue) { // In case user holds button
         this.brushes[brushId - 1].ch1 = Math.floor(this.brushes[brushId - 1].ch1 / 10);
@@ -86,7 +85,7 @@ export class BrushTableComponent implements OnInit {
         this.brushes[brushId - 1].ch5 = Math.floor(this.brushes[brushId - 1].ch5 / 10);
       }
     } else {
-      this.inputError = false;
+      this.view.closeInfoError();
     }
   }
 
@@ -134,8 +133,8 @@ export class BrushTableComponent implements OnInit {
 
   // Add/customize a cookie containing users channelnames
   addChannelCookie() {
-    const json_channelNames = JSON.stringify(this.channelNames);
-    this.cookieService.set('chNames', json_channelNames, 365); // Expires after 1 year
+    const jsonChannelNames = JSON.stringify(this.channelNames);
+    this.cookieService.set('chNames', jsonChannelNames, 365); // Expires after 1 year
   }
 
   updateBrushes(brushId: number, channel: string) {

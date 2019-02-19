@@ -24,10 +24,24 @@ export class BrushGraphComponent implements OnInit {
         {
           ticks: {
             beginAtZero: true,
-            max: 100
+            max: 100,
+            callback: function(value: string) {
+              return value + '%';
+            }
           }
         }
       ]
+    },
+    tooltips: {
+      enabled: true,
+      mode: 'single',
+      callbacks: {
+        label: function(tooltipItem: any, data: any) {
+          const allData = data.datasets[tooltipItem.datasetIndex].data;
+          const tooltipData = allData[tooltipItem.index];
+          return ' ' + tooltipData + '%';
+        }
+      }
     }
   };
   public barChartLabels: string[] = ['No data'];
@@ -78,8 +92,13 @@ export class BrushGraphComponent implements OnInit {
         }
       }
     });
-    this.data.maxChannelValue.subscribe(maxChannelValue => this.maxChannelValue = maxChannelValue);
-    this.data.newBrushId.subscribe(brushId => {
+    this.data.maxChannelValue.subscribe(maxChannelValue => {
+        this.maxChannelValue = maxChannelValue;
+        if (this.initialized === true) {
+          this.addData();
+        }
+    });
+    this.data.currentBrushId.subscribe(brushId => {
       this.currentBrushId = brushId;
       if (this.initialized === true) {
         this.addData();

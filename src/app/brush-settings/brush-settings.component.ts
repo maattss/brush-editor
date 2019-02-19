@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Brush } from '../brush';
 import { BrushService, ViewService } from '../_services/index';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-brush-settings',
@@ -9,26 +10,44 @@ import { BrushService, ViewService } from '../_services/index';
 })
 export class BrushSettingsComponent implements OnInit {
 
-  constructor(private data: BrushService, private view: ViewService) { }
+  constructor(private data: BrushService, private view: ViewService, private cookieService: CookieService) { }
 
-   // Class variables
-   private brushes: Brush[];
-   private showSettings: boolean;
-   private maxChannelValue: number;
+  // Class variables
+  private brushes: Brush[];
+  private showSettings: boolean;
+  private maxChannelValue: number;
+  private initialized: boolean;
 
   ngOnInit() {
     // Subscriptions
     this.data.currentBrush.subscribe(brushes => this.brushes = brushes);
     this.view.showSettings.subscribe(showSettings => this.showSettings = showSettings);
-    this.data.maxChannelValue.subscribe(maxChannelValue => this.maxChannelValue = maxChannelValue);
+    this.data.maxChannelValue.subscribe(maxChannelValue => {
+      this.maxChannelValue = maxChannelValue;
+      if (this.initialized) {
+        this.addChannelCookie();
+      }
+      this.initialized = true;
+    });
+
+     // Check if a cookie named maxChannelValue exist
+     if (this.cookieService.check('maxChannelValue')) {
+      this.data.changeMaxChannelValue(JSON.parse(this.cookieService.get('maxChannelValue')));
+    }
   }
   updateSettings() {
     const inputValue = (<HTMLInputElement>document.getElementById('maxChannelvalue')).value;
     this.data.changeMaxChannelValue(+inputValue);
+    this.addChannelCookie();
+    this.view.toggleSettingsView();
+    this.view.showInfoSuccess('Settings updated successfully!');
   }
 
   resetSettings() {
     this.resetChannelNames();
+    this.data.changeMaxChannelValue(1000);
+    this.view.toggleSettingsView();
+    this.view.showInfoSuccess('Settings reset successfully!');
   }
 
   resetChannelNames() {
@@ -38,5 +57,10 @@ export class BrushSettingsComponent implements OnInit {
 
   toggleSettings() {
     this.view.toggleSettingsView();
+  }
+
+  addChannelCookie() {
+    const jsonMaxChannelValue = JSON.stringify(this.maxChannelValue);
+    this.cookieService.set('maxChannelValue', jsonMaxChannelValue, 365); // Expires after 1 year
   }
 }

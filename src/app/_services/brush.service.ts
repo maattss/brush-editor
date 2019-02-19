@@ -21,17 +21,14 @@ export class BrushService {
   fileName        = this.fileNameSrc.asObservable();
   currentBrushId  = this.currentBrushIdSrc.asObservable();
   maxChannelValue = this.maxChannelValueSrc.asObservable();
-  newBrushId      = this.newBrushIdSrc.asObservable();
 
   constructor() { }
 
   changeBrush(brushes: Brush[]) {
     this.brushSrc.next(brushes);
-    console.log('Brush updated');
   }
   changeChannelName(chNames: ChannelNames) {
     this.channelNamesSrc.next(chNames);
-    console.log('Channel names updated');
   }
   changeFileComment(comment: string) {
     this.fileCommentSrc.next(comment);
@@ -41,13 +38,8 @@ export class BrushService {
   }
   changeCurrentBrushID(id: number) {
     this.currentBrushIdSrc.next(id);
-    console.log('Current Brush ID updated');
   }
   changeMaxChannelValue(value: number) {
     this.maxChannelValueSrc.next(value);
-  }
-  changeNewBrushId(newId: number) {
-    this.newBrushIdSrc.next(newId);
-    console.log('New Brush ID updated to ' + newId);
   }
 }
