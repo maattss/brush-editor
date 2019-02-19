@@ -96,6 +96,11 @@ export class NavComponent implements OnInit {
 
   saveFileAs() {
     let text = '';
+    if (this.fileComment) {  // Add comment to file if it exists
+      text += '#' + this.fileComment + ' \r\n';
+    }
+
+    // Add brushes to file
     for (const brush of this.brushes) {
       text += (brush.ch1 + ',' + brush.ch2 + ',' + brush.ch3 + ',' + brush.ch4 + ',' + brush.ch5);
       if (brush.desc !== '') {
