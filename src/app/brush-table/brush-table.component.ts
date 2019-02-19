@@ -58,8 +58,8 @@ export class BrushTableComponent implements OnInit {
 
     // Check if a cookie named chNames exist
     if (this.cookieService.check('chNames')) {
-      console.log('We have a cookie with the value: ' + this.cookieService.get('chNames'));
-      this.channelNames = JSON.parse(this.cookieService.get('chNames'));
+      console.log('Channel names cookie: ' + this.cookieService.get('chNames'));
+      this.data.changeChannelName(JSON.parse(this.cookieService.get('chNames')));
     }
   }
 
@@ -134,8 +134,8 @@ export class BrushTableComponent implements OnInit {
 
   // Add/customize a cookie containing users channelnames
   addChannelCookie() {
-    const json_channelNames = JSON.stringify(this.channelNames);
-    this.cookieService.set('chNames', json_channelNames, 365); // Expires after 1 year
+    const jsonChannelNames = JSON.stringify(this.channelNames);
+    this.cookieService.set('chNames', jsonChannelNames, 365); // Expires after 1 year
   }
 
   updateBrushes(brushId: number, channel: string) {

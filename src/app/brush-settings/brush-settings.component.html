@@ -3,11 +3,10 @@
         <span aria-hidden="true">&times;</span>
     </button>
     <div class="mb-1 mr-1 d-md-inline-block d-block">
-        
         <form>
             <div class="form-group">
                 <label for="maxChannelvalue">Max channel value</label>
-                <input type="number" class="form-control" id="maxChannelvalue" aria-describedby="maxChannelValue" placeholder=0 value="{{maxChannelValue}}">
+                <input type="number" class="form-control" id="maxChannelvalue" aria-describedby="maxChannelValue" placeholder=0 value="{{maxChannelValue}}" max="10000" min="1">
             </div>
             <button type="button" class="btn btn-primary" (click)="updateSettings()" title="Update brush editor settings">
                 Update settings

@@ -28,6 +28,9 @@ export class BrushGraphComponent implements OnInit {
           }
         }
       ]
+    },
+    tooltips: {
+      mode: 'point'
     }
   };
   public barChartLabels: string[] = ['No data'];
@@ -78,9 +81,15 @@ export class BrushGraphComponent implements OnInit {
         }
       }
     });
-    this.data.maxChannelValue.subscribe(maxChannelValue => this.maxChannelValue = maxChannelValue);
-    this.data.newBrushId.subscribe(brushId => {
+    this.data.maxChannelValue.subscribe(maxChannelValue => {
+        this.maxChannelValue = maxChannelValue;
+        if (this.initialized === true) {
+          this.addData();
+        }
+    });
+    this.data.currentBrushId.subscribe(brushId => {
       this.currentBrushId = brushId;
+      console.log(this.currentBrushId);
       if (this.initialized === true) {
         this.addData();
         if (this.getWidthOfScreen() >= 995) { // If pixels of users screen >= 995px
@@ -123,11 +132,13 @@ export class BrushGraphComponent implements OnInit {
   // Add/update data the graph
   addData() {
     if (this.currentBrushId > 0) {  // Do not draw graph if no brush is selected
+      
       this.addLabels();
       this.isDataAvailable = true;
       this.barChartData = [];
       const br: Brush = this.brushes[this.currentBrushId - 1];
       const ch1Percent: number = (br.ch1 / this.maxChannelValue) * 100;
+      console.log('ch1Percent: ' + br.ch1 + ' / ' + this.maxChannelValue + ' = ' + ch1Percent);
       const ch2Percent: number = (br.ch2 / this.maxChannelValue) * 100;
       const ch3Percent: number = (br.ch3 / this.maxChannelValue) * 100;
       const values: number[] = [ch1Percent, ch2Percent, ch3Percent];
