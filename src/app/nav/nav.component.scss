@@ -22,3 +22,6 @@
     font-size: 300px; /* wtf, but apparently the most reliable way to make a large part of the input clickable in most browsers */
     height: 100px;
 }
+/deep/ .mat-tooltip {
+    font-size: 10px;
+  }
