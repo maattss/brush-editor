@@ -87,6 +87,7 @@ export class BrushTableComponent implements OnInit {
     } else {
       this.view.closeInfoError();
     }
+    this.data.changeBrush(this.brushes);
   }
 
   setPage(page: number) {
@@ -155,8 +156,6 @@ export class BrushTableComponent implements OnInit {
     } else {  // channel === "desc"
       brush.desc = inputValue;
     }
-    console.log(this.brushes[0].ch1);
-    this.data.changeBrush(this.brushes);
   }
 
   deleteRow(brushId: number) {
