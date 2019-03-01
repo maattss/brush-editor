@@ -39,7 +39,6 @@ export class BrushTableComponent implements OnInit {
       this.brushes = brushes;
 
       if (this.initialized === true) { // Page is fully initialized
-        // Initialize to page 1
         this.setPage(this.currentPage);
       }
     });
@@ -63,6 +62,7 @@ export class BrushTableComponent implements OnInit {
   }
 
   private inputValidation(brushId: number): void {
+    console.log('Checkinggggggg');
     this.view.showInfoError('Maximum input value is ' + this.maxChannelValue);
     if (this.brushes[brushId - 1].ch1 > this.maxChannelValue) {
       while (this.brushes[brushId - 1].ch1 > this.maxChannelValue) { // In case user holds button
@@ -100,7 +100,7 @@ export class BrushTableComponent implements OnInit {
   }
 
   markRow(rowId: number) {
-    this.data.changeCurrentBrushID(rowId);
+    this.currentBrushId = rowId;
     const colorClass = 'table-danger';
 
     let index = 10 * (this.currentPage - 1) + 1; // Current first row index
