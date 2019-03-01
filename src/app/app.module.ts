@@ -14,11 +14,11 @@ import { NavComponent } from './nav/nav.component';
 import { BrushSettingsComponent } from './brush-settings/brush-settings.component';
 import { BrushGraphComponent } from './brush-graph/brush-graph.component';
 import { BrushInfoComponent } from './brush-info/brush-info.component';
+import { InfoMsgComponent } from './info-msg/info-msg.component';
 
 // Services
 import { CookieService } from 'ngx-cookie-service';
 import { PagerService } from './_services/index';
-import { InfoMsgComponent } from './info-msg/info-msg.component';
 
 @NgModule({
   declarations: [
