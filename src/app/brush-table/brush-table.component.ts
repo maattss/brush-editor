@@ -101,6 +101,7 @@ export class BrushTableComponent implements OnInit {
 
   markRow(rowId: number) {
     this.currentBrushId = rowId;
+    this.data.changeCurrentBrushID(rowId);
     const colorClass = 'table-danger';
 
     let index = 10 * (this.currentPage - 1) + 1; // Current first row index
