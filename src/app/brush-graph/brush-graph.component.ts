@@ -11,6 +11,7 @@ export class BrushGraphComponent implements OnInit {
 
   // Chart variables
   public barChartOptions = {
+    animation: false,
     scaleShowVerticalLines: false,
     responsive: true,
     maintainAspectRatio: false,
