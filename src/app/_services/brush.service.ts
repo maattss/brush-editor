@@ -13,7 +13,6 @@ export class BrushService {
   private fileCommentSrc     = new BehaviorSubject<string>('');
   private fileNameSrc        = new BehaviorSubject<string>('');
   private maxChannelValueSrc = new BehaviorSubject<number>(1000);
-  private newBrushIdSrc      = new BehaviorSubject<number>(0);
 
   currentBrush    = this.brushSrc.asObservable();
   channelNames    = this.channelNamesSrc.asObservable();

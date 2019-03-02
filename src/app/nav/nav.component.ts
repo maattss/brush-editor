@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Brush } from '../brush';
 import { BrushService, ViewService } from '../_services/index';
 import { saveAs } from 'file-saver';
+import { digestAuthRequest } from '../../assets/js/digestAuthRequest.js';
 
 @Component({
   selector: 'app-nav',
@@ -118,5 +119,24 @@ export class NavComponent implements OnInit {
       saveAs(blob, 'default.bt');
     }
 
+  }
+
+  httpRequest() {
+    // Http request
+  const url = 'http://127.0.0.1';
+
+  // Create HTTP request object
+  const req = new digestAuthRequest('GET', url, 'Default User', 'robotics');
+
+  // Make the request
+  req.request(function(data) {
+    console.log('Data retrieved successfully');
+    console.log(data);
+    document.getElementById('result').innerHTML = 'Data retrieved successfully';
+    document.getElementById('data').innerHTML = JSON.stringify(data);
+  }, function(errorCode) {
+    console.log('no dice: ' + errorCode);
+    document.getElementById('result').innerHTML = 'Error: ' + errorCode;
+  });
   }
 }
