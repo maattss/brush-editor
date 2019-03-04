@@ -30,7 +30,8 @@
                 placeholder="0"
                 value="{{brush.ch1 || ''}}"
                 [(ngModel)]="brush.ch1"
-                (keyup)="updateBrushes(brush.brushId, 'ch1'); inputValidation(brush.brushId)" 
+                (keypress)="inputValidation(brush.brushId, 'ch1')"
+                (keyup)="updateBrushes(brush.brushId, 'ch1'); inputValidation(brush.brushId, 'ch1')" 
                 (focus)="markRow(brush.brushId)">
               </td>
   
@@ -40,7 +41,8 @@
                 value="{{brush.ch2 || ''}}"
                 placeholder="0"
                 [(ngModel)]="brush.ch2"
-                (keyup)="updateBrushes(brush.brushId, 'ch2'); inputValidation(brush.brushId)" 
+                (keypress)="inputValidation(brush.brushId, 'ch2')"
+                (keyup)="updateBrushes(brush.brushId, 'ch2'); inputValidation(brush.brushId, 'ch2')" 
                 (focus)="markRow(brush.brushId)">
               </td>
   
@@ -50,7 +52,8 @@
                 value="{{brush.ch3 || ''}}" 
                 placeholder="0"
                 [(ngModel)]="brush.ch3"
-                (keyup)="updateBrushes(brush.brushId, 'ch3'); inputValidation(brush.brushId)" 
+                (keypress)="inputValidation(brush.brushId, 'ch3')"
+                (keyup)="updateBrushes(brush.brushId, 'ch3'); inputValidation(brush.brushId, 'ch3')" 
                 (focus)="markRow(brush.brushId)">
               </td>
   
@@ -60,7 +63,8 @@
                 value="{{brush.ch4 || ''}}"
                 placeholder="0"
                 [(ngModel)]="brush.ch4"
-                (keyup)="updateBrushes(brush.brushId, 'ch4'); inputValidation(brush.brushId)" 
+                (keypress)="inputValidation(brush.brushId, 'ch4')"
+                (keyup)="updateBrushes(brush.brushId, 'ch4'); inputValidation(brush.brushId, 'ch4')" 
                 (focus)="markRow(brush.brushId)">
               </td>
   
@@ -70,7 +74,8 @@
                 value="{{brush.ch5 || ''}}"
                 placeholder="0"
                 [(ngModel)]="brush.ch5"
-                (keyup)="updateBrushes(brush.brushId, 'ch5'); inputValidation(brush.brushId)" 
+                (keypress)="inputValidation(brush.brushId, 'ch5')"
+                (keyup)="updateBrushes(brush.brushId, 'ch5'); inputValidation(brush.brushId, 'ch5')" 
                 (focus)="markRow(brush.brushId)">
               </td>
   
@@ -78,13 +83,13 @@
                 type="text" 
                 id="{{brush.brushId}}desc" 
                 class="desc" 
-                value="{{brush.desc}}"
-                (keyup)="updateBrushes(brush.brushId, 'desc'); inputValidation(brush.brushId)"
+                [(ngModel)]="brush.desc"
+                (keyup)="updateBrushes(brush.brushId, 'desc')"
                 (focus)="markRow(brush.brushId)">
               </td>
   
               <td class="clearField align-middle">
-                <button mat-raised-button matTooltip="Clear content of row" matTooltipPosition="right" id="btnClear" class="btn btn-link" (mousedown)="deleteRow(brush.brushId)">
+                <button mat-raised-button matTooltip="Clear content of row" matTooltipPosition="right" id="btnClear" class="btn btn-link" (mousedown)="deleteRow(brush.brushId)" (focus)="markRow(brush.brushId)">
                   <i class="fas fa-times fa-2x"></i>
                 </button>
               </td>
