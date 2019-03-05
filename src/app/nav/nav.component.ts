@@ -87,6 +87,11 @@ export class NavComponent implements OnInit {
 
   }
 
+  openFileChooser() {
+    this.httpRequestNoAuth();
+    this.view.toggleFileChooserView();
+  }
+
   httpGetAsync(theUrl: string, callback: Function) {
       const xmlHttp = new XMLHttpRequest();
       xmlHttp.onreadystatechange = function() {

@@ -1,5 +1,12 @@
-<ul>
-    <li *ngFor="let file of navFiles" >
-      <button class="btn btn-primary mb-1" (click)="changeFile(file)">{{ file }}</button>
-    </li>
-</ul>
+<div *ngIf="showFileChooser" class="alert alert-secondary fade show" role="alert">
+    <button type="button" class="close mb-3" aria-label="Close" (click)="toggleFileChooser()"
+    mat-raised-button matTooltip="Close file chooser" matTooltipShowDelay="1000">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <p *ngFor="let file of navFiles" >
+      <i class="far fa-file mr-1"></i><a href="#" (click)="toggleFileChooser(); changeFile(file)">{{ file }}</a>
+  </p>
+  <p *ngFor="let dir of navDirectories" >
+      <i class="far fa-folder mr-1"></i><a href="#" (click)="toggleFileChooser(); changeDirectory(dir)">{{ dir }}</a>
+  </p>
+</div>

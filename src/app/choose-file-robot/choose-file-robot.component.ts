@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChooseFileService } from '../_services/choose-file.service';
-import { BrushService } from '../_services';
+import { BrushService, ViewService } from '../_services';
+import { timingSafeEqual } from 'crypto';
 
 @Component({
   selector: 'app-choose-file-robot',
@@ -9,13 +10,14 @@ import { BrushService } from '../_services';
 })
 export class ChooseFileRobotComponent implements OnInit {
 
-  constructor(private fileChooser: ChooseFileService, private data: BrushService) { }
+  constructor(private fileChooser: ChooseFileService, private data: BrushService, private view: ViewService) { }
 
   // Class variables
   private navFiles: string[];
   private navDirectories: string[];
   private navUnknowns: string[];
   private baseURI: string;
+  private showFileChooser: boolean;
 
   ngOnInit() {
     // Subscribe
@@ -23,9 +25,13 @@ export class ChooseFileRobotComponent implements OnInit {
     this.fileChooser.directories.subscribe(navDirectories => this.navDirectories = navDirectories);
     this.fileChooser.unknowns.subscribe(navUnknowns => this.navUnknowns = navUnknowns);
     this.fileChooser.baseURI.subscribe(baseURI => this.baseURI = baseURI);
+    this.view.showFileChooser.subscribe(showFileChooser => this.showFileChooser = showFileChooser);
   }
 
-  // Remember to encode URI before creating link: encodeURI()
+  toggleFileChooser() {
+    this.view.toggleFileChooserView();
+  }
+
   httpGetAsync(theUrl: string, callback: Function) {
     const xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() {
@@ -43,51 +49,19 @@ export class ChooseFileRobotComponent implements OnInit {
     });
   }
 
-  parse(response: string) {
-    const obj = JSON.parse(response);
-    console.log(obj);
-    const fileInfoArray = obj._embedded._state;
-    const fsFiles: string[] = [];
-    const fsDirs: string[] = [];
-    const fsUnknowns: string[] = [];
-    for (let i = 0; i < fileInfoArray.length; i++) {
-      const element = fileInfoArray[i];
-      const name = element._title;
-      const ext = name.substr(name.length - 3).toLowerCase();
-
-      if (element._type === 'fs-file' && ext === '.bt') { // Only accepted if type is file and extension is .bt
-        fsFiles.push(name);
-      } else if (element._type === 'fs-dir') {
-        fsDirs.push(name);
-      } else {
-        fsUnknowns.push(name);
-      }
-    }
-
-    // Update files, directories and unknowns in filechooser service
-    this.fileChooser.changeFiles(fsFiles);
-    this.fileChooser.changeDirectories(fsDirs);
-    this.fileChooser.changeUnknowns(fsUnknowns);
-  }
-
-  fetchFile(URI: string) {
-    fetch(URI)
-      .then(res => res.blob()) // Gets the response and returns it as a blob
-      .then(blob => {
-        console.log(blob);
-        const reader = new FileReader();
-        reader.onload = () => {
-            this.data.parseFile(reader.result.toString());
-        };
-        reader.readAsText(blob);
-      }
-    );
+  openFileChooser() {
+    this.httpRequestNoAuth();
+    this.view.toggleFileChooserView();
   }
 
   changeFile(fileName: string) {
+    this.data.changeFileName(fileName);
     const URI = this.baseURI + encodeURI(fileName);
     console.log('Change file URI: ' + URI);
     this.fileChooser.fetchFile(URI);
   }
 
+  changeDirectory(dirName: string) {
+    console.log('Not yet implemented ');
+  }
 }
