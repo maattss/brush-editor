@@ -7,10 +7,6 @@
 var digestAuthRequest = function (method, url, username, password) {
 	var self = this;
 
-	if (typeof CryptoJS === 'undefined' && typeof require === 'function') {
-		var CryptoJS = require('crypto-js');
-	}
-
 	this.scheme = null; // we just echo the scheme, to allow for 'Digest', 'X-Digest', 'JDigest' etc
 	this.nonce = null; // server issued nonce
 	this.realm = null; // server issued realm

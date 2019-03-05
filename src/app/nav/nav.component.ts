@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Brush } from '../brush';
 import { BrushService, ViewService } from '../_services/index';
 import { saveAs } from 'file-saver';
-import { parseHttpResponse } from 'selenium-webdriver/http';
 
-declare const myTest: any;
+declare const digestAuthRequest: any;
 
 @Component({
   selector: 'app-nav',
@@ -59,8 +58,22 @@ export class NavComponent implements OnInit {
     }
   }
 
-  myTestClick() {
-    console.log(myTest());
+  httpRequestWithDigest() {
+    const method   = 'GET';
+    const url      = 'http://localhost/fileservice/%24home/A1brush?json=1';
+    const user     = 'Default User';
+    const password = 'robotics';
+    const digest   = new digestAuthRequest(method, url, user, password);
+
+    digest.request(function(data) {
+      console.log('Data retrieved successfully');
+      console.log(data);
+      document.getElementById('result').innerHTML = 'Data retrieved successfully';
+      document.getElementById('data').innerHTML = JSON.stringify(data);
+    }, function(errorCode) {
+      console.log('no dice: ' + errorCode);
+      document.getElementById('result').innerHTML = 'Error: ' + errorCode;
+    });
   }
 
   parseFile(text: string) {
@@ -157,7 +170,7 @@ export class NavComponent implements OnInit {
       document.getElementById('result').innerHTML = 'Error: ' + errorCode;
     });
   }
-  httpRequestNoDigest() {
+  /*httpRequestNoDigest() {
     const xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() {
         if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
@@ -168,7 +181,7 @@ export class NavComponent implements OnInit {
     };
     xmlHttp.open('GET', 'http://localhost:80/fileservice/$HOME?json=1', true); // true for asynchronous
     xmlHttp.send(null);
-  }
+  }*/
   parseResponse(response: string) {
 
   }
