@@ -92,6 +92,7 @@ export class NavComponent implements OnInit {
     this.view.toggleFileChooserView();
   }
 
+  // Implement DIGEST Auth here
   httpGetAsync(theUrl: string, callback: Function) {
       const xmlHttp = new XMLHttpRequest();
       xmlHttp.onreadystatechange = function() {

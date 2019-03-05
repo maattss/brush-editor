@@ -32,28 +32,6 @@ export class ChooseFileRobotComponent implements OnInit {
     this.view.toggleFileChooserView();
   }
 
-  httpGetAsync(theUrl: string, callback: Function) {
-    const xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function() {
-        if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-          callback(xmlHttp.responseText);
-        }
-    };
-    xmlHttp.open('GET', theUrl, true); // true for asynchronous
-    xmlHttp.send(null);
-  }
-
-  httpRequestNoAuth() {
-    this.httpGetAsync(this.baseURI + '?json=1', (response: any) => {
-      this.fileChooser.parseResponse(response);
-    });
-  }
-
-  openFileChooser() {
-    this.httpRequestNoAuth();
-    this.view.toggleFileChooserView();
-  }
-
   changeFile(fileName: string) {
     this.data.changeFileName(fileName);
     const URI = this.baseURI + encodeURI(fileName);
