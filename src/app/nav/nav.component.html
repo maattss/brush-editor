@@ -100,10 +100,14 @@
         </ul>
     </div>
 </nav>
-<div>
+<div class="ml-2">
     <h1>API-testing</h1>
-    <button id="http-request">
-        Make request
+    <button type="button" id="http-request" class="btn btn-primary" (click)="httpRequestNoDigest()">
+        Make request (npm)
+    </button>
+    <br>
+    <button type="button" class="btn btn-primary" (click)="myTestClick()">
+        Make request (local)
     </button>
     <p id="result"></p>
     <p id="data"></p>

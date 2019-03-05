@@ -2,7 +2,7 @@
 // by @inorganik
 
 // dependent upon CryptoJS MD5 hashing:
-// https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js
+// http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js
 
 var digestAuthRequest = function (method, url, username, password) {
 	var self = this;
@@ -51,22 +51,18 @@ var digestAuthRequest = function (method, url, username, password) {
 	this.makeUnauthenticatedRequest = function(data) {
 		self.firstRequest = new XMLHttpRequest();
 		self.firstRequest.open(method, url, true);
-		self.firstRequest.setRequestHeader('Access-Control-Expose-Header', 'WWW-Authenticate');
-		self.firstRequest.setRequestHeader('Access-Control-Allow-Origin', 'http://127.0.0.1/');
-		self.firstRequest.setRequestHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
-		self.firstRequest.setRequestHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
-		
 		self.firstRequest.timeout = self.timeout;
 		// if we are posting, add appropriate headers
 		if (self.post) {
 			self.firstRequest.setRequestHeader('Content-type', 'application/json');
 		}
+
 		self.firstRequest.onreadystatechange = function() {
+
 			// 2: received headers,  3: loading, 4: done
 			if (self.firstRequest.readyState === 2) {
-				console.dirxml(self.firstRequest);
-				var responseHeaders = self.firstRequest.getResponseHeader('www-authenticate');
-				console.log("Responseheaders: " + responseHeaders);
+
+				var responseHeaders = self.firstRequest.getAllResponseHeaders();
 				responseHeaders = responseHeaders.split('\n');
 				// get authenticate header
 				var digestHeaders;

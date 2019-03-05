@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Brush } from '../brush';
 import { BrushService, ViewService } from '../_services/index';
 import { saveAs } from 'file-saver';
-import { digestAuthRequest } from '../../assets/js/digestAuthRequest.js';
+import { parseHttpResponse } from 'selenium-webdriver/http';
+
+declare const myTest: any;
 
 @Component({
   selector: 'app-nav',
@@ -55,6 +57,10 @@ export class NavComponent implements OnInit {
     } catch (error) {
       return;
     }
+  }
+
+  myTestClick() {
+    console.log(myTest());
   }
 
   parseFile(text: string) {
@@ -120,23 +126,50 @@ export class NavComponent implements OnInit {
     }
 
   }
-
+/*
+  httpRequestLocal() {
+    const url = 'http://127.0.0.1';
+    const digest = new digestAuthRequest('GET', url, 'Default User', 'robotics');
+    console.log(digest);
+  }
+*/
   httpRequest() {
     // Http request
-  const url = 'http://127.0.0.1';
+    const url = 'http://127.0.0.1';
 
-  // Create HTTP request object
-  const req = new digestAuthRequest('GET', url, 'Default User', 'robotics');
+    // Create HTTP request object
+    const digest = require('digest-auth-request');
+    console.log(digest);
 
-  // Make the request
-  req.request(function(data) {
-    console.log('Data retrieved successfully');
-    console.log(data);
-    document.getElementById('result').innerHTML = 'Data retrieved successfully';
-    document.getElementById('data').innerHTML = JSON.stringify(data);
-  }, function(errorCode) {
-    console.log('no dice: ' + errorCode);
-    document.getElementById('result').innerHTML = 'Error: ' + errorCode;
-  });
+    // create digest request object
+    console.log(digest());
+    const getRequest = digest();
+    // console.log(getRequest);
+
+    // Make the request
+    getRequest.request(function(datax) {
+      console.log('Data retrieved successfully');
+      console.log(datax);
+      document.getElementById('result').innerHTML = 'Data retrieved successfully';
+      document.getElementById('data').innerHTML = JSON.stringify(datax);
+    }, function(errorCode) {
+      console.log('no dice: ' + errorCode);
+      document.getElementById('result').innerHTML = 'Error: ' + errorCode;
+    });
+  }
+  httpRequestNoDigest() {
+    const xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+          // callback(xmlHttp.responseText);
+          console.log(xmlHttp.responseText);
+          parseResponse(xmlHttp.responseText);
+        }
+    };
+    xmlHttp.open('GET', 'http://localhost:80/fileservice/$HOME?json=1', true); // true for asynchronous
+    xmlHttp.send(null);
+  }
+  parseResponse(response: string) {
+
   }
 }
