@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Brush } from './brush';
-import { BrushService } from './_services/index';
+import { BrushService, ViewService } from './_services/index';
 
 @Component({
   selector: 'app-root',

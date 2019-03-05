@@ -21,6 +21,7 @@ import { InfoMsgComponent } from './info-msg/info-msg.component';
 // Services
 import { CookieService } from 'ngx-cookie-service';
 import { PagerService } from './_services/index';
+import { ChooseFileRobotComponent } from './choose-file-robot/choose-file-robot.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { PagerService } from './_services/index';
     BrushSettingsComponent,
     BrushGraphComponent,
     BrushInfoComponent,
-    InfoMsgComponent
+    InfoMsgComponent,
+    ChooseFileRobotComponent
   ],
   imports: [
     BrowserModule,

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Brush } from '../brush';
 import { BrushService, ViewService } from '../_services/index';
 import { saveAs } from 'file-saver';
+import { ChooseFileService } from '../_services/choose-file.service';
 
 declare const digestAuthRequest: any;
 
@@ -12,19 +13,21 @@ declare const digestAuthRequest: any;
 })
 export class NavComponent implements OnInit {
 
-  constructor(private data: BrushService, private view: ViewService) { }
+  constructor(private data: BrushService, private view: ViewService, private fileChooser: ChooseFileService) { }
 
   // Class variables
   private brushes: Brush[];
   private file: any;
   private fileComment: string;
   private fileName: string;
+  private baseURI: string;
 
   ngOnInit() {
     // Subscribe
     this.data.currentBrush.subscribe(brushes => this.brushes = brushes);
     this.data.fileComment.subscribe(fileComment => this.fileComment = fileComment);
     this.data.fileName.subscribe(fileName => this.fileName = fileName);
+    this.fileChooser.baseURI.subscribe(baseURI => this.baseURI = baseURI);
   }
 
   toggleFileInfo() {
@@ -46,11 +49,11 @@ export class NavComponent implements OnInit {
     // File reader
     const fileReader = new FileReader();
     fileReader.onload = () => {
-      this.parseFile(fileReader.result.toString());
+      this.data.parseFile(fileReader.result.toString());
       this.data.changeCurrentBrushID(0);
     };
 
-    // Prevents error in console when cancelling file upload
+    // Prevents error in console when canceling file upload
     try {
       fileReader.readAsText(this.file);
     } catch (error) {
@@ -139,50 +142,27 @@ export class NavComponent implements OnInit {
     }
 
   }
-/*
-  httpRequestLocal() {
-    const url = 'http://127.0.0.1';
-    const digest = new digestAuthRequest('GET', url, 'Default User', 'robotics');
-    console.log(digest);
+
+  openFileChooser() {
+    this.httpRequestNoAuth();
+    this.view.toggleFileChooserView();
   }
-*/
-  httpRequest() {
-    // Http request
-    const url = 'http://127.0.0.1';
 
-    // Create HTTP request object
-    const digest = require('digest-auth-request');
-    console.log(digest);
+  // Implement DIGEST Auth here
+  httpGetAsync(theUrl: string, callback: Function) {
+      const xmlHttp = new XMLHttpRequest();
+      xmlHttp.onreadystatechange = function() {
+          if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+            callback(xmlHttp.responseText);
+          }
+      };
+      xmlHttp.open('GET', theUrl, true); // true for asynchronous
+      xmlHttp.send(null);
+  }
 
-    // create digest request object
-    console.log(digest());
-    const getRequest = digest();
-    // console.log(getRequest);
-
-    // Make the request
-    getRequest.request(function(datax) {
-      console.log('Data retrieved successfully');
-      console.log(datax);
-      document.getElementById('result').innerHTML = 'Data retrieved successfully';
-      document.getElementById('data').innerHTML = JSON.stringify(datax);
-    }, function(errorCode) {
-      console.log('no dice: ' + errorCode);
-      document.getElementById('result').innerHTML = 'Error: ' + errorCode;
+  httpRequestNoAuth() {
+    this.httpGetAsync(this.baseURI + '?json=1', (response: any) => {
+      this.fileChooser.parseResponse(response);
     });
-  }
-  /*httpRequestNoDigest() {
-    const xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function() {
-        if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-          // callback(xmlHttp.responseText);
-          console.log(xmlHttp.responseText);
-          parseResponse(xmlHttp.responseText);
-        }
-    };
-    xmlHttp.open('GET', 'http://localhost:80/fileservice/$HOME?json=1', true); // true for asynchronous
-    xmlHttp.send(null);
-  }*/
-  parseResponse(response: string) {
-
   }
 }
