@@ -13,7 +13,7 @@
                 <a class="nav-link d-inline-block pt-0 pb-0" href="#" *ngIf="brushes.length>0" mat-raised-button matTooltip="Export file to robot" matTooltipShowDelay="1000"> <!-- Hidden when no brushfile is choosed -->
                     <i class="fas fa-file-download fa-2x navbar-icons"></i>
                 </a>
-                <a class="nav-link d-inline-block pt-0 pb-0" href="#" mat-raised-button matTooltip="Choose file from the robot to display" matTooltipShowDelay="1000">
+                <a class="nav-link d-inline-block pt-0 pb-0" href="#" (click)="openFileChooser()" mat-raised-button matTooltip="Choose file from the robot to display" matTooltipShowDelay="1000">
                     <i class="fas fa-file-upload fa-2x navbar-icons"></i>
                 </a>
             </div>
@@ -47,7 +47,7 @@
                 <span >Robot: Export file</span> <!-- Text only when navbar is collapsed -->
             </a>
         </li>
-        <li class="nav-item d-lg-none" mat-raised-button matTooltip="Choose file from the robot to display" matTooltipShowDelay="1000" matTooltipPosition="right">
+        <li class="nav-item d-lg-none" (click)=" openFileChooser()" mat-raised-button matTooltip="Choose file from the robot to display" matTooltipShowDelay="1000" matTooltipPosition="right">
             <a class="nav-link" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">
                 <span *ngIf="brushes.length<=0">Robot: Choose file</span> <!-- Text only when navbar is collapsed -->
                 <span *ngIf="brushes.length>0">Robot: Choose new file</span>
@@ -100,3 +100,13 @@
         </ul>
     </div>
 </nav>
+<!--
+<div class="ml-2 mt-2">
+    <button type="button" class="btn btn-primary" (click)="httpRequestWithDigest()">
+        Make request with Digest
+    </button>
+    <p id="result">Requesting...</p>
+    <p id="data"></p>
+</div>
+-->
+
