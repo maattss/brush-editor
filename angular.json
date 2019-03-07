@@ -29,10 +29,7 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": [
-              "src/assets/js/custom.js",
-              "src/assets/js/digestAuth.js"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
