@@ -63,7 +63,7 @@ export class NavComponent implements OnInit {
 
   httpRequestWithDigest() {
     const method   = 'GET';
-    const url      = 'http://localhost/fileservice/%24home/A1brush?json=1';
+    const url      = 'http://localhost/fileservice/%24home?json=1';
     const user     = 'Default User';
     const password = 'robotics';
     const digest   = new digestAuthRequest(method, url, user, password);
