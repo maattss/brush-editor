@@ -14,14 +14,12 @@ export class BrushSettingsComponent implements OnInit {
 
   // Class variables
   private brushes: Brush[];
-  private showSettings: boolean;
   private maxChannelValue: number;
   private initialized: boolean;
 
   ngOnInit() {
     // Subscriptions
     this.data.currentBrush.subscribe(brushes => this.brushes = brushes);
-    this.view.showSettings.subscribe(showSettings => this.showSettings = showSettings);
     this.data.maxChannelValue.subscribe(maxChannelValue => {
       this.maxChannelValue = maxChannelValue;
       if (this.initialized) {

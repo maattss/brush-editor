@@ -143,7 +143,7 @@ var digestAuthRequest = function (method, url, username, password) {
 			}
 		}
 	}
-	this.makeAuthenticatedRequest= function() {
+	this.makeAuthenticatedRequest = function() {
 
 		self.response = self.formulateResponse();
 		self.authenticatedRequest = new XMLHttpRequest();

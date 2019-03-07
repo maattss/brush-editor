@@ -124,7 +124,7 @@ export class NavComponent implements OnInit {
   }
 
   openFileChooser() {
-    this.fileChooser.httpRequestWithDigest();
+    this.fileChooser.httpGetWithDigest();
     this.view.toggleFileChooserView();
   }
 }

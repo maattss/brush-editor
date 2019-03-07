@@ -14,14 +14,14 @@ export class BrushInfoComponent implements OnInit {
   // Class variables
   private fileComment: string;
   private fileName: string;
-  private showFileInfo: boolean;
+
 
   ngOnInit() {
     // Subscriptions
     this.data.fileComment.subscribe(fileComment => this.fileComment = fileComment);
     this.data.fileName.subscribe(fileName => this.fileName = fileName);
-    this.view.showFileInfo.subscribe(showFileInfo => this.showFileInfo = showFileInfo);
   }
+
   saveFileInfo() {
     this.toggleFileInfo();
   }

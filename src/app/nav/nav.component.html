@@ -10,11 +10,8 @@
         <!-- File upload/download setting large screen-->
         <li class="nav-item d-none d-lg-block ml-2" > 
             <div>
-                <a class="nav-link d-inline-block pt-0 pb-0" href="#" *ngIf="brushes.length>0" mat-raised-button matTooltip="Export file to robot" matTooltipShowDelay="1000"> <!-- Hidden when no brushfile is choosed -->
-                    <i class="fas fa-file-download fa-2x navbar-icons"></i>
-                </a>
-                <a class="nav-link d-inline-block pt-0 pb-0" href="#" (click)="openFileChooser()" mat-raised-button matTooltip="Choose file from the robot to display" matTooltipShowDelay="1000">
-                    <i class="fas fa-file-upload fa-2x navbar-icons"></i>
+                <a class="nav-link d-inline-block pt-0 pb-0" href="#" (click)="openFileChooser()" mat-raised-button matTooltip="Open robot file chooser" matTooltipShowDelay="1000">
+                    <i class="fas fa-folder-open fa-2x navbar-icons"></i>
                 </a>
             </div>
             <div class="text-center mt-1">

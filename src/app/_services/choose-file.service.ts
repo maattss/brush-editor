@@ -62,12 +62,12 @@ export class ChooseFileService {
       }
       this.url = newUrl;
       this.changeCurrentUrl(newUrl);
-      this.httpRequestWithDigest();
+      this.httpGetWithDigest();
     }
   }
 
-  httpRequestWithDigest() {
-    const digest = new digestAuthRequest(this.method, this.url + '?json=1', this.userName, this.password);
+  httpGetWithDigest() {
+    const digest = new digestAuthRequest('GET', this.url + '?json=1', this.userName, this.password);
     digest.request((response: any) => {
       console.log('API response: ', response);
       this.parseResponse(response);
@@ -117,6 +117,25 @@ export class ChooseFileService {
         reader.readAsText(blob);
       }
     );
+  }
+
+  exportOpenFile() {
+    console.log('Not implemented yet');
+    this.httpPostWithDigest();
+  }
+
+  httpPostWithDigest() {
+    const fileName = 'test.txt';
+    const JSONdata = '';
+    // API expects PUT
+    // curl --digest -u "Default User":robotics -d -X PUT "http://localhost/fileservice/$home/test.txt"
+    const digest = new digestAuthRequest('POST', this.url + fileName, this.userName, this.password);
+    digest.request(JSONdata, (response: any) => {
+      console.log('API response: ', response);
+      this.parseResponse(response);
+    }, function(errorCode: any) {
+      console.log('Error: ', errorCode);
+    });
   }
 
   // // Old school regular XMLHttpRequest

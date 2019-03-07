@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChooseFileService } from '../_services/choose-file.service';
 import { BrushService, ViewService } from '../_services';
+import { Brush } from '../brush';
 
 @Component({
   selector: 'app-choose-file-robot',
@@ -12,6 +13,7 @@ export class ChooseFileRobotComponent implements OnInit {
   constructor(private fileChooser: ChooseFileService, private data: BrushService, private view: ViewService) { }
 
   // Class variables
+  private brushes: Brush[];
   private navFiles: string[];
   private navDirectories: string[];
   private navUnknowns: string[];
@@ -22,13 +24,13 @@ export class ChooseFileRobotComponent implements OnInit {
 
   ngOnInit() {
     // Subscribe
+    this.data.currentBrush.subscribe(brushes => this.brushes = brushes);
     this.fileChooser.files.subscribe(navFiles => this.navFiles = navFiles);
     this.fileChooser.directories.subscribe(navDirectories => this.navDirectories = navDirectories);
     this.fileChooser.unknowns.subscribe(navUnknowns => this.navUnknowns = navUnknowns);
     this.fileChooser.currentUrl.subscribe(currentUrl => {
       this.currentUrl = currentUrl;
       const urlSplitted = currentUrl.split('/');
-      console.log(urlSplitted);
       this.currentUrlView = 'Home';
       for (let i = 5; i < urlSplitted.length; i++) {
         this.currentUrlView += '/' + urlSplitted[i];
@@ -49,7 +51,7 @@ export class ChooseFileRobotComponent implements OnInit {
 
   moveIntoDirectory(dirName: string) {
     this.fileChooser.addToUrl(dirName);
-    this.fileChooser.httpRequestWithDigest();
+    this.fileChooser.httpGetWithDigest();
   }
 
   back() {
