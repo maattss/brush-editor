@@ -20,14 +20,12 @@ export class NavComponent implements OnInit {
   private file: any;
   private fileComment: string;
   private fileName: string;
-  private baseURI: string;
 
   ngOnInit() {
     // Subscribe
     this.data.currentBrush.subscribe(brushes => this.brushes = brushes);
     this.data.fileComment.subscribe(fileComment => this.fileComment = fileComment);
     this.data.fileName.subscribe(fileName => this.fileName = fileName);
-    this.fileChooser.baseURI.subscribe(baseURI => this.baseURI = baseURI);
   }
 
   toggleFileInfo() {
@@ -59,24 +57,6 @@ export class NavComponent implements OnInit {
     } catch (error) {
       return;
     }
-  }
-
-  httpRequestWithDigest() {
-    const method   = 'GET';
-    const url      = 'http://localhost/fileservice/%24home?json=1';
-    const user     = 'Default User';
-    const password = 'robotics';
-    const digest   = new digestAuthRequest(method, url, user, password);
-
-    digest.request(function(data) {
-      console.log('Data retrieved successfully');
-      console.log(data);
-      document.getElementById('result').innerHTML = 'Data retrieved successfully';
-      document.getElementById('data').innerHTML = JSON.stringify(data);
-    }, function(errorCode) {
-      console.log('no dice: ' + errorCode);
-      document.getElementById('result').innerHTML = 'Error: ' + errorCode;
-    });
   }
 
   parseFile(text: string) {
@@ -144,25 +124,7 @@ export class NavComponent implements OnInit {
   }
 
   openFileChooser() {
-    this.httpRequestNoAuth();
+    this.fileChooser.httpRequestWithDigest();
     this.view.toggleFileChooserView();
-  }
-
-  // Implement DIGEST Auth here
-  httpGetAsync(theUrl: string, callback: Function) {
-      const xmlHttp = new XMLHttpRequest();
-      xmlHttp.onreadystatechange = function() {
-          if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-            callback(xmlHttp.responseText);
-          }
-      };
-      xmlHttp.open('GET', theUrl, true); // true for asynchronous
-      xmlHttp.send(null);
-  }
-
-  httpRequestNoAuth() {
-    this.httpGetAsync(this.baseURI + '?json=1', (response: any) => {
-      this.fileChooser.parseResponse(response);
-    });
   }
 }

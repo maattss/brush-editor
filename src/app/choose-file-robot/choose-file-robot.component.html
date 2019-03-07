@@ -2,11 +2,21 @@
     <button type="button" class="close mb-3" aria-label="Close" (click)="toggleFileChooser()"
     mat-raised-button matTooltip="Close file chooser" matTooltipShowDelay="1000">
     <span aria-hidden="true">&times;</span>
-  </button>
-  <p *ngFor="let file of navFiles" >
-      <i class="far fa-file mr-1"></i><a href="#" (click)="toggleFileChooser(); changeFile(file)">{{ file }}</a>
-  </p>
-  <p *ngFor="let dir of navDirectories" >
-      <i class="far fa-folder mr-1"></i><a href="#" (click)="toggleFileChooser(); changeDirectory(dir)">{{ dir }}</a>
-  </p>
+    </button>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+        <li [class.disabled]="!backEnabled" class="page-item">
+            <a class="page-link" href="#" aria-label="Previous" (click)="back()">
+            <i [class.disabled]="!backEnabled" class="fas fa-long-arrow-alt-left"></i>
+            </a>
+        </li>
+        <li class="page-item disabled"><a class="page-link" href="#" id="currentPath">{{currentUrlView}}</a></li> 
+        </ul>
+    </nav>
+    <p *ngFor="let dir of navDirectories" class="menuElement rounded p-0 pt-2 pb-2 m-0" (click)="moveIntoDirectory(dir)">
+        <i class="far fa-folder fa-lg icon"></i><span>{{ dir }}</span>
+    </p>
+    <p *ngFor="let file of navFiles" class="menuElement rounded p-0 pt-2 pb-2 m-0" (click)="toggleFileChooser(); changeFile(file)">
+        <i class="far fa-file fa-lg icon"></i><span>{{ file }}</span>
+    </p>
 </div>
