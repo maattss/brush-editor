@@ -35,6 +35,9 @@ export class BrushService {
   changeFileName(name: string) {
     this.fileNameSrc.next(name);
   }
+  getFileName() {
+    return this.fileNameSrc.value;
+  }
   changeCurrentBrushID(id: number) {
     this.currentBrushIdSrc.next(id);
   }
@@ -73,10 +76,62 @@ export class BrushService {
             ch4: +channels[3],
             ch5: +channels[4],
             desc: description
-          });
+        });
         counter++;
       }
     });
     this.changeBrush(brushes);
+  }
+
+  getExportableString() {
+   let text = '';
+    if (this.fileCommentSrc.value) {  // Add comment to file if it exists
+      text += '#' + this.fileCommentSrc.value + ' \r\n';
+    }
+
+    // Add brushes to file
+    for (const brush of this.brushSrc.value) {
+      text += brush.ch1 + ',' + brush.ch2 + ',' + brush.ch3;
+      if (brush.ch4) {
+        text += ',' + brush.ch4;
+      }
+      if (brush.ch5) {
+        text += ',' + brush.ch5;
+      }
+      if (brush.desc !== '') {
+        text += '#' + brush.desc;
+      }
+      if (!(brush.brushId >= this.brushSrc.value.length)) {
+          text += ' \r\n';
+      }
+    }
+  return text;
+  }
+
+  getJSONdata() {
+    const collection = [];
+    if (this.fileCommentSrc.value) {  // Add comment to file if it exists
+      collection.push('#' + this.fileCommentSrc.value + ' \r\n');
+    }
+
+    // Add brushes to file
+    for (const brush of this.brushSrc.value) {
+      let text = '';
+      text += brush.ch1 + ',' + brush.ch2 + ',' + brush.ch3;
+      if (brush.ch4) {
+        text += ',' + brush.ch4;
+      }
+      if (brush.ch5) {
+        text += ',' + brush.ch5;
+      }
+      if (brush.desc !== '') {
+        text += '#' + brush.desc;
+      }
+      if (!(brush.brushId >= this.brushSrc.value.length)) {
+          text += ' \r\n';
+      }
+      collection.push(text);
+    }
+    return JSON.stringify(collection);
   }
 }

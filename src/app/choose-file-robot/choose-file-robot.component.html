@@ -19,10 +19,15 @@
             </li>
         </ul>
     </nav>
-    <p *ngFor="let dir of navDirectories" class="menuElement rounded p-0 pt-2 pb-2 m-0" (click)="moveIntoDirectory(dir)">
+    <p *ngIf="navDirectories.length === 0 && navFiles.length === 0">
+        No files or directories
+    </p>
+    <p *ngFor="let dir of navDirectories" class="menuElement rounded p-0 pt-2 pb-2 m-0" (click)="moveIntoDirectory(dir)"
+        mat-raised-button matTooltip="Move into directory" matTooltipShowDelay="1000" matTooltipPosition="above">
         <i class="far fa-folder fa-lg icon"></i><span>{{ dir }}</span>
     </p>
-    <p *ngFor="let file of navFiles" class="menuElement rounded p-0 pt-2 pb-2 m-0" (click)="toggleFileChooser(); changeFile(file)">
+    <p *ngFor="let file of navFiles" class="menuElement rounded p-0 pt-2 pb-2 m-0" (click)="toggleFileChooser(); changeFile(file)"
+        mat-raised-button matTooltip="Open file" matTooltipShowDelay="1000" matTooltipPosition="above">
         <i class="far fa-file fa-lg icon"></i><span>{{ file }}</span>
-    </p>
+</p>
 </div>

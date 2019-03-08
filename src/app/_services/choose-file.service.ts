@@ -12,11 +12,10 @@ export class ChooseFileService {
   private fileSrc         = new BehaviorSubject<Array<string>>([]);
   private directorySrc    = new BehaviorSubject<Array<string>>([]);
   private unknownSrc      = new BehaviorSubject<Array<string>>([]);
-  private currentUrlSrc   = new BehaviorSubject<string>('http://localhost:80/fileservice/$HOME/');
+  private currentUrlSrc   = new BehaviorSubject<string>('http://localhost/fileservice/$HOME/');
   private backEnabledSrc  = new BehaviorSubject<boolean>(false);
 
   // Http request values
-  private method = 'GET';
   private url = 'http://localhost/fileservice/$home/';
   private userName = 'Default User';
   private password = 'robotics';
@@ -60,6 +59,7 @@ export class ChooseFileService {
       if (newFolder.toLowerCase() === '$home') {
         this.backEnabledSrc.next(false);
       }
+
       this.url = newUrl;
       this.changeCurrentUrl(newUrl);
       this.httpGetWithDigest();
@@ -112,30 +112,35 @@ export class ChooseFileService {
       .then(blob => {
         const reader = new FileReader();
         reader.onload = () => {
+            console.log(reader.result);
             this.data.parseFile(reader.result.toString());
         };
+        console.log(blob);
         reader.readAsText(blob);
       }
     );
   }
 
   exportOpenFile() {
-    console.log('Not implemented yet');
+    console.log('Does not work yet..');
+    // TODO: Not quite figured out the fileformat yet, also need to include errorhandling for unsuccessful uploads
     this.httpPostWithDigest();
+    this.httpGetWithDigest();
   }
 
   httpPostWithDigest() {
-    const fileName = 'test.txt';
-    const JSONdata = '';
-    // API expects PUT
-    // curl --digest -u "Default User":robotics -d -X PUT "http://localhost/fileservice/$home/test.txt"
-    const digest = new digestAuthRequest('POST', this.url + fileName, this.userName, this.password);
-    digest.request(JSONdata, (response: any) => {
+    // const fileName = this.data.getFileName();
+    // console.log(fileName);
+    const fileName = 'test3.bt';
+    const postData = this.data.getJSONdata();
+    console.log(postData);
+    const digest = new digestAuthRequest('PUT', this.url + fileName + '?json=1', this.userName, this.password);
+    digest.request((response: any) => {
       console.log('API response: ', response);
       this.parseResponse(response);
     }, function(errorCode: any) {
       console.log('Error: ', errorCode);
-    });
+    }, postData);
   }
 
   // // Old school regular XMLHttpRequest

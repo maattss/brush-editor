@@ -57,4 +57,8 @@ export class ChooseFileRobotComponent implements OnInit {
   back() {
     this.fileChooser.moveBack();
   }
+
+  exportFile() {
+    this.fileChooser.exportOpenFile();
+  }
 }
