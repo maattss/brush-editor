@@ -124,6 +124,8 @@ export class ChooseFileService {
   exportOpenFile() {
     console.log('Does not work yet..');
     // TODO: Not quite figured out the fileformat yet, also need to include errorhandling for unsuccessful uploads
+    // http://developercenter.robotstudio.com/blobproxy/devcenter/Robot_Web_Services/html/fs_file_upload_page.html
+    // https://github.com/inorganik/digest-auth-request
     this.httpPostWithDigest();
     this.httpGetWithDigest();
   }
