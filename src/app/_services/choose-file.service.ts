@@ -12,11 +12,10 @@ export class ChooseFileService {
   private fileSrc         = new BehaviorSubject<Array<string>>([]);
   private directorySrc    = new BehaviorSubject<Array<string>>([]);
   private unknownSrc      = new BehaviorSubject<Array<string>>([]);
-  private currentUrlSrc   = new BehaviorSubject<string>('http://localhost/fileservice/$HOME/');
   private backEnabledSrc  = new BehaviorSubject<boolean>(false);
 
   // Http request values
-  private url = 'http://localhost/fileservice/$home/';
+  private currentUrlSrc   = new BehaviorSubject<string>('http://localhost/fileservice/$HOME/');
   private userName = 'Default User';
   private password = 'robotics';
 
@@ -41,12 +40,11 @@ export class ChooseFileService {
     this.currentUrlSrc.next(url);
   }
   addToUrl(url: string) {
-    this.changeCurrentUrl(this.url + url);
-    this.url = this.url + encodeURI(url) + '/';
+    this.changeCurrentUrl(this.currentUrlSrc.value + encodeURI(url) + '/');
     this.backEnabledSrc.next(true);
   }
   moveBack() {
-    const urlSplitted = this.url.split('/');
+    const urlSplitted = this.currentUrlSrc.value.split('/');
 
     if (urlSplitted[urlSplitted.length - 2] !== '$home') {
       let newUrl = '';
@@ -60,23 +58,21 @@ export class ChooseFileService {
         this.backEnabledSrc.next(false);
       }
 
-      this.url = newUrl;
       this.changeCurrentUrl(newUrl);
-      this.httpGetWithDigest();
+      this.getFSResource();
     }
   }
 
-  httpGetWithDigest() {
-    const digest = new digestAuthRequest('GET', this.url + '?json=1', this.userName, this.password);
+  getFSResource() {
+    const digest = new digestAuthRequest('GET', this.currentUrlSrc.value + '?json=1', this.userName, this.password);
     digest.request((response: any) => {
-      console.log('API response: ', response);
-      this.parseResponse(response);
+      this.parseFSResponse(response);
     }, function(errorCode: any) {
       console.log('Error: ', errorCode);
     });
   }
 
-  parseResponse(response: any) {
+  parseFSResponse(response: any) {
     const fileInfoArray = response._embedded._state;
     const fsFiles: string[] = []; // File names
     const fsDirs: string[] = [];  // Directories
@@ -105,61 +101,28 @@ export class ChooseFileService {
   }
 
   // Download and parse brush file from Robot Web Service API
-  fetchFile(fileName: string) {
-    const fileUrl = this.url + encodeURI(fileName);
-    fetch(fileUrl)
-      .then(res => res.blob()) // Gets the response and returns it as a blob
-      .then(blob => {
-        const reader = new FileReader();
-        reader.onload = () => {
-            console.log(reader.result);
-            this.data.parseFile(reader.result.toString());
-        };
-        console.log(blob);
-        reader.readAsText(blob);
-      }
-    );
+  getFile(fileName: string) {
+    const digest = new digestAuthRequest('GET', this.currentUrlSrc.value + encodeURI(fileName), this.userName, this.password);
+    digest.request((response: any) => {
+      this.data.parseFile(response.toString());
+    }, function(errorCode: any) {
+      console.log('Error: ', errorCode);
+    });
   }
 
   exportOpenFile() {
-    console.log('Does not work yet..');
-    // TODO: Not quite figured out the fileformat yet, also need to include errorhandling for unsuccessful uploads
-    // http://developercenter.robotstudio.com/blobproxy/devcenter/Robot_Web_Services/html/fs_file_upload_page.html
-    // https://github.com/inorganik/digest-auth-request
-    this.httpPostWithDigest();
-    this.httpGetWithDigest();
+    this.postFile(); // Export file
+    this.getFSResource(); // get updated view for the file explorer
   }
 
-  httpPostWithDigest() {
-    // const fileName = this.data.getFileName();
-    // console.log(fileName);
-    const fileName = 'test3.bt';
-    const postData = this.data.getJSONdata();
-    console.log(postData);
-    const digest = new digestAuthRequest('PUT', this.url + fileName + '?json=1', this.userName, this.password);
+  postFile() {
+    const fileName = this.data.getFileName();
+    const postData = this.data.getExportableString();
+    const digest = new digestAuthRequest('PUT', this.currentUrlSrc.value + fileName, this.userName, this.password);
     digest.request((response: any) => {
-      console.log('API response: ', response);
-      this.parseResponse(response);
+      this.parseFSResponse(response);
     }, function(errorCode: any) {
       console.log('Error: ', errorCode);
     }, postData);
   }
-
-  // // Old school regular XMLHttpRequest
-  // httpGetAsync(theUrl: string, callback: Function) {
-  //     const xmlHttp = new XMLHttpRequest();
-  //     xmlHttp.onreadystatechange = function() {
-  //         if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-  //           callback(xmlHttp.responseText);
-  //         }
-  //     };
-  //     xmlHttp.open('GET', theUrl, true); // true for asynchronous
-  //     xmlHttp.send(null);
-  // }
-
-  // httpRequestNoAuth() {
-  //   this.httpGetAsync(this.currentUrl + '?json=1', (response: any) => {
-  //     this.fileChooser.parseResponse(response);
-  //   });
-  // }
 }
