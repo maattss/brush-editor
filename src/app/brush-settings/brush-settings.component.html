@@ -1,6 +1,6 @@
 <div class="alert alert-secondary fade show mb-1 mt-1" role="alert">
     <button type="button" class="close mb-3" aria-label="Close" (click)="toggleSettings()"
-        mat-raised-button matTooltip="Close settings" matTooltipShowDelay="1000">
+        mat-raised-button matTooltip="Close settings" matTooltipShowDelay="1000" matTooltipClass="primary-tooltip">
         <span aria-hidden="true">&times;</span>
     </button>
     <div class="mb-1 mr-1 d-md-inline-block d-block">
@@ -10,11 +10,11 @@
                 <input type="number" class="form-control" id="maxChannelvalue" aria-describedby="maxChannelValue" placeholder=0 value="{{maxChannelValue}}" max="10000" min="1">
             </div>
             <button type="button" class="btn btn-primary" (click)="updateSettings()" 
-                mat-raised-button matTooltip="Update brush editor settings" matTooltipShowDelay="1000">
+                mat-raised-button matTooltip="Update brush editor settings" matTooltipShowDelay="1000" matTooltipClass="primary-tooltip">
                 Update settings
             </button>
             <button type="button" class="btn btn-secondary ml-1" (click)="resetSettings()"
-                mat-raised-button matTooltip="Reset all settings to default (channel names, max channel value etc... )" matTooltipShowDelay="1000">
+                mat-raised-button matTooltip="Reset all settings to default (channel names, max channel value, etc.)" matTooltipShowDelay="1000" matTooltipClass="primary-tooltip">
                 Reset all
             </button>
         </form>

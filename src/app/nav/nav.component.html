@@ -10,7 +10,7 @@
         <!-- File upload/download setting large screen-->
         <li class="nav-item d-none d-lg-block ml-2" > 
             <div>
-                <a class="nav-link d-inline-block pt-0 pb-0" href="#" (click)="openFileChooser()" mat-raised-button matTooltip="Open robot file chooser" matTooltipShowDelay="1000">
+                <a class="nav-link d-inline-block pt-0 pb-0" href="#" (click)="openFileChooser()" mat-raised-button matTooltip="Open robot file chooser" matTooltipShowDelay="1000" matTooltipClass="primary-tooltip">
                     <i class="fas fa-folder-open fa-2x navbar-icons"></i>
                 </a>
             </div>
@@ -21,10 +21,10 @@
 
         <li class="nav-item d-none d-lg-block ml-2" >
             <div>
-                <a class="nav-link d-inline-block pt-0 pb-0" href="#" (click)="saveFileAs()" *ngIf="brushes.length>0" mat-raised-button matTooltip="Export file to your device" matTooltipShowDelay="1000"> <!-- Hidden when no brushfile is choosed -->
+                <a class="nav-link d-inline-block pt-0 pb-0" href="#" (click)="saveFileAs()" *ngIf="brushes.length>0" mat-raised-button matTooltip="Export file to your device" matTooltipShowDelay="1000" matTooltipClass="primary-tooltip"> <!-- Hidden when no brushfile is choosed -->
                     <i class="fas fa-file-download fa-2x navbar-icons"></i>
                 </a>
-                <a class="nav-link d-inline-block pt-0 pb-0" href="#" mat-raised-button matTooltip="Choose local file to display" matTooltipShowDelay="1000">
+                <a class="nav-link d-inline-block pt-0 pb-0" href="#" mat-raised-button matTooltip="Open local file chooser" matTooltipShowDelay="1000" matTooltipClass="primary-tooltip">
                     <div class="fileupload">
                         <input type="file" id="theFile" aria-describedby="fileUpload" (change)="fileChanged($event)">
                     </div>
@@ -39,23 +39,23 @@
         </li>
 
         <!-- File upload/download setting small screen-->
-        <li class="nav-item d-lg-none" *ngIf="brushes.length>0" mat-raised-button matTooltip="Export file to robot" matTooltipShowDelay="1000" matTooltipPosition="right"> <!--  Hidden when no brushfile is choosed -->
+        <li class="nav-item d-lg-none" *ngIf="brushes.length>0" mat-raised-button matTooltip="Export file to robot" matTooltipShowDelay="1000" matTooltipPosition="right" matTooltipClass="primary-tooltip"> <!--  Hidden when no brushfile is choosed -->
             <a class="nav-link" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">
                 <span >Robot: Export file</span> <!-- Text only when navbar is collapsed -->
             </a>
         </li>
-        <li class="nav-item d-lg-none" (click)=" openFileChooser()" mat-raised-button matTooltip="Choose file from the robot to display" matTooltipShowDelay="1000" matTooltipPosition="right">
+        <li class="nav-item d-lg-none" (click)=" openFileChooser()" mat-raised-button matTooltip="Choose file from the robot to display" matTooltipShowDelay="1000" matTooltipPosition="right" matTooltipClass="primary-tooltip">
             <a class="nav-link" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">
                 <span *ngIf="brushes.length<=0">Robot: Choose file</span> <!-- Text only when navbar is collapsed -->
                 <span *ngIf="brushes.length>0">Robot: Choose new file</span>
             </a>
         </li>
-        <li class="nav-item d-lg-none" *ngIf="brushes.length>0"  mat-raised-button matTooltip="Export file to your device" matTooltipShowDelay="1000" matTooltipPosition="right"> <!--  Hidden when no brushfile is choosed -->
+        <li class="nav-item d-lg-none" *ngIf="brushes.length>0"  mat-raised-button matTooltip="Export file to your device" matTooltipShowDelay="1000" matTooltipPosition="right" matTooltipClass="primary-tooltip"> <!--  Hidden when no brushfile is choosed -->
             <a class="nav-link" href="#" data-toggle="collapse" data-target=".navbar-collapse.show" (click)="saveFileAs()">
             <span class="d-lg-none">Local: Export file</span> <!-- Text only when navbar is collapsed -->
             </a>
         </li>
-        <li class="nav-item d-lg-none" mat-raised-button matTooltip="Choose local file to display" matTooltipShowDelay="1000" matTooltipPosition="right">
+        <li class="nav-item d-lg-none" mat-raised-button matTooltip="Choose local file to display" matTooltipShowDelay="1000" matTooltipPosition="right" matTooltipClass="primary-tooltip">
             <a class="nav-link d-inline-block pt-0 pb-0" href="#">
                 <div class="fileupload">
                     <input type="file" id="theFile" aria-describedby="fileUpload" (change)="fileChanged($event)">
@@ -72,10 +72,10 @@
 
         <!-- File info -->
         <li class="nav-item text-muted" *ngIf="brushes.length>0">
-            <a class="nav-link d-lg-none" href="#" mat-raised-button matTooltip="Show/hide file information" matTooltipShowDelay="1000" matTooltipPosition="right">
+            <a class="nav-link d-lg-none" href="#" mat-raised-button matTooltip="Show/hide file information" matTooltipShowDelay="1000" matTooltipPosition="right" matTooltipClass="primary-tooltip">
                 <span (click)="toggleFileInfo()" data-toggle="collapse" data-target=".navbar-collapse.show">File info</span> <!-- Navbar collapsed: Text only --> 
             </a>
-            <a class="nav-link pt-0 pb-0 ml-2 d-none d-lg-block" href="#" mat-raised-button matTooltip="Show/hide file information" matTooltipShowDelay="1000"> <!-- Navbar expandes: Icon and text --> 
+            <a class="nav-link pt-0 pb-0 ml-2 d-none d-lg-block" href="#" mat-raised-button matTooltip="Show/hide file information" matTooltipShowDelay="1000" matTooltipClass="primary-tooltip"> <!-- Navbar expandes: Icon and text --> 
                 <i class="fas fa-info-circle fa-2x navbar-icons text-center d-block" (click)="toggleFileInfo()"></i> 
             </a>
             <span class="h6 text-muted mt-1 mb-0 d-none d-lg-block">File info</span>
@@ -86,10 +86,10 @@
     
         <!-- Settings -->
         <li class="nav-item text-muted" *ngIf="brushes.length>0">
-            <a class="nav-link d-lg-none" href="#" mat-raised-button matTooltip="Show/hide file information" matTooltipShowDelay="1000" matTooltipPosition="right">  <!-- Navbar collapsed: Text only --> 
+            <a class="nav-link d-lg-none" href="#" mat-raised-button matTooltip="Show/hide settings" matTooltipShowDelay="1000" matTooltipPosition="right" matTooltipClass="primary-tooltip">  <!-- Navbar collapsed: Text only --> 
                 <span (click)="toggleSettings()" data-toggle="collapse" data-target=".navbar-collapse.show">Settings</span>
             </a>
-            <a class="nav-link pt-0 pb-0 ml-2 d-none d-lg-block" href="#"  mat-raised-button matTooltip="Show/hide brush editor settings menu" matTooltipShowDelay="1000"> <!-- Navbar expandes: Icon and text --> 
+            <a class="nav-link pt-0 pb-0 ml-2 d-none d-lg-block" href="#"  mat-raised-button matTooltip="Show/hide settings" matTooltipShowDelay="1000" matTooltipClass="primary-tooltip"> <!-- Navbar expandes: Icon and text --> 
                 <i class="fas fa-cog fa-2x navbar-icons text-center d-block" (click)="toggleSettings()"></i>
             </a>
             <span class="h6 text-muted mt-1 mb-0 d-none d-lg-block">Settings</span>

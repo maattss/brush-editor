@@ -51,8 +51,6 @@ export class BrushTableComponent implements OnInit {
       this.initialized = true;
     });
 
-    // Do NOT subscribe to currentBrushId => Creates infinite loop!
-    // this.data.currentBrushId.subscribe(brushId => this.currentBrushId = brushId);
     this.data.maxChannelValue.subscribe(maxChannelValue => this.maxChannelValue = maxChannelValue);
 
     // Check if a cookie named chNames exist
@@ -84,7 +82,6 @@ export class BrushTableComponent implements OnInit {
   }
 
   markRow(rowId: number) {
-    this.currentBrushId = rowId;
     this.data.changeCurrentBrushID(rowId);
     const colorClass = 'table-danger';
 
