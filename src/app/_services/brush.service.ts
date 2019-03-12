@@ -86,52 +86,71 @@ export class BrushService {
   getExportableString() {
    let text = '';
     if (this.fileCommentSrc.value) {  // Add comment to file if it exists
-      text += '#' + this.fileCommentSrc.value + ' \r\n';
+      text += '#' + this.fileCommentSrc.value + '\r\n';
+    }
+
+    let ch4Exists = false;
+    let ch5Exists = false;
+    // Check if channel 4 or channel 5 exists
+    for (const brush of this.brushSrc.value) {
+      if (brush.ch4) {
+        ch4Exists = true;
+      }
+      if (brush.ch5) {
+        ch5Exists = true;
+      }
     }
 
     // Add brushes to file
     for (const brush of this.brushSrc.value) {
       text += brush.ch1 + ',' + brush.ch2 + ',' + brush.ch3;
-      if (brush.ch4) {
+      if (ch4Exists) {
         text += ',' + brush.ch4;
+        if (ch5Exists) {
+          text += ',' + brush.ch5;
+        }
       }
-      if (brush.ch5) {
-        text += ',' + brush.ch5;
-      }
+
       if (brush.desc !== '') {
         text += '#' + brush.desc;
       }
       if (!(brush.brushId >= this.brushSrc.value.length)) {
-          text += ' \r\n';
+          text += '\r\n';
       }
     }
   return text;
   }
 
-  getJSONdata() {
-    const collection = [];
-    if (this.fileCommentSrc.value) {  // Add comment to file if it exists
-      collection.push('#' + this.fileCommentSrc.value + ' \r\n');
-    }
+  // getDataAsCollection() {
+  //   const collection = [];
+  //   if (this.fileCommentSrc.value) {  // Add comment to file if it exists
+  //     collection.push('#' + this.fileCommentSrc.value + '');
+  //   }
 
-    // Add brushes to file
-    for (const brush of this.brushSrc.value) {
-      let text = '';
-      text += brush.ch1 + ',' + brush.ch2 + ',' + brush.ch3;
-      if (brush.ch4) {
-        text += ',' + brush.ch4;
-      }
-      if (brush.ch5) {
-        text += ',' + brush.ch5;
-      }
-      if (brush.desc !== '') {
-        text += '#' + brush.desc;
-      }
-      if (!(brush.brushId >= this.brushSrc.value.length)) {
-          text += ' \r\n';
-      }
-      collection.push(text);
-    }
-    return JSON.stringify(collection);
-  }
+  //   // Add brushes to file
+  //   for (const brush of this.brushSrc.value) {
+  //     let text = '';
+  //     text += brush.ch1 + ',' + brush.ch2 + ',' + brush.ch3;
+  //     if (brush.ch4) {
+  //       text += ',' + brush.ch4;
+  //     }
+  //     if (brush.ch5) {
+  //       text += ',' + brush.ch5;
+  //     }
+  //     if (brush.desc !== '') {
+  //       text += '#' + brush.desc;
+  //     }
+  //     if (!(brush.brushId >= this.brushSrc.value.length)) {
+  //         text += '';
+  //     }
+  //     collection.push(text);
+  //   }
+  //   return collection;
+  // }
+
+  // getExportableFile() {
+  //   const text = this.getExportableString();
+  //   const data = new Blob([text], {type: 'text/plain;charset=utf-8'});
+  //   return data;
+  // }
 }

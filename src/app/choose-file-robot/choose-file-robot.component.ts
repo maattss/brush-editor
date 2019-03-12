@@ -33,7 +33,7 @@ export class ChooseFileRobotComponent implements OnInit {
       const urlSplitted = currentUrl.split('/');
       this.currentUrlView = 'Home';
       for (let i = 5; i < urlSplitted.length; i++) {
-        this.currentUrlView += '/' + urlSplitted[i];
+        this.currentUrlView += '/' + decodeURIComponent(urlSplitted[i]);
       }
     });
     this.fileChooser.backEnabled.subscribe(backEnabled => this.backEnabled = backEnabled);
@@ -46,12 +46,12 @@ export class ChooseFileRobotComponent implements OnInit {
 
   changeFile(fileName: string) {
     this.data.changeFileName(fileName);
-    this.fileChooser.fetchFile(fileName);
+    this.fileChooser.getFile(fileName);
   }
 
   moveIntoDirectory(dirName: string) {
     this.fileChooser.addToUrl(dirName);
-    this.fileChooser.httpGetWithDigest();
+    this.fileChooser.getFSResource();
   }
 
   back() {
@@ -61,4 +61,17 @@ export class ChooseFileRobotComponent implements OnInit {
   exportFile() {
     this.fileChooser.exportOpenFile();
   }
+
+  duplicateFile() {
+    console.log('Not yet implemented');
+  }
+
+  createNewFile() {
+    console.log('Not yet implemented');
+  }
+
+  createNewFolder() {
+    console.log('Not yet implemented');
+  }
+
 }
