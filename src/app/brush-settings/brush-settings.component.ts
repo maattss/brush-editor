@@ -34,11 +34,27 @@ export class BrushSettingsComponent implements OnInit {
     }
   }
   updateSettings() {
-    const inputValue = (<HTMLInputElement>document.getElementById('maxChannelvalue')).value;
-    this.data.changeMaxChannelValue(+inputValue);
+    const maxChannelValueNew = +(<HTMLInputElement>document.getElementById('maxChannelvalue')).value;
+    this.updateBrushes();
+    this.data.changeMaxChannelValue(maxChannelValueNew);
     this.addChannelCookie();
     this.view.toggleSettingsView();
     this.view.showInfoSuccess('Settings updated successfully!');
+  }
+
+  updateBrushes() {
+    const maxChannelValueNew = +(<HTMLInputElement>document.getElementById('maxChannelvalue')).value;
+    // Loop through all brushes and change values if they exceed the new maxChannelValue
+    for (let brushId = 1; brushId <= this.brushes.length; brushId++) {
+      const brush = this.brushes[brushId - 1];
+      for (const channel in brush) { // Loops through channel names in current brush object
+        if (brush[channel] > maxChannelValueNew) {
+          while (brush[channel] > maxChannelValueNew) { // Reduce by 10 until demand is met
+            brush[channel] = Math.floor(brush[channel] / 10);
+          }
+        }
+      }
+    }
   }
 
   resetSettings() {

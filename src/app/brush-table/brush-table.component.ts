@@ -15,16 +15,11 @@ export class BrushTableComponent implements OnInit {
   private brushes: Brush[];
   private channelNames: ChannelNames;
   private initialized = false;
-  private currentBrushId: number;
   private maxChannelValue: number;
 
-  // Keep track of current page
+  // Pagination
   private currentPage = 1;
-
-  // pager object
   private pager: any = {};
-
-  // paged items
   private pagedItems: Brush[];
 
   constructor(
@@ -34,7 +29,6 @@ export class BrushTableComponent implements OnInit {
     private pagerService: PagerService) { }
 
   ngOnInit() {
-    // Subscribe
     this.data.currentBrush.subscribe(brushes => {
       this.brushes = brushes;
 
