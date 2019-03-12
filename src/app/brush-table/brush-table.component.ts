@@ -22,6 +22,9 @@ export class BrushTableComponent implements OnInit {
   private pager: any = {};
   private pagedItems: Brush[];
 
+  // Input validation
+  private inputError = false;
+
   constructor(
     private cookieService: CookieService,
     private data: BrushService,
@@ -53,17 +56,17 @@ export class BrushTableComponent implements OnInit {
     }
   }
 
-  private inputValidation(brushId: number, channel): void {
-    this.view.showInfoError('Maximum input value is ' + this.maxChannelValue);
+  private inputValidation(brushId: number, channel): boolean {
     const brush = this.brushes[brushId - 1];
     for (const channelX in brush) { // Loops through channel names in brush
       if (channelX.toString() === channel && brush[channelX] > this.maxChannelValue) {
         brush[channelX] = Math.floor(brush[channelX] / 10);
+        this.inputError = true;
         return;
       }
     }
-    this.view.closeInfoError();
     this.data.changeBrush(this.brushes);
+    this.inputError = false;
   }
 
   setPage(page: number) {
