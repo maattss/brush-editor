@@ -129,13 +129,22 @@ export class BrushTableComponent implements OnInit {
 
   deleteRow(brushId: number) {
     const brush = this.brushes[brushId - 1];
-    for (const channelX in brush) { // Loops through channel names in brush
-      if (channelX.toString() === 'desc') {
-        brush[channelX] = '';
-      } else if (channelX.toString() !== 'brushId') {
-        brush[channelX] = 0;
+    console.log(brush);
+    for (const obj in brush) { // Loops through channel names in brush
+      if (obj.toString() === 'desc') {
+        brush[obj] = '';
+      } else if (obj.toString() !== 'brushId') {
+        if (!isNaN(+brush[obj])) {
+          brush[obj] = 0;
+        } else {
+          console.log('Gotcha');
+        }
       }
     }
     this.data.changeBrush(this.brushes);
+  }
+
+  isNumber(n: any) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
   }
 }
