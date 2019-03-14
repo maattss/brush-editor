@@ -3,23 +3,18 @@
     mat-raised-button matTooltip="Close file information" matTooltipShowDelay="1000" matTooltipClass="primary-tooltip">
     <span aria-hidden="true">&times;</span>
   </button>
-  <!-- If we want to be able to update file name and comment (https://angular.io/guide/forms)
+  <div *ngIf="inputError" class="custom-tooltip alert alert-danger">
+      File name need to have .bt as extension to be valid.
+  </div>
+  <h5>File information</h5>
   <form>
-    <div class="input-group mb-2">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Filename</span>
-        </div>
-        <input type="text" id="fileNameInput" class="form-control" value="{{fileName}}" disabled>
+    <div class="form-group">
+        <label for="fileNameInput">Name</label>
+        <input type="text" id="fileNameInput" class="form-control rounded-0" value="{{fileName}}">
+        <small id="fileNameHelp" class="form-text text-muted">Filename need to have .bt as extension to be valid.</small>
+        <label for="fileCommentInput" class="mt-3">Comment</label>
+        <input type="text" id="fileCommentInput" class="form-control rounded-0" value="{{fileComment}}">
     </div>
-    <div class="input-group mb-2">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Filecomment</span>
-        </div>
-        <textarea id="fileCommentInput" class="form-control" disabled>{{fileComment}}</textarea>
-    </div>
-    <input type="button" class="btn btn-primary" (click)="saveFileInfo()" value="Save file info" disabled>
-  </form>-->
-  <h5>File info</h5>
-  <p>Name: <i>{{fileName}}</i></p>
-  <p>Comment: <i>{{fileComment}}</i></p>
+    <input type="button" class="btn btn-primary rounded-0" (click)="saveFileInfo()" value="Update file info">
+  </form>
 </div>

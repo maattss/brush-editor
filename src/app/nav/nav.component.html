@@ -59,7 +59,7 @@
                     <div class="fileupload">
                         <input type="file" id="theFile" aria-describedby="fileUpload" (change)="fileChanged($event)">
                     </div>
-                    <label for="theFile" class="chooseFileLabel pt-1 pb-1 text-white">
+                    <label for="theFile" class="chooseFileLabel pt-1 pb-1 text-white" data-toggle="collapse" data-target=".navbar-collapse.show">
                         <span *ngIf="brushes.length<=0">Local: Choose file</span>
                         <span *ngIf="brushes.length>0">Local: Choose new file</span>
                     </label>
@@ -69,7 +69,7 @@
             <!-- File info -->
             <li class="nav-item" *ngIf="brushes.length>0" (click)="toggleFileInfo()">
                 <a class="nav-link d-lg-none text-white" href="#" mat-raised-button matTooltip="Show/hide file information" matTooltipShowDelay="1000" matTooltipPosition="right" matTooltipClass="primary-tooltip">
-                    <span data-toggle="collapse" data-target=".navbar-collapse.show">File info</span> <!-- Navbar collapsed: Text only --> 
+                    <span data-toggle="collapse" data-target=".navbar-collapse.show">File information</span> <!-- Navbar collapsed: Text only --> 
                 </a>
                 <a class="nav-link pt-0 pb-0 d-none d-lg-block ml-2" href="#" mat-raised-button matTooltip="Show/hide file information" matTooltipShowDelay="1000" matTooltipClass="primary-tooltip"> <!-- Navbar expandes: Icon and text --> 
                     <i class="fas fa-info-circle navbar-icons-2 text-center d-block text-white"></i> 

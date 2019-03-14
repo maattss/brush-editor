@@ -34,8 +34,6 @@ export class BrushSettingsComponent implements OnInit {
     this.addChannelCookie();
     document.getElementById('allSettings').hidden = true;
     document.getElementById('confirmation').hidden = false;
-    // this.view.toggleSettingsView();
-    // this.view.showInfoSuccess('Settings updated successfully!');
   }
 
   hideConfirmation() {

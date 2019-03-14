@@ -15,6 +15,8 @@ export class BrushInfoComponent implements OnInit {
   private fileComment: string;
   private fileName: string;
 
+  // Input validation
+  private inputError = false;
 
   ngOnInit() {
     // Subscriptions
@@ -23,7 +25,17 @@ export class BrushInfoComponent implements OnInit {
   }
 
   saveFileInfo() {
-    this.toggleFileInfo();
+    const fileNameNew = (<HTMLInputElement>document.getElementById('fileNameInput')).value;
+    if (fileNameNew.slice(-3) === '.bt') {
+      this.inputError = false;
+      const fileCommentNew = (<HTMLInputElement>document.getElementById('fileCommentInput')).value;
+      this.data.changeFileName(fileNameNew);
+      this.data.changeFileComment(fileCommentNew);
+      this.view.toggleFileInfoView();
+      this.view.showInfoSuccess('File info updated successfully!');
+    } else {
+      this.inputError = true;
+    }
   }
 
   toggleFileInfo() {

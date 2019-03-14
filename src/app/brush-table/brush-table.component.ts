@@ -66,7 +66,10 @@ export class BrushTableComponent implements OnInit {
     const brush = this.brushes[brushId - 1];
     for (const channelX in brush) { // Loops through channel names in current brush object
       if (channelX.toString() === channel) {
-        if (brush[channelX] > this.maxChannelValue) { this.inputError = true; }
+        if (brush[channelX] > this.maxChannelValue) {
+          this.inputError = true;
+        }
+
         while (brush[channelX] > this.maxChannelValue) { // Reduce by 10 until demand is met
           brush[channelX] = Math.floor(brush[channelX] / 10);
           if (brush[channelX] <= this.maxChannelValue) {
