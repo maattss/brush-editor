@@ -69,8 +69,10 @@ export class BrushTableComponent implements OnInit {
         if (brush[channelX] > this.maxChannelValue) { this.inputError = true; }
         while (brush[channelX] > this.maxChannelValue) { // Reduce by 10 until demand is met
           brush[channelX] = Math.floor(brush[channelX] / 10);
+          if (brush[channelX] < this.maxChannelValue) {
+            return;
+          }
         }
-        return;
       }
     }
     this.data.changeBrush(this.brushes);
