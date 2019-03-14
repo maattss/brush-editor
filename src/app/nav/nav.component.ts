@@ -104,8 +104,7 @@ export class NavComponent implements OnInit {
   }
 
   openFileChooser() {
-    // this.fileChooser.getFSResource();
-    console.log('yeah');
+    this.fileChooser.getFSResource();
     this.view.toggleFileChooserView();
   }
 }
