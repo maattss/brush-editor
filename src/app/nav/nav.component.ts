@@ -17,6 +17,7 @@ export class NavComponent implements OnInit {
 
   // Class variables
   private brushes: Brush[];
+  private maxChannelValue: number;
   private file: any;
   private fileComment: string;
   private fileName: string;
@@ -24,8 +25,39 @@ export class NavComponent implements OnInit {
   ngOnInit() {
     // Subscribe
     this.data.currentBrush.subscribe(brushes => this.brushes = brushes);
+    this.data.maxChannelValue.subscribe(maxChannelValue => this.maxChannelValue = maxChannelValue);
     this.data.fileComment.subscribe(fileComment => this.fileComment = fileComment);
     this.data.fileName.subscribe(fileName => this.fileName = fileName);
+  }
+
+  userChoice() {
+    loop1:
+    for (let brushId = 1; brushId <= this.brushes.length; brushId++) {
+      const brush = this.brushes[brushId - 1];
+      for (const channel in brush) { // Loops through channel names in current brush object
+        if (brush[channel] > this.maxChannelValue) {
+          document.getElementById('userDecision').hidden = false;
+          break loop1;
+        }
+      }
+    }
+  }
+
+  adjustBrushToMaxvalue() {
+    for (let brushId = 1; brushId <= this.brushes.length; brushId++) {
+      const brush = this.brushes[brushId - 1];
+      for (const channel in brush) { // Loops through channel names in current brush object
+        if (brush[channel] > this.maxChannelValue && brush[channel] > this.maxChannelValue) {
+          brush[channel] = this.maxChannelValue;
+        }
+      }
+    }
+    this.data.changeBrush(this.brushes);
+    this.hideConfirmation();
+  }
+
+  hideConfirmation() {
+    document.getElementById('userDecision').hidden = true;
   }
 
   toggleFileInfo() {
@@ -33,6 +65,7 @@ export class NavComponent implements OnInit {
   }
 
   toggleSettings() {
+    this.hideConfirmation();
     this.view.toggleSettingsView();
   }
 
@@ -49,6 +82,7 @@ export class NavComponent implements OnInit {
     fileReader.onload = () => {
       this.data.parseFile(fileReader.result.toString());
       this.data.changeCurrentBrushID(0);
+      this.userChoice();
     };
 
     // Prevents error in console when canceling file upload
