@@ -32,6 +32,14 @@ export class BrushSettingsComponent implements OnInit {
     const maxChannelValueNew = +(<HTMLInputElement>document.getElementById('maxChannelvalue')).value;
     this.data.changeMaxChannelValue(maxChannelValueNew);
     this.addChannelCookie();
+    document.getElementById('allSettings').hidden = true;
+    document.getElementById('confirmation').hidden = false;
+    // this.view.toggleSettingsView();
+    // this.view.showInfoSuccess('Settings updated successfully!');
+  }
+
+  hideConfirmation() {
+    document.getElementById('confirmation').hidden = true;
     this.view.toggleSettingsView();
     this.view.showInfoSuccess('Settings updated successfully!');
   }
@@ -40,14 +48,13 @@ export class BrushSettingsComponent implements OnInit {
     for (let brushId = 1; brushId <= this.brushes.length; brushId++) {
       const brush = this.brushes[brushId - 1];
       for (const channel in brush) { // Loops through channel names in current brush object
-        if (brush[channel] > this.maxChannelValue) {
-          while (brush[channel] > this.maxChannelValue) { // Reduce by 10 until demand is met
-            brush[channel] = Math.floor(brush[channel] / 10);
-          }
+        if (brush[channel] > this.maxChannelValue && brush[channel] > this.maxChannelValue) {
+          brush[channel] = this.maxChannelValue;
         }
       }
     }
     this.data.changeBrush(this.brushes);
+    this.hideConfirmation();
   }
 
   resetSettings() {

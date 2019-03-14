@@ -91,3 +91,14 @@
     </div>
 </nav>
 
+<div class="alert alert-secondary fade show" role="alert" id="userDecision" hidden>
+    <button type="button" class="close mb-3" aria-label="Close" (click)="hideConfirmation()"
+    mat-raised-button matTooltip="Close" matTooltipShowDelay="1000" matTooltipClass="primary-tooltip">
+    <span aria-hidden="true">&times;</span>
+    </button>
+
+    <p>Your max channel value is set to: <span style="font-weight:bold">{{maxChannelValue}}</span>! You can change this in settings.</p>
+    <p>Do you want all values in the table that are greater than <span style="font-weight:bold">{{maxChannelValue}}</span> to be changed to <span style="font-weight:bold">{{maxChannelValue}}</span>?</p>
+    <button id="yes" (click)="adjustBrushToMaxvalue()" class="btn btn-primary ml-1">Yes</button>
+    <button id="no" (click)="hideConfirmation()" class="btn btn-primary ml-1">No, let them stay like this</button>
+</div>

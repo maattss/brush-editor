@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SkipSelf } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Brush, ChannelNames, GlobalVariables } from '../brush';
 import { PagerService, BrushService, ViewService } from '../_services/index';
