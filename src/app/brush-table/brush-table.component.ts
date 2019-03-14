@@ -51,15 +51,22 @@ export class BrushTableComponent implements OnInit {
     if (this.cookieService.check('chNames')) {
       this.data.changeChannelName(JSON.parse(this.cookieService.get('chNames')));
     }
+
+    // Check if a cookie named maxChannelValue exist
+    if (this.cookieService.check('maxChannelValue')) {
+      const cookieVal = JSON.parse(this.cookieService.get('maxChannelValue'));
+      this.data.changeMaxChannelValue(cookieVal);
+    }
   }
 
   private inputValidation(brushId: number, channel): void {
     this.view.showInfoError('Maximum input value is ' + this.maxChannelValue);
     const brush = this.brushes[brushId - 1];
-    for (const channelX in brush) { // Loops through channel names in brush
-      if (channelX.toString() === channel && brush[channelX] > this.maxChannelValue) {
-        brush[channelX] = Math.floor(brush[channelX] / 10);
-        return;
+    for (const channelX in brush) { // Loops through channel names in current brush object
+      if (channelX.toString() === channel) {
+        while (brush[channelX] > this.maxChannelValue) { // Reduce by 10 until demand is met
+          brush[channelX] = Math.floor(brush[channelX] / 10);
+        }
       }
     }
     this.view.closeInfoError();

@@ -27,34 +27,27 @@ export class BrushSettingsComponent implements OnInit {
       }
       this.initialized = true;
     });
-
-     // Check if a cookie named maxChannelValue exist
-     if (this.cookieService.check('maxChannelValue')) {
-      this.data.changeMaxChannelValue(JSON.parse(this.cookieService.get('maxChannelValue')));
-    }
   }
   updateSettings() {
     const maxChannelValueNew = +(<HTMLInputElement>document.getElementById('maxChannelvalue')).value;
-    this.updateBrushes();
     this.data.changeMaxChannelValue(maxChannelValueNew);
     this.addChannelCookie();
     this.view.toggleSettingsView();
     this.view.showInfoSuccess('Settings updated successfully!');
   }
 
-  updateBrushes() {
-    const maxChannelValueNew = +(<HTMLInputElement>document.getElementById('maxChannelvalue')).value;
-    // Loop through all brushes and change values if they exceed the new maxChannelValue
+  adjustBrushToMaxvalue() {
     for (let brushId = 1; brushId <= this.brushes.length; brushId++) {
       const brush = this.brushes[brushId - 1];
       for (const channel in brush) { // Loops through channel names in current brush object
-        if (brush[channel] > maxChannelValueNew) {
-          while (brush[channel] > maxChannelValueNew) { // Reduce by 10 until demand is met
+        if (brush[channel] > this.maxChannelValue) {
+          while (brush[channel] > this.maxChannelValue) { // Reduce by 10 until demand is met
             brush[channel] = Math.floor(brush[channel] / 10);
           }
         }
       }
     }
+    this.data.changeBrush(this.brushes);
   }
 
   resetSettings() {
