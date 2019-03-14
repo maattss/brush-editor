@@ -39,44 +39,46 @@
         </li>
 
         <!-- File upload/download setting small screen-->
-        <li class="nav-item d-lg-none" *ngIf="brushes.length>0" mat-raised-button matTooltip="Export file to robot" matTooltipShowDelay="1000" matTooltipPosition="right" matTooltipClass="primary-tooltip"> <!--  Hidden when no brushfile is choosed -->
+        <li class="nav-item d-lg-none" (click)="openFileChooser()" mat-raised-button matTooltip="Choose file from the robot to display" matTooltipShowDelay="1000" matTooltipPosition="right" matTooltipClass="primary-tooltip">
             <a class="nav-link" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">
-                <span >Robot: Export file</span> <!-- Text only when navbar is collapsed -->
+            Robot: Open File explorer
             </a>
         </li>
-        <li class="nav-item d-lg-none" (click)=" openFileChooser()" mat-raised-button matTooltip="Choose file from the robot to display" matTooltipShowDelay="1000" matTooltipPosition="right" matTooltipClass="primary-tooltip">
+
+        <!-- Divider for collapsed navbar -->
+        <li class="dropdown-divider d-lg-none pb-0 pt-0 mb-0 mt-0"></li>
+
+        <li class="nav-item d-lg-none" (click)="saveFileAs()" *ngIf="brushes.length>0"  mat-raised-button matTooltip="Export file to your device" matTooltipShowDelay="1000" matTooltipPosition="right" matTooltipClass="primary-tooltip"> <!--  Hidden when no brushfile is choosed -->
             <a class="nav-link" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">
-                <span *ngIf="brushes.length<=0">Robot: Choose file</span> <!-- Text only when navbar is collapsed -->
-                <span *ngIf="brushes.length>0">Robot: Choose new file</span>
+            Local: Export file
             </a>
         </li>
-        <li class="nav-item d-lg-none" *ngIf="brushes.length>0"  mat-raised-button matTooltip="Export file to your device" matTooltipShowDelay="1000" matTooltipPosition="right" matTooltipClass="primary-tooltip"> <!--  Hidden when no brushfile is choosed -->
-            <a class="nav-link" href="#" data-toggle="collapse" data-target=".navbar-collapse.show" (click)="saveFileAs()">
-            <span class="d-lg-none">Local: Export file</span> <!-- Text only when navbar is collapsed -->
-            </a>
-        </li>
-        <li class="nav-item d-lg-none" mat-raised-button matTooltip="Choose local file to display" matTooltipShowDelay="1000" matTooltipPosition="right" matTooltipClass="primary-tooltip">
+
+        <!-- Divider for collapsed navbar -->
+        <li class="dropdown-divider d-lg-none pb-0 pt-0 mb-0 mt-0" *ngIf="brushes.length>0"></li>
+
+        <li class="nav-item d-lg-none pt-1 pb-1" mat-raised-button matTooltip="Choose local file to display" matTooltipShowDelay="1000" matTooltipPosition="right">
             <a class="nav-link d-inline-block pt-0 pb-0" href="#">
                 <div class="fileupload">
                     <input type="file" id="theFile" aria-describedby="fileUpload" (change)="fileChanged($event)">
                 </div>
                 <label for="theFile" class="chooseFileLabel pt-1 pb-1">
-                    <span *ngIf="brushes.length<=0">Local: Choose file</span> <!-- Text only when navbar is collapsed -->
+                    <span *ngIf="brushes.length<=0">Local: Choose file</span>
                     <span *ngIf="brushes.length>0">Local: Choose new file</span>
                 </label>
             </a>
         </li>
     
         <!-- Divider for collapsed navbar -->
-        <li class="dropdown-divider d-lg-none pb-0 pt-0 mb-0" *ngIf="brushes.length>0"></li>
+        <li class="dropdown-divider d-lg-none pb-0 pt-0 mb-0 mt-0" *ngIf="brushes.length>0"></li>
 
         <!-- File info -->
-        <li class="nav-item text-muted" *ngIf="brushes.length>0">
+        <li class="nav-item text-muted" *ngIf="brushes.length>0" (click)="toggleFileInfo()">
             <a class="nav-link d-lg-none" href="#" mat-raised-button matTooltip="Show/hide file information" matTooltipShowDelay="1000" matTooltipPosition="right" matTooltipClass="primary-tooltip">
-                <span (click)="toggleFileInfo()" data-toggle="collapse" data-target=".navbar-collapse.show">File info</span> <!-- Navbar collapsed: Text only --> 
+                <span data-toggle="collapse" data-target=".navbar-collapse.show">File info</span> <!-- Navbar collapsed: Text only --> 
             </a>
             <a class="nav-link pt-0 pb-0 ml-2 d-none d-lg-block" href="#" mat-raised-button matTooltip="Show/hide file information" matTooltipShowDelay="1000" matTooltipClass="primary-tooltip"> <!-- Navbar expandes: Icon and text --> 
-                <i class="fas fa-info-circle fa-2x navbar-icons text-center d-block" (click)="toggleFileInfo()"></i> 
+                <i class="fas fa-info-circle fa-2x navbar-icons text-center d-block"></i> 
             </a>
             <span class="h6 text-muted mt-1 mb-0 d-none d-lg-block">File info</span>
         </li>
@@ -85,25 +87,16 @@
         <li class="dropdown-divider d-lg-none pb-0 pt-0 mb-0 mt-0" *ngIf="brushes.length>0"></li>
     
         <!-- Settings -->
-        <li class="nav-item text-muted" *ngIf="brushes.length>0">
-            <a class="nav-link d-lg-none" href="#" mat-raised-button matTooltip="Show/hide settings" matTooltipShowDelay="1000" matTooltipPosition="right" matTooltipClass="primary-tooltip">  <!-- Navbar collapsed: Text only --> 
+        <li class="nav-item text-muted" *ngIf="brushes.length>0" (click)="toggleSettings()">
+            <a class="nav-link d-lg-none" href="#" mat-raised-button matTooltip="Show/hide file information" matTooltipShowDelay="1000" matTooltipPosition="right" matTooltipClass="primary-tooltip">  <!-- Navbar collapsed: Text only --> 
                 <span (click)="toggleSettings()" data-toggle="collapse" data-target=".navbar-collapse.show">Settings</span>
             </a>
-            <a class="nav-link pt-0 pb-0 ml-2 d-none d-lg-block" href="#"  mat-raised-button matTooltip="Show/hide settings" matTooltipShowDelay="1000" matTooltipClass="primary-tooltip"> <!-- Navbar expandes: Icon and text --> 
-                <i class="fas fa-cog fa-2x navbar-icons text-center d-block" (click)="toggleSettings()"></i>
+            <a class="nav-link pt-0 pb-0 ml-2 d-none d-lg-block" href="#"  mat-raised-button matTooltip="Show/hide brush editor settings menu" matTooltipShowDelay="1000" matTooltipClass="primary-tooltip"> <!-- Navbar expandes: Icon and text --> 
+                <i class="fas fa-cog fa-2x navbar-icons text-center d-block" ></i>
             </a>
             <span class="h6 text-muted mt-1 mb-0 d-none d-lg-block">Settings</span>
         </li>
         </ul>
     </div>
 </nav>
-<!--
-<div class="ml-2 mt-2">
-    <button type="button" class="btn btn-primary" (click)="httpRequestWithDigest()">
-        Make request with Digest
-    </button>
-    <p id="result">Requesting...</p>
-    <p id="data"></p>
-</div>
--->
 

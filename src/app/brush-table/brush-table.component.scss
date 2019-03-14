@@ -46,3 +46,20 @@ input:-webkit-autofill:focus,
 input:-webkit-autofill:active  {
     transition: background-color 5000s ease-in-out 0s;
 }
+.hiddentooltip {
+    display: inline-block;
+    position: absolute;
+    visibility: hidden; 
+    left: 0;
+    width: 0;
+    top: 3em;
+}
+.fakeTooltip{
+    border-radius: 0.25em;
+    padding:0.75em;
+    z-index:2;
+    position: absolute;
+    left: 10em;
+    top: -0.2em;
+    font-size: 12px;
+  }

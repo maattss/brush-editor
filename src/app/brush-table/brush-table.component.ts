@@ -22,6 +22,9 @@ export class BrushTableComponent implements OnInit {
   private pager: any = {};
   private pagedItems: Brush[];
 
+  // Input validation
+  private inputError = false;
+
   constructor(
     private cookieService: CookieService,
     private data: BrushService,
@@ -59,18 +62,19 @@ export class BrushTableComponent implements OnInit {
     }
   }
 
-  private inputValidation(brushId: number, channel): void {
-    this.view.showInfoError('Maximum input value is ' + this.maxChannelValue);
+  private inputValidation(brushId: number, channel): boolean {
     const brush = this.brushes[brushId - 1];
     for (const channelX in brush) { // Loops through channel names in current brush object
       if (channelX.toString() === channel) {
+        if (brush[channelX] > this.maxChannelValue) { this.inputError = true; }
         while (brush[channelX] > this.maxChannelValue) { // Reduce by 10 until demand is met
           brush[channelX] = Math.floor(brush[channelX] / 10);
         }
+        return;
       }
     }
-    this.view.closeInfoError();
     this.data.changeBrush(this.brushes);
+    this.inputError = false;
   }
 
   setPage(page: number) {
@@ -133,13 +137,22 @@ export class BrushTableComponent implements OnInit {
 
   deleteRow(brushId: number) {
     const brush = this.brushes[brushId - 1];
-    for (const channelX in brush) { // Loops through channel names in brush
-      if (channelX.toString() === 'desc') {
-        brush[channelX] = '';
-      } else if (channelX.toString() !== 'brushId') {
-        brush[channelX] = 0;
+    console.log(brush);
+    for (const obj in brush) { // Loops through channel names in brush
+      if (obj.toString() === 'desc') {
+        brush[obj] = '';
+      } else if (obj.toString() !== 'brushId') {
+        if (!isNaN(+brush[obj])) {
+          brush[obj] = 0;
+        } else {
+          console.log('Gotcha');
+        }
       }
     }
     this.data.changeBrush(this.brushes);
+  }
+
+  isNumber(n: any) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
   }
 }
