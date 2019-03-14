@@ -8,13 +8,21 @@ import { BrushService, ViewService } from './_services/index';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent  implements OnInit {
-  constructor(private data: BrushService) { }
+  constructor(private data: BrushService, private view: ViewService) { }
 
   // Class variables
   private brushes: Brush[];
+  private showFileInfo: boolean;
+  private showSettings: boolean;
+  private showSuccess: boolean;
+  private showError: boolean;
 
   ngOnInit() {
     // Subscribe
     this.data.currentBrush.subscribe(brushes => this.brushes = brushes);
+    this.view.showFileInfo.subscribe(showFileInfo => this.showFileInfo = showFileInfo);
+    this.view.showSettings.subscribe(showSettings => this.showSettings = showSettings);
+    this.view.showSuccess.subscribe(showSuccess => this.showSuccess = showSuccess);
+    this.view.showError.subscribe(showError => this.showError = showError);
   }
 }

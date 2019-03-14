@@ -1,12 +1,47 @@
 <div *ngIf="showFileChooser" class="alert alert-secondary fade show" role="alert">
     <button type="button" class="close mb-3" aria-label="Close" (click)="toggleFileChooser()"
-    mat-raised-button matTooltip="Close file chooser" matTooltipShowDelay="1000">
+    mat-raised-button matTooltip="Close file chooser" matTooltipShowDelay="1000" matTooltipClass="primary-tooltip">
     <span aria-hidden="true">&times;</span>
-  </button>
-  <p *ngFor="let file of navFiles" >
-      <i class="far fa-file mr-1"></i><a href="#" (click)="toggleFileChooser(); changeFile(file)">{{ file }}</a>
-  </p>
-  <p *ngFor="let dir of navDirectories" >
-      <i class="far fa-folder mr-1"></i><a href="#" (click)="toggleFileChooser(); changeDirectory(dir)">{{ dir }}</a>
-  </p>
+    </button>
+    <nav>
+        <ul class="pagination">
+            <li [class.disabled]="!backEnabled" class="page-item">
+                <a class="page-link" href="#" aria-label="Previous" (click)="back()">
+                <i [class.disabled]="!backEnabled" class="fas fa-long-arrow-alt-left"></i>
+                </a>
+            </li>
+            <li class="page-item disabled">
+                <a class="page-link path" href="#" id="currentPath">{{currentUrlView}}</a>
+            </li> 
+            <li *ngIf="brushes.length>0" class="page-item" (click)= "exportFile()"
+                mat-raised-button matTooltip="Export current file to this folder" matTooltipShowDelay="1000" matTooltipPosition="right" matTooltipClass="primary-tooltip">
+                <a class="page-link" href="#"><i class="fas fa-upload"></i></a>
+            </li>
+            <!--
+            <li *ngIf="brushes.length>0" class="page-item disabled" (click)= "duplicateFile()"
+                mat-raised-button matTooltip="Duplicate current file" matTooltipShowDelay="1000" matTooltipPosition="right">
+                <a class="page-link" href="#"><i class="fas fa-copy disabled"></i></a>
+            </li>
+            <li class="page-item disabled" (click)= "createNewFile()"
+                mat-raised-button matTooltip="Create new empty file" matTooltipShowDelay="1000" matTooltipPosition="right">
+                <a class="page-link" href="#"><i class="fas fa-file disabled"></i></a>
+            </li>
+            <li class="page-item disabled" (click)= "createNewFolder()"
+                mat-raised-button matTooltip="Create new folder in this directory" matTooltipShowDelay="1000" matTooltipPosition="right">
+                <a class="page-link" href="#"><i class="fas fa-folder-plus disabled"></i></a>
+            </li>
+            -->
+        </ul>
+    </nav>
+    <p *ngIf="navDirectories.length === 0 && navFiles.length === 0">
+        No files or directories
+    </p>
+    <p *ngFor="let dir of navDirectories" class="menuElement rounded p-0 pt-2 pb-2 m-0" (click)="moveIntoDirectory(dir)"
+        mat-raised-button matTooltip="Move into directory" matTooltipShowDelay="1000" matTooltipPosition="above" matTooltipClass="primary-tooltip">
+        <i class="far fa-folder fa-lg icon"></i><span>{{ dir }}</span>
+    </p>
+    <p *ngFor="let file of navFiles" class="menuElement rounded p-0 pt-2 pb-2 m-0" (click)="toggleFileChooser(); changeFile(file)"
+        mat-raised-button matTooltip="Open file" matTooltipShowDelay="1000" matTooltipPosition="above" matTooltipClass="primary-tooltip">
+        <i class="far fa-file fa-lg icon"></i><span>{{ file }}</span>
+</p>
 </div>

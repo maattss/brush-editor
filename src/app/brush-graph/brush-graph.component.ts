@@ -99,17 +99,6 @@ export class BrushGraphComponent implements OnInit {
           this.addData();
         }
     });
-    this.data.currentBrushId.subscribe(brushId => {
-      this.currentBrushId = brushId;
-      if (this.initialized === true) {
-        this.addData();
-        if (this.getWidthOfScreen() >= 995) { // If pixels of users screen >= 995px
-          this.widePage = true;
-        } else {
-          this.widePage = false;
-        }
-      }
-    });
   }
 
   getWidthOfScreen() {

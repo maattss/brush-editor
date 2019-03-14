@@ -14,14 +14,12 @@ export class BrushSettingsComponent implements OnInit {
 
   // Class variables
   private brushes: Brush[];
-  private showSettings: boolean;
   private maxChannelValue: number;
   private initialized: boolean;
 
   ngOnInit() {
     // Subscriptions
     this.data.currentBrush.subscribe(brushes => this.brushes = brushes);
-    this.view.showSettings.subscribe(showSettings => this.showSettings = showSettings);
     this.data.maxChannelValue.subscribe(maxChannelValue => {
       this.maxChannelValue = maxChannelValue;
       if (this.initialized) {
@@ -29,18 +27,27 @@ export class BrushSettingsComponent implements OnInit {
       }
       this.initialized = true;
     });
-
-     // Check if a cookie named maxChannelValue exist
-     if (this.cookieService.check('maxChannelValue')) {
-      this.data.changeMaxChannelValue(JSON.parse(this.cookieService.get('maxChannelValue')));
-    }
   }
   updateSettings() {
-    const inputValue = (<HTMLInputElement>document.getElementById('maxChannelvalue')).value;
-    this.data.changeMaxChannelValue(+inputValue);
+    const maxChannelValueNew = +(<HTMLInputElement>document.getElementById('maxChannelvalue')).value;
+    this.data.changeMaxChannelValue(maxChannelValueNew);
     this.addChannelCookie();
     this.view.toggleSettingsView();
     this.view.showInfoSuccess('Settings updated successfully!');
+  }
+
+  adjustBrushToMaxvalue() {
+    for (let brushId = 1; brushId <= this.brushes.length; brushId++) {
+      const brush = this.brushes[brushId - 1];
+      for (const channel in brush) { // Loops through channel names in current brush object
+        if (brush[channel] > this.maxChannelValue) {
+          while (brush[channel] > this.maxChannelValue) { // Reduce by 10 until demand is met
+            brush[channel] = Math.floor(brush[channel] / 10);
+          }
+        }
+      }
+    }
+    this.data.changeBrush(this.brushes);
   }
 
   resetSettings() {

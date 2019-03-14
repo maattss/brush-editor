@@ -2,20 +2,28 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject} from 'rxjs';
 import { BrushService } from './brush.service';
 
+declare const digestAuthRequest: any;
+
 @Injectable({
   providedIn: 'root'
 })
 
 export class ChooseFileService {
-  private fileSrc      = new BehaviorSubject<Array<string>>([]);
-  private directorySrc = new BehaviorSubject<Array<string>>([]);
-  private unknownSrc   = new BehaviorSubject<Array<string>>([]);
-  private baseURISrc   = new BehaviorSubject<string>('http://localhost:80/fileservice/$HOME/');
+  private fileSrc         = new BehaviorSubject<Array<string>>([]);
+  private directorySrc    = new BehaviorSubject<Array<string>>([]);
+  private unknownSrc      = new BehaviorSubject<Array<string>>([]);
+  private backEnabledSrc  = new BehaviorSubject<boolean>(false);
+
+  // Http request values
+  private currentUrlSrc   = new BehaviorSubject<string>('http://localhost/fileservice/$HOME/');
+  private userName = 'Default User';
+  private password = 'robotics';
 
   files       = this.fileSrc.asObservable();
   directories = this.directorySrc.asObservable();
   unknowns    = this.unknownSrc.asObservable();
-  baseURI     = this.baseURISrc.asObservable();
+  currentUrl  = this.currentUrlSrc.asObservable();
+  backEnabled = this.backEnabledSrc.asObservable();
 
   constructor(private data: BrushService) { }
 
@@ -28,23 +36,53 @@ export class ChooseFileService {
   changeUnknowns(unknowns: string[]) {
     this.unknownSrc.next(unknowns);
   }
-  changeBaseURI(URI: string) {
-    this.baseURISrc.next(URI);
+  changeCurrentUrl(url: string) {
+    this.currentUrlSrc.next(url);
+  }
+  addToUrl(url: string) {
+    this.changeCurrentUrl(this.currentUrlSrc.value + encodeURI(url) + '/');
+    this.backEnabledSrc.next(true);
+  }
+  moveBack() {
+    const urlSplitted = this.currentUrlSrc.value.split('/');
+
+    if (urlSplitted[urlSplitted.length - 2] !== '$home') {
+      let newUrl = '';
+      let newFolder = '';
+      for (let i = 0; i < urlSplitted.length - 2; i++) {
+        newUrl += urlSplitted[i] + '/';
+        newFolder = urlSplitted[i];
+      }
+
+      if (newFolder.toLowerCase() === '$home') {
+        this.backEnabledSrc.next(false);
+      }
+
+      this.changeCurrentUrl(newUrl);
+      this.getFSResource();
+    }
   }
 
-  parseResponse(response: string) {
-    const obj = JSON.parse(response);
-    console.log(obj);
-    const fileInfoArray = obj._embedded._state;
-    const fsFiles: string[] = [];
-    const fsDirs: string[] = [];
+  getFSResource() {
+    const digest = new digestAuthRequest('GET', this.currentUrlSrc.value + '?json=1', this.userName, this.password);
+    digest.request((response: any) => {
+      this.parseFSResponse(response);
+    }, function(errorCode: any) {
+      console.log('Error: ', errorCode);
+    });
+  }
+
+  parseFSResponse(response: any) {
+    const fileInfoArray = response._embedded._state;
+    const fsFiles: string[] = []; // File names
+    const fsDirs: string[] = [];  // Directories
     const fsUnknowns: string[] = [];
     for (let i = 0; i < fileInfoArray.length; i++) {
       const element = fileInfoArray[i];
       const name = element._title;
       const ext = name.substr(name.length - 3).toLowerCase();
 
-      if (element._type === 'fs-file' && ext === '.bt') { // Only accepted if type is file and extension is .bt
+      if (element._type === 'fs-file' && ext === '.bt') { // File only accepted if type is file and extension is .bt
         fsFiles.push(name);
       } else if (element._type === 'fs-dir') {
         fsDirs.push(name);
@@ -53,23 +91,38 @@ export class ChooseFileService {
       }
     }
 
-    // Update files, directories and unknowns in filechooser service
+    // Sort and update
+    fsFiles.sort();
     this.changeFiles(fsFiles);
+    fsDirs.sort();
     this.changeDirectories(fsDirs);
+    fsUnknowns.sort();
     this.changeUnknowns(fsUnknowns);
   }
 
-  fetchFile(url: string) {
-    fetch(url)
-      .then(res => res.blob()) // Gets the response and returns it as a blob
-      .then(blob => {
-        console.log(blob);
-        const reader = new FileReader();
-        reader.onload = () => {
-            this.data.parseFile(reader.result.toString());
-        };
-        reader.readAsText(blob);
-      }
-    );
+  // Download and parse brush file from Robot Web Service API
+  getFile(fileName: string) {
+    const digest = new digestAuthRequest('GET', this.currentUrlSrc.value + encodeURI(fileName), this.userName, this.password);
+    digest.request((response: any) => {
+      this.data.parseFile(response.toString());
+    }, function(errorCode: any) {
+      console.log('Error: ', errorCode);
+    });
+  }
+
+  exportOpenFile() {
+    this.postFile(); // Export file
+    this.getFSResource(); // get updated view for the file explorer
+  }
+
+  postFile() {
+    const fileName = this.data.getFileName();
+    const postData = this.data.getExportableString();
+    const digest = new digestAuthRequest('PUT', this.currentUrlSrc.value + fileName, this.userName, this.password);
+    digest.request((response: any) => {
+      this.parseFSResponse(response);
+    }, function(errorCode: any) {
+      console.log('Error: ', errorCode);
+    }, postData);
   }
 }

@@ -15,17 +15,15 @@ export class BrushTableComponent implements OnInit {
   private brushes: Brush[];
   private channelNames: ChannelNames;
   private initialized = false;
-  private currentBrushId: number;
   private maxChannelValue: number;
 
-  // Keep track of current page
+  // Pagination
   private currentPage = 1;
-
-  // pager object
   private pager: any = {};
-
-  // paged items
   private pagedItems: Brush[];
+
+  // Input validation
+  private inputError = false;
 
   constructor(
     private cookieService: CookieService,
@@ -34,7 +32,6 @@ export class BrushTableComponent implements OnInit {
     private pagerService: PagerService) { }
 
   ngOnInit() {
-    // Subscribe
     this.data.currentBrush.subscribe(brushes => {
       this.brushes = brushes;
 
@@ -51,27 +48,33 @@ export class BrushTableComponent implements OnInit {
       this.initialized = true;
     });
 
-    // Do NOT subscribe to currentBrushId => Creates infinite loop!
-    // this.data.currentBrushId.subscribe(brushId => this.currentBrushId = brushId);
     this.data.maxChannelValue.subscribe(maxChannelValue => this.maxChannelValue = maxChannelValue);
 
     // Check if a cookie named chNames exist
     if (this.cookieService.check('chNames')) {
       this.data.changeChannelName(JSON.parse(this.cookieService.get('chNames')));
     }
+
+    // Check if a cookie named maxChannelValue exist
+    if (this.cookieService.check('maxChannelValue')) {
+      const cookieVal = JSON.parse(this.cookieService.get('maxChannelValue'));
+      this.data.changeMaxChannelValue(cookieVal);
+    }
   }
 
-  private inputValidation(brushId: number, channel): void {
-    this.view.showInfoError('Maximum input value is ' + this.maxChannelValue);
+  private inputValidation(brushId: number, channel): boolean {
     const brush = this.brushes[brushId - 1];
-    for (const channelX in brush) { // Loops through channel names in brush
-      if (channelX.toString() === channel && brush[channelX] > this.maxChannelValue) {
-        brush[channelX] = Math.floor(brush[channelX] / 10);
+    for (const channelX in brush) { // Loops through channel names in current brush object
+      if (channelX.toString() === channel) {
+        if (brush[channelX] > this.maxChannelValue) { this.inputError = true; }
+        while (brush[channelX] > this.maxChannelValue) { // Reduce by 10 until demand is met
+          brush[channelX] = Math.floor(brush[channelX] / 10);
+        }
         return;
       }
     }
-    this.view.closeInfoError();
     this.data.changeBrush(this.brushes);
+    this.inputError = false;
   }
 
   setPage(page: number) {
@@ -84,7 +87,6 @@ export class BrushTableComponent implements OnInit {
   }
 
   markRow(rowId: number) {
-    this.currentBrushId = rowId;
     this.data.changeCurrentBrushID(rowId);
     const colorClass = 'table-danger';
 
@@ -135,13 +137,22 @@ export class BrushTableComponent implements OnInit {
 
   deleteRow(brushId: number) {
     const brush = this.brushes[brushId - 1];
-    for (const channelX in brush) { // Loops through channel names in brush
-      if (channelX.toString() === 'desc') {
-        brush[channelX] = '';
-      } else if (channelX.toString() !== 'brushId') {
-        brush[channelX] = 0;
+    console.log(brush);
+    for (const obj in brush) { // Loops through channel names in brush
+      if (obj.toString() === 'desc') {
+        brush[obj] = '';
+      } else if (obj.toString() !== 'brushId') {
+        if (!isNaN(+brush[obj])) {
+          brush[obj] = 0;
+        } else {
+          console.log('Gotcha');
+        }
       }
     }
     this.data.changeBrush(this.brushes);
+  }
+
+  isNumber(n: any) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
   }
 }

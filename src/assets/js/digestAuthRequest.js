@@ -34,6 +34,7 @@ var digestAuthRequest = function (method, url, username, password) {
 		// posts data as JSON if there is any
 		if (data) {
 			self.data = JSON.stringify(data);
+			// self.data = data;
 		}
 		self.successFn = successFn;
 		self.errorFn = errorFn;
@@ -143,7 +144,7 @@ var digestAuthRequest = function (method, url, username, password) {
 			}
 		}
 	}
-	this.makeAuthenticatedRequest= function() {
+	this.makeAuthenticatedRequest = function() {
 
 		self.response = self.formulateResponse();
 		self.authenticatedRequest = new XMLHttpRequest();
