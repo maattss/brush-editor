@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject} from 'rxjs';
 import { Brush, ChannelNames } from '../brush';
+import { TestBed } from '@angular/core/testing';
 
 @Injectable({
   providedIn: 'root'
@@ -48,15 +49,22 @@ export class BrushService {
   parseFile(text: string) {
     const brushes = [];
 
+    // Handle JSON file format
+    if (text.substring(0, 1) === '\"') {
+      text = text.substring(1);
+    }
+
     // Split read file by newline
     const list: string[] = text.split(/\r?\n/);
     let counter = 1;
 
     // Loop through brushes from file and push to brush-object
     list.forEach(element => {
+      console.log('First line', element);
       // Handle file comment
       if (element.substring(0, 1) === '#') {
         const comment = element.substring(1).trim();
+        console.log('comment', comment);
         this.changeFileComment(comment);
       } else {
         const channels: string[] = element.split(',');
@@ -80,6 +88,7 @@ export class BrushService {
         counter++;
       }
     });
+    console.log('Parsed file', brushes);
     this.changeBrush(brushes);
   }
 

@@ -5,7 +5,7 @@
     <p class="text-center font-weight-bold" *ngIf="isDataAvailable==false">Select a brush to show graph</p>
 
     <!-- Display block if data is available, display none if not -->
-    <div class="chart-container" style="position: relative; height: 358px; width:100%;" > <!-- Height and width in this container chooses size of chart!-->
+    <div class="chart-container" style="position: relative; height: 396px; width:100%;" > <!-- Height and width in this container chooses size of chart!-->
       <canvas id="chart" baseChart [ngClass]="isDataAvailable ? 'd-block' : 'd-none'" 
         [data]="barChartData"
         [labels]="barChartLabels"

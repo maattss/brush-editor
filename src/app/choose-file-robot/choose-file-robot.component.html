@@ -12,7 +12,7 @@
             </li>
             <li class="page-item disabled">
                 <a class="page-link path rounded-0" href="#" id="currentPath">{{currentUrlView}}</a>
-            </li> 
+            </li>
             <li *ngIf="brushes.length>0" class="page-item" (click)= "exportFile()"
                 mat-raised-button matTooltip="Export current file to this folder" matTooltipShowDelay="1000" matTooltipPosition="right" matTooltipClass="primary-tooltip">
                 <a class="page-link rounded-0" href="#"><i class="fas fa-upload"></i></a>
@@ -33,6 +33,7 @@
             -->
         </ul>
     </nav>
+    <p *ngIf="fileName">Current file opened: <i>{{ fileName }}</i></p>
     <p *ngIf="navDirectories.length === 0 && navFiles.length === 0">
         No files or directories
     </p>
@@ -43,5 +44,8 @@
     <p *ngFor="let file of navFiles" class="menuElement rounded p-0 pt-2 pb-2 m-0" (click)="toggleFileChooser(); changeFile(file)"
         mat-raised-button matTooltip="Open file" matTooltipShowDelay="1000" matTooltipPosition="above" matTooltipClass="primary-tooltip">
         <i class="far fa-file fa-lg icon"></i><span>{{ file }}</span>
-</p>
+    </p>
+    <div class="dialog">
+
+    </div>
 </div>

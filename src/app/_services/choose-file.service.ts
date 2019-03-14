@@ -105,6 +105,7 @@ export class ChooseFileService {
     const digest = new digestAuthRequest('GET', this.currentUrlSrc.value + encodeURI(fileName), this.userName, this.password);
     digest.request((response: any) => {
       this.data.parseFile(response.toString());
+      console.log('GET response', response);
     }, function(errorCode: any) {
       console.log('Error: ', errorCode);
     });

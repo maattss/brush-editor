@@ -14,6 +14,7 @@ export class ChooseFileRobotComponent implements OnInit {
 
   // Class variables
   private brushes: Brush[];
+  private fileName: string;
   private navFiles: string[];
   private navDirectories: string[];
   private navUnknowns: string[];
@@ -25,6 +26,7 @@ export class ChooseFileRobotComponent implements OnInit {
   ngOnInit() {
     // Subscribe
     this.data.currentBrush.subscribe(brushes => this.brushes = brushes);
+    this.data.fileName.subscribe(fileName => this.fileName = fileName);
     this.fileChooser.files.subscribe(navFiles => this.navFiles = navFiles);
     this.fileChooser.directories.subscribe(navDirectories => this.navDirectories = navDirectories);
     this.fileChooser.unknowns.subscribe(navUnknowns => this.navUnknowns = navUnknowns);
