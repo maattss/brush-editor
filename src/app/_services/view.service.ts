@@ -25,26 +25,50 @@ export class ViewService {
 
   toggleSettingsView() {
     this.showSettingsSrc.next(!this.showSettingsSrc.value);
+
+    this.showFileChooserSrc.next(false);
+    this.showFileInfoSrc.next(false);
+    this.showErrorSrc.next(false);
+    this.showSuccessSrc.next(false);
   }
   toggleFileInfoView() {
     this.showFileInfoSrc.next(!this.showFileInfoSrc.value);
+
+    this.showFileChooserSrc.next(false);
+    this.showSettingsSrc.next(false);
+    this.showErrorSrc.next(false);
+    this.showSuccessSrc.next(false);
   }
   toggleFileChooserView() {
     this.showFileChooserSrc.next(!this.showFileChooserSrc.value);
+
+    this.showSettingsSrc.next(false);
+    this.showFileInfoSrc.next(false);
+    this.showErrorSrc.next(false);
+    this.showSuccessSrc.next(false);
   }
   showInfoSuccess(msg: string) {
     if (msg) {
       this.infoMsgSrc.next(msg);
     }
-    this.showErrorSrc.next(false);
     this.showSuccessSrc.next(true);
+
+    this.showFileChooserSrc.next(false);
+    this.showSettingsSrc.next(false);
+    this.showFileInfoSrc.next(false);
+    this.showErrorSrc.next(false);
   }
   showInfoError(msg: string) {
     if (msg) {
       this.infoMsgSrc.next(msg);
     }
-    this.showSuccessSrc.next(false);
+
     this.showErrorSrc.next(true);
+
+    this.showFileChooserSrc.next(false);
+    this.showSettingsSrc.next(false);
+    this.showSuccessSrc.next(false);
+    this.showFileInfoSrc.next(false);
   }
   closeInfoSuccess() {
     this.showSuccessSrc.next(false);

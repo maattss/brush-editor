@@ -13,6 +13,7 @@ export class AppComponent  implements OnInit {
   // Class variables
   private brushes: Brush[];
   private showFileInfo: boolean;
+  private showFileChooser: boolean;
   private showSettings: boolean;
   private showSuccess: boolean;
   private showError: boolean;
@@ -21,6 +22,7 @@ export class AppComponent  implements OnInit {
     // Subscribe
     this.data.currentBrush.subscribe(brushes => this.brushes = brushes);
     this.view.showFileInfo.subscribe(showFileInfo => this.showFileInfo = showFileInfo);
+    this.view.showFileChooser.subscribe(showFileChooser => this.showFileChooser = showFileChooser);
     this.view.showSettings.subscribe(showSettings => this.showSettings = showSettings);
     this.view.showSuccess.subscribe(showSuccess => this.showSuccess = showSuccess);
     this.view.showError.subscribe(showError => this.showError = showError);

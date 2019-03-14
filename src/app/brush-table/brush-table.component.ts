@@ -69,8 +69,10 @@ export class BrushTableComponent implements OnInit {
         if (brush[channelX] > this.maxChannelValue) { this.inputError = true; }
         while (brush[channelX] > this.maxChannelValue) { // Reduce by 10 until demand is met
           brush[channelX] = Math.floor(brush[channelX] / 10);
+          if (brush[channelX] <= this.maxChannelValue) {
+            return;
+          }
         }
-        return;
       }
     }
     this.data.changeBrush(this.brushes);
@@ -88,7 +90,7 @@ export class BrushTableComponent implements OnInit {
 
   markRow(rowId: number) {
     this.data.changeCurrentBrushID(rowId);
-    const colorClass = 'table-danger';
+    const colorClass = 'table-primary';
 
     let index = 10 * (this.currentPage - 1) + 1; // Current first row index
     const indexEnd = index + this.pagedItems.length - 1; // Last index for current page
@@ -124,12 +126,12 @@ export class BrushTableComponent implements OnInit {
     const inputValue = (<HTMLInputElement>document.getElementById(elementId)).value;
     const brush = this.brushes[brushId - 1];
 
-    for (const channelX in brush) { // Loops through channel names in brush
-      if (channelX.toString() === channel) {
+    for (const obj in brush) { // Loops through channel names in brush
+      if (obj.toString() === channel) {
         if (channel === 'desc') {
-          brush[channelX] = inputValue;
+          brush[obj] = inputValue;
         } else { // ch1, ch2, ch3, ch4 or ch5
-          brush[channelX] = +inputValue;
+          brush[obj] = +inputValue;
         }
       }
     }
@@ -137,15 +139,12 @@ export class BrushTableComponent implements OnInit {
 
   deleteRow(brushId: number) {
     const brush = this.brushes[brushId - 1];
-    console.log(brush);
     for (const obj in brush) { // Loops through channel names in brush
       if (obj.toString() === 'desc') {
         brush[obj] = '';
       } else if (obj.toString() !== 'brushId') {
         if (!isNaN(+brush[obj])) {
           brush[obj] = 0;
-        } else {
-          console.log('Gotcha');
         }
       }
     }

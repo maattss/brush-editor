@@ -52,6 +52,11 @@ export class BrushGraphComponent implements OnInit {
   }];
   public barChartType = 'bar';
   public barChartLegend = true;
+  public chartColors: any[] = [
+    {
+      backgroundColor: ['rgba(0, 123, 255, 0.6)', 'rgba(0, 123, 255, 0.6)', 'rgba(0, 123, 255, 0.6)',
+      'rgba(0, 123, 255, 0.6)', 'rgba(0, 123, 255, 0.6)']
+    }];
   public isDataAvailable = false; // Controls if graph is displayed or not
 
   constructor(private data: BrushService) { }
@@ -63,7 +68,6 @@ export class BrushGraphComponent implements OnInit {
   private initialized = false;
   private currentBrushId: number;
   private maxChannelValue: number;
-  private widePage = true; // If screen of user is wide (>=995px) = true
 
   ngOnInit() {
     // Subscriptions
@@ -86,11 +90,6 @@ export class BrushGraphComponent implements OnInit {
       this.currentBrushId = brushId;
       if (this.initialized === true) {
         this.addData();
-        if (this.getWidthOfScreen() >= 995) { // If pixels of users screen >= 995px
-          this.widePage = true;
-        } else {
-          this.widePage = false;
-        }
       }
     });
     this.data.maxChannelValue.subscribe(maxChannelValue => {
@@ -99,16 +98,6 @@ export class BrushGraphComponent implements OnInit {
           this.addData();
         }
     });
-  }
-
-  getWidthOfScreen() {
-    return Math.max(
-      document.body.scrollWidth,
-      document.documentElement.scrollWidth,
-      document.body.offsetWidth,
-      document.documentElement.offsetWidth,
-      document.documentElement.clientWidth
-    );
   }
 
   // Add/update labels to graph
