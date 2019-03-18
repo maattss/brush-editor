@@ -15,9 +15,9 @@ export class ChooseFileService {
   private backEnabledSrc  = new BehaviorSubject<boolean>(false);
 
   // Http request values
-  private currentUrlSrc   = new BehaviorSubject<string>('http://localhost/fileservice/$HOME/');
-  private userName = 'Default User';
-  private password = 'robotics';
+  private currentUrlSrc   = new BehaviorSubject<string>('http://127.0.0.1/fileservice/$HOME/');
+  private userName        = 'Default User';
+  private password        = 'robotics';
 
   files       = this.fileSrc.asObservable();
   directories = this.directorySrc.asObservable();
