@@ -26,7 +26,7 @@ export class BrushInfoComponent implements OnInit {
 
   saveFileInfo() {
     const fileNameNew = (<HTMLInputElement>document.getElementById('fileNameInput')).value;
-    if (fileNameNew.slice(-3) === '.bt') {
+    if (fileNameNew.slice(-3).toLowerCase() === '.bt') {
       this.inputError = false;
       const fileCommentNew = (<HTMLInputElement>document.getElementById('fileCommentInput')).value;
       this.data.changeFileName(fileNameNew);
