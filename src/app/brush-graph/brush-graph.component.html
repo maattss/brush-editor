@@ -1,15 +1,19 @@
-<!-- Chart.js init script -->
-<!--<script type="text/javascript" src="../../../node_modules/chart.js/src/chart.js"></script>-->
-<div *ngIf="brushes.length>0" class="chart-container mb-5 ml-2 position-relative" id="chart{{widePage}}">
-  <h3>Graph</h3>
-   <!-- Display block if data is available, display none if not -->
-  <canvas baseChart [ngClass]="isDataAvailable ? 'd-block' : 'd-none'" 
-          [data]="barChartData"
-          [labels]="barChartLabels"
-          [options]="barChartOptions"
-          [legend]="barChartLegend"
-          [chartType]="barChartType">
-  </canvas> 
-  <!-- Add a helper text is no data is selected -->
-  <p class="text-center font-weight-bold" *ngIf="isDataAvailable==false">Select a brush to show graph</p>
+<div *ngIf="brushes.length>0" class="card rounded-0 bg-light" style="height: 472px;">
+  <div class="card-body">
+    <h5 class="card-title">Graph</h5>
+    <!-- Add a helper text is no data is selected -->
+    <p class="text-center font-weight-bold" *ngIf="isDataAvailable==false">Select a brush to show graph</p>
+
+    <!-- Display block if data is available, display none if not -->
+    <div class="chart-container" style="position: relative; height: 396px; width:100%;" > <!-- Height and width in this container chooses size of chart!-->
+      <canvas id="chart" baseChart [ngClass]="isDataAvailable ? 'd-block' : 'd-none'" 
+        [data]="barChartData"
+        [labels]="barChartLabels"
+        [options]="barChartOptions"
+        [legend]="barChartLegend"
+        [chartType]="barChartType"
+        [colors]="chartColors">
+      </canvas> 
+    </div>
+  </div>
 </div>

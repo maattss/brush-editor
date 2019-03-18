@@ -1,13 +1,30 @@
-#file-uploader {
-    margin-bottom: 1em;
-}
-button {
-    margin-right: 5px;
-    padding: 5px;
-}
-li {
-    text-align: left;
-}
 .navbar-icons {
-    font-size: 38px;
+    font-size: 34px; /* Height */
+}
+.navbar-icons-2 {
+    font-size: 36px; /* Height */
+}
+.navbar-buttons {
+    margin: 0;
+}
+.chooseFileLabel {
+    cursor: pointer;
+    margin-bottom: 0;
+}
+.fileupload {
+    position: relative;
+    overflow: hidden;
+}
+.fileupload input {
+    position: absolute;
+    top: 0;
+    right: 0; /* not left, because only the right part of the input seems to be clickable in some browser */
+    cursor: default;
+    opacity: 0.0;
+    filter: alpha(opacity=0); /* and all the other old opacity stuff you want to support */
+    font-size: 300px; /* wtf, but apparently the most reliable way to make a large part of the input clickable in most browsers */
+    height: 100px;
+}
+/deep/ .mat-tooltip {
+    font-size: 10px;
 }

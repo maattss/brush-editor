@@ -1,0 +1,17 @@
+.icon {
+    width: 32px;
+    text-align: center;
+}
+.menuElement:hover {
+    background-color: rgba(0,0,0,.2);
+    cursor: pointer;
+}
+i, #currentPath {
+    color: black;
+}
+i.disabled {
+    color: #6c757d;
+}
+.pagination {
+    font-size: 1.15em;
+}

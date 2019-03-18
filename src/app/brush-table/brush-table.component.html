@@ -1,13 +1,15 @@
-<!-- Show table and graph only if a file has been uploaded -->
-
-<div *ngIf="brushes.length>0"> 
-  <div id="tableContainer">
-    <h3>Data</h3>
+<div *ngIf="brushes.length>0" class="card rounded-0 bg-light"> <!-- Show table and graph only if a file has been uploaded -->
+  <div id="tableContainer" class="card-body pb-0">
+    <h5 class="card-title">Data</h5>
+    <div *ngIf="inputError" class="custom-tooltip alert alert-danger">
+        Maximum input value is {{maxChannelValue}}! You can change this value in settings.
+    </div>
+  <div>
     <div class="table-responsive">
-      <table class="table table-hover">
+      <table class="table table-hover table-sm">
         <thead>
           <tr>
-            <th> <!--Brush ID ?--> </th>
+            <th> <!-- Empty --> </th>
             <th *ngIf="brushes[0].ch1>=0"><input type="text" id="channelName1" value="{{channelNames.ch1}}" (keyup)="changeChannelValue(1)"></th>
             <th *ngIf="brushes[0].ch2>=0"><input type="text" id="channelName2" value="{{channelNames.ch2}}" (keyup)="changeChannelValue(2)"></th>
             <th *ngIf="brushes[0].ch3>=0"><input type="text" id="channelName3" value="{{channelNames.ch3}}" (keyup)="changeChannelValue(3)"></th>
@@ -27,11 +29,14 @@
               
               <td *ngIf="brush.ch1>=0"><input 
                 type="number"
-                id="{{brush.brushId}}ch1" 
-                value="{{brush.ch1 || ''}}" 
+                id="{{brush.brushId}}ch1"
                 placeholder="0"
-                (keyup)="updateBrushes(brush.brushId, 'ch1')" 
-                (focus)="markRow(brush.brushId)">
+                value="{{brush.ch1 || ''}}"
+                [(ngModel)]="brush.ch1"
+                (keypress)="inputValidation(brush.brushId, 'ch1')"
+                (keyup)="updateBrushes(brush.brushId, 'ch1'); inputValidation(brush.brushId, 'ch1')" 
+                (focus)="markRow(brush.brushId)" 
+                (blur)="inputError=false">
               </td>
   
               <td *ngIf="brush.ch2>=0"><input 
@@ -39,8 +44,11 @@
                 id="{{brush.brushId}}ch2" 
                 value="{{brush.ch2 || ''}}"
                 placeholder="0"
-                (keyup)="updateBrushes(brush.brushId, 'ch2')" 
-                (mousedown)="markRow(brush.brushId)">
+                [(ngModel)]="brush.ch2"
+                (keypress)="inputValidation(brush.brushId, 'ch2')"
+                (keyup)="updateBrushes(brush.brushId, 'ch2'); inputValidation(brush.brushId, 'ch2')" 
+                (focus)="markRow(brush.brushId)"
+                (blur)="inputError=false">
               </td>
   
               <td *ngIf="brush.ch3>=0"><input 
@@ -48,8 +56,11 @@
                 id="{{brush.brushId}}ch3" 
                 value="{{brush.ch3 || ''}}" 
                 placeholder="0"
-                (keyup)="updateBrushes(brush.brushId, 'ch3')" 
-                (mousedown)="markRow(brush.brushId)">
+                [(ngModel)]="brush.ch3"
+                (keypress)="inputValidation(brush.brushId, 'ch3')"
+                (keyup)="updateBrushes(brush.brushId, 'ch3'); inputValidation(brush.brushId, 'ch3')" 
+                (focus)="markRow(brush.brushId)"
+                (blur)="inputError=false">
               </td>
   
               <td *ngIf="brush.ch4>=0"><input 
@@ -57,8 +68,11 @@
                 id="{{brush.brushId}}ch4" 
                 value="{{brush.ch4 || ''}}"
                 placeholder="0"
-                (keyup)="updateBrushes(brush.brushId, 'ch4')" 
-                (mousedown)="markRow(brush.brushId)">
+                [(ngModel)]="brush.ch4"
+                (keypress)="inputValidation(brush.brushId, 'ch4')"
+                (keyup)="updateBrushes(brush.brushId, 'ch4'); inputValidation(brush.brushId, 'ch4')" 
+                (focus)="markRow(brush.brushId)"
+                (blur)="inputError=false">
               </td>
   
               <td *ngIf="brush.ch5>=0"><input 
@@ -66,23 +80,25 @@
                 id="{{brush.brushId}}ch5" 
                 value="{{brush.ch5 || ''}}"
                 placeholder="0"
-                (keyup)="updateBrushes(brush.brushId, 'ch5')" 
-                (mousedown)="markRow(brush.brushId)">
+                [(ngModel)]="brush.ch5"
+                (keypress)="inputValidation(brush.brushId, 'ch5')"
+                (keyup)="updateBrushes(brush.brushId, 'ch5'); inputValidation(brush.brushId, 'ch5')" 
+                (focus)="markRow(brush.brushId)"
+                (blur)="inputError=false">
               </td>
   
               <td><input 
                 type="text" 
                 id="{{brush.brushId}}desc" 
                 class="desc" 
-                value="{{brush.desc}}"
+                [(ngModel)]="brush.desc"
                 (keyup)="updateBrushes(brush.brushId, 'desc')"
-                (mousedown)="markRow(brush.brushId)">
+                (focus)="markRow(brush.brushId)">
               </td>
-  
-              <td>
-                <button title="Clear content of row" id="btnDelete" class="btn btn-link" (mousedown)="deleteRow(brush.brushId)">
-                  <i class="fas fa-times"></i>
-                </button>
+              <td class="clearField align-middle">
+                <button mat-raised-button matTooltip="Clear content of row" matTooltipPosition="right" matTooltipClass="primary-tooltip" id="btnClear" class="btn btn-link" (mousedown)="deleteRow(brush.brushId)" (focus)="markRow(brush.brushId)">
+                  <i class="fas fa-times fa-2x"></i>
+                </button> 
               </td>
             </tr>
         </tbody>
@@ -91,33 +107,25 @@
   </div>
 
   <!-- Pager -->
-  <nav id="pager" aria-label="Brush table pager">
+  <nav id="pager" aria-label="Brush table pager" class="mt-1">
     <ul *ngIf="pager.pages && pager.pages.length" class="pagination justify-content-center">
-
-        <!-- Add if pages usually above 10
         <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item">
-            <a (click)="setPage(1)" class="page-link">First</a>
-        </li>-->
-        <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item">
-            <a (click)="setPage(pager.currentPage - 1)" class="page-link">
-                <span aria-hidden="true">&laquo;</span>
+            <a (click)="setPage(pager.currentPage - 1)" class="page-link rounded-0">
+                <span aria-hidden="true"><i class="fas fa-long-arrow-alt-left"></i></span>
                 <span class="sr-only">Previous</span>
             </a>
         </li>
         <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}" class="page-item">
-            <a (click)="setPage(page)" class="page-link">{{page}}</a>
+            <a (click)="setPage(page)" class="page-link rounded-0">{{page}}</a>
         </li>
         <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item">
-            <a (click)="setPage(pager.currentPage + 1)" class="page-link">
-                <span aria-hidden="true">&raquo;</span>
+            <a (click)="setPage(pager.currentPage + 1)" class="page-link rounded-0">
+                <span aria-hidden="true"><i class="fas fa-long-arrow-alt-right"></i></span>
                 <span class="sr-only">Next</span>
             </a>
         </li>
-        <!-- Add if pages usually above 10 
-        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item">
-            <a (click)="setPage(pager.totalPages)" class="page-link">Last</a>
-        </li> -->
     </ul>
+
     <!-- Marks the row displayed in graph -->
     <div *ngIf="currentBrushId >= currentPage*10-9 && currentBrushId < currentPage*10+1">
       {{ markRow(currentBrushId) }}

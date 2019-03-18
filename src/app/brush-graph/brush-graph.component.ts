@@ -11,6 +11,7 @@ export class BrushGraphComponent implements OnInit {
 
   // Chart variables
   public barChartOptions = {
+    animation: false,
     scaleShowVerticalLines: false,
     responsive: true,
     maintainAspectRatio: false,
@@ -23,10 +24,25 @@ export class BrushGraphComponent implements OnInit {
       yAxes: [
         {
           ticks: {
-            beginAtZero: true
+            beginAtZero: true,
+            max: 100,
+            callback: function(value: string) {
+              return value + '%';
+            }
           }
         }
       ]
+    },
+    tooltips: {
+      enabled: true,
+      mode: 'single',
+      callbacks: {
+        label: function(tooltipItem: any, data: any) {
+          const allData = data.datasets[tooltipItem.datasetIndex].data;
+          const tooltipData = allData[tooltipItem.index];
+          return ' ' + tooltipData + '%';
+        }
+      }
     }
   };
   public barChartLabels: string[] = ['No data'];
@@ -36,6 +52,11 @@ export class BrushGraphComponent implements OnInit {
   }];
   public barChartType = 'bar';
   public barChartLegend = true;
+  public chartColors: any[] = [
+    {
+      backgroundColor: ['rgba(0, 123, 255, 0.6)', 'rgba(0, 123, 255, 0.6)', 'rgba(0, 123, 255, 0.6)',
+      'rgba(0, 123, 255, 0.6)', 'rgba(0, 123, 255, 0.6)']
+    }];
   public isDataAvailable = false; // Controls if graph is displayed or not
 
   constructor(private data: BrushService) { }
@@ -46,7 +67,7 @@ export class BrushGraphComponent implements OnInit {
   private chart: [];
   private initialized = false;
   private currentBrushId: number;
-  private widePage = true; // If screen of user is wide (>=995px) = true
+  private maxChannelValue: number;
 
   ngOnInit() {
     // Subscriptions
@@ -69,23 +90,14 @@ export class BrushGraphComponent implements OnInit {
       this.currentBrushId = brushId;
       if (this.initialized === true) {
         this.addData();
-        if (this.getWidthOfScreen() >= 995) { // If pixels of users screen >= 995px
-          this.widePage = true;
-        } else {
-          this.widePage = false;
-        }
       }
     });
-  }
-
-  getWidthOfScreen() {
-    return Math.max(
-      document.body.scrollWidth,
-      document.documentElement.scrollWidth,
-      document.body.offsetWidth,
-      document.documentElement.offsetWidth,
-      document.documentElement.clientWidth
-    );
+    this.data.maxChannelValue.subscribe(maxChannelValue => {
+        this.maxChannelValue = maxChannelValue;
+        if (this.initialized === true) {
+          this.addData();
+        }
+    });
   }
 
   // Add/update labels to graph
@@ -113,9 +125,18 @@ export class BrushGraphComponent implements OnInit {
       this.isDataAvailable = true;
       this.barChartData = [];
       const br: Brush = this.brushes[this.currentBrushId - 1];
-      const values: number[] = [br.ch1, br.ch2, br.ch3];
-      if (br.ch4 >= 0) { values.push(br.ch4); }
-      if (br.ch5 >= 0) { values.push(br.ch5); }
+      const ch1Percent: number = (br.ch1 / this.maxChannelValue) * 100;
+      const ch2Percent: number = (br.ch2 / this.maxChannelValue) * 100;
+      const ch3Percent: number = (br.ch3 / this.maxChannelValue) * 100;
+      const values: number[] = [ch1Percent, ch2Percent, ch3Percent];
+      if (br.ch4 >= 0) {
+        const ch4Percent: number = (br.ch4 / this.maxChannelValue) * 100;
+        values.push(ch4Percent);
+      }
+      if (br.ch5 >= 0) {
+        const ch5Percent: number = (br.ch5 / this.maxChannelValue) * 100;
+        values.push(ch5Percent);
+      }
 
       this.barChartData.push({
         data: values,
