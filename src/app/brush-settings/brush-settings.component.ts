@@ -102,7 +102,6 @@ export class BrushSettingsComponent implements OnInit {
     this.data.changeBrush(this.brushes);
     this.view.showInfoSuccess('All values greater than ' + this.maxChannelValue
     + ' are changed to ' + this.maxChannelValue + '!');
-    this.toggleSettings();
   }
 
   toggleSettings() {
