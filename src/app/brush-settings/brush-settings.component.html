@@ -9,23 +9,25 @@
             <div class="form-group">
                 <label for="maxChannelvalue">Max channel value</label>
                 <input type="number" class="form-control rounded-0" id="maxChannelvalue" aria-describedby="maxChannelValue" placeholder="0" value="{{maxChannelValue}}">
-                <button class="btn btn-primary mt-1 rounded-0" (click)="updateMaxChannelValue(); hideSettingsDiv()">Update value</button>
+                <button class="btn btn-primary mt-1 rounded-0" (click)="updateMaxChannelValue(); hideSettingsDiv()">
+                    Update value
+                </button>
+                <button id="resetMaxBtn" class="btn btn-secondary ml-1 mt-1 rounded-0" (click)="resetMaxChannel()" mat-raised-button matTooltip="Reset max channel value to 1000" matTooltipShowDelay="1000" matTooltipClass="primary-tooltip">
+                    Reset value
+                </button>
             </div>
 
             <div class="form-group">
-                <label for="robotIP">Robot IP adress (ex: 127.0.0.1)</label>
+                <label for="robotIP">Robot IP address (ex: 127.0.0.1)</label>
                 <input type="text" class="form-control rounded-0" id="robotIP" aria-describedby="robotIP" placeholder="127.0.0.1" value="{{robotIP}}">
                 <button class="btn btn-primary mt-1 rounded-0" (click)="updateRobotIP()">Update IP</button>
                 <button class="btn btn-secondary ml-1 mt-1 rounded-0" (click)="setRobotIPtoLocal()">Use local IP</button>
             </div>
 
             <div class="form-group">
-                <label for="resetMaxBtn">Reset to default</label><br>
-                <button id="resetMaxBtn" class="btn btn-primary mt-1 rounded-0" (click)="resetMaxChannel()" mat-raised-button matTooltip="Reset max channel value to 1000" matTooltipShowDelay="1000" matTooltipClass="primary-tooltip">
-                    Reset max channel value
-                </button>
+                <label for="resetChNames">Reset to default</label>
                 <br>
-                <button class="btn btn-primary mt-1 rounded-0" (click)="resetChannelNames()" mat-raised-button matTooltip="Reset the channel names to default (Channel 1, Channel 2, etc.)" matTooltipShowDelay="1000" matTooltipClass="primary-tooltip">
+                <button id="resetChNames" class="btn btn-primary mt-1 rounded-0" (click)="resetChannelNames()" mat-raised-button matTooltip="Reset the channel names to default (Channel 1, Channel 2, etc.)" matTooltipShowDelay="1000" matTooltipClass="primary-tooltip">
                     Reset channel names
                 </button>
             </div>
