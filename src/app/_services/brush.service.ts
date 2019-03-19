@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject} from 'rxjs';
-import { Brush, ChannelNames } from '../brush';
+import { Brush, ChannelNames, ChannelMaxValues } from '../brush';
 import { TestBed } from '@angular/core/testing';
 
 @Injectable({
