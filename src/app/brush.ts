@@ -14,6 +14,10 @@ export class ChannelNames {
     ch4: string;
     ch5: string;
 }
-export class GlobalVariables {
-    currentBrushId: number;
+export class ChannelMaxValues {
+    ch1: number;
+    ch2: number;
+    ch3: number;
+    ch4: number;
+    ch5: number;
 }
