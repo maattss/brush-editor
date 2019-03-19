@@ -16,6 +16,7 @@ export class BrushTableComponent implements OnInit {
   private channelNames: ChannelNames;
   private initialized = false;
   private maxChannelValue: number;
+  private currentBrushId: number; // Need this when moving to a page where the active row is
 
   // Pagination
   private currentPage = 1;
@@ -59,6 +60,8 @@ export class BrushTableComponent implements OnInit {
     if (this.cookieService.check('maxChannelValue')) {
       const cookieVal = JSON.parse(this.cookieService.get('maxChannelValue'));
       this.data.changeMaxChannelValue(cookieVal);
+    } else {
+      this.data.changeMaxChannelValue(1000);
     }
   }
 
@@ -92,6 +95,7 @@ export class BrushTableComponent implements OnInit {
   }
 
   markRow(rowId: number) {
+    this.currentBrushId = rowId;
     this.data.changeCurrentBrushID(rowId);
     const colorClass = 'table-primary';
 
