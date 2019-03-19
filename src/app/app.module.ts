@@ -7,8 +7,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-// import { digestAuthRequest } from 'digest-auth-request';
-
 // Components
 import { AppComponent } from './app.component';
 import { BrushTableComponent } from './brush-table/brush-table.component';
