@@ -60,6 +60,8 @@ export class BrushTableComponent implements OnInit {
     if (this.cookieService.check('maxChannelValue')) {
       const cookieVal = JSON.parse(this.cookieService.get('maxChannelValue'));
       this.data.changeMaxChannelValue(cookieVal);
+    } else {
+      this.data.changeMaxChannelValue(1000);
     }
   }
 
