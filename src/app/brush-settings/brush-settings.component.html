@@ -18,17 +18,17 @@
             </div>
 
             <div class="form-group">
-                <label for="robotIP">Robot IP address (ex: 127.0.0.1)</label>
-                <input type="text" class="form-control rounded-0" id="robotIP" aria-describedby="robotIP" placeholder="127.0.0.1" value="{{robotIP}}">
+                <label for="robotIP">Robot IP address</label>
+                <input type="text" class="form-control rounded-0" id="robotIP" aria-describedby="robotIP" placeholder="Ex: 127.0.0.1" value="{{robotIP}}">
                 <button class="btn btn-primary mt-1 rounded-0" (click)="updateRobotIP()">Update IP</button>
                 <button class="btn btn-secondary ml-1 mt-1 rounded-0" (click)="setRobotIPtoLocal()">Use local IP</button>
             </div>
 
             <div class="form-group">
-                <label for="resetChNames">Reset to default</label>
+                <label for="resetChNames">Channel names</label>
                 <br>
                 <button id="resetChNames" class="btn btn-primary mt-1 rounded-0" (click)="resetChannelNames()" mat-raised-button matTooltip="Reset the channel names to default (Channel 1, Channel 2, etc.)" matTooltipShowDelay="1000" matTooltipClass="primary-tooltip">
-                    Reset channel names
+                    Reset to default
                 </button>
             </div>
         </form>
