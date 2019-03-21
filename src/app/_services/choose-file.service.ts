@@ -119,6 +119,15 @@ export class ChooseFileService {
   postFile() {
     const fileName = this.data.getFileName();
     const postData = this.data.getExportableString();
+
+    // Try something like this. https://stackoverflow.com/questions/18729405/how-to-convert-utf8-string-to-byte-array
+    // const str = this.data.getExportableString();
+    // const utf8 = unescape(encodeURIComponent(str));
+    // const arr = [];
+    // for (let i = 0; i < utf8.length; i++) {
+    //   arr.push(utf8.charCodeAt(i));
+    // }
+
     const digest = new digestAuthRequest('PUT', this.currentUrlSrc.value + fileName, this.userName, this.password);
     digest.request((response: any) => {
       this.parseFSResponse(response);
