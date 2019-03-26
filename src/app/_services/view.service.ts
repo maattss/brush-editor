@@ -53,10 +53,7 @@ export class ViewService {
     this.showSuccessSrc.next(false);
   }
   toggleBrushMappingView() {
-
-    console.log(this.showBrushMappingSrc.value);
     this.showBrushMappingSrc.next(!this.showBrushMappingSrc.value);
-    console.log(this.showBrushMappingSrc.value);
 
     this.showFileChooserSrc.next(false);
     this.showSettingsSrc.next(false);
