@@ -27,14 +27,14 @@ var digestAuthRequest = function (method, url, username, password) {
 	}
 
 	// start here
-	// successFn - will be passed JSON data
+	// successFn - will be passed data
 	// errorFn - will be passed error status code
 	// data - optional, for POSTS
 	this.request = function(successFn, errorFn, data) {
-		// posts data as JSON if there is any
+		// posts data if there is any
 		if (data) {
-			//self.data = JSON.stringify(data);
-			self.data = data;
+			// If JSON: JSON.stringify(data) and add appropriate headers
+			self.data = data; 
 		}
 		self.successFn = successFn;
 		self.errorFn = errorFn;
@@ -51,6 +51,7 @@ var digestAuthRequest = function (method, url, username, password) {
 		self.firstRequest.timeout = self.timeout;
 		// add appropriate headers
 		if (self.post) {
+			// JSON: application/json
 			self.firstRequest.setRequestHeader('Content-type', 'application/octet-stream');
 		}
 
