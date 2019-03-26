@@ -1,6 +1,6 @@
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BrushService } from '../_services/index';
-import { Brush, ChannelNames, GlobalVariables } from '../brush';
+import { Brush, ChannelNames } from '../brush';
 
 @Component({
   selector: 'app-brush-graph',

@@ -17,6 +17,7 @@ export class NavComponent implements OnInit {
 
   // Class variables
   private brushes: Brush[];
+  // private maxChannelValues: {};
   private maxChannelValue: number;
   private file: any;
   private fileComment: string;

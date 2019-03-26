@@ -2,12 +2,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ChartsModule } from 'ng2-charts';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AppRoutingModule } from './app-routing.module';
+import { FormsModule } from '@angular/forms';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-// import { digestAuthRequest } from 'digest-auth-request';
 
 // Components
 import { AppComponent } from './app.component';
@@ -36,10 +33,8 @@ import { ChooseFileRobotComponent } from './choose-file-robot/choose-file-robot.
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     ChartsModule,
     FormsModule,
-    ReactiveFormsModule,
     MatTooltipModule,
     BrowserAnimationsModule
   ],

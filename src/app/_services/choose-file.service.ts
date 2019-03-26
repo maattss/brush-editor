@@ -119,6 +119,7 @@ export class ChooseFileService {
   postFile() {
     const fileName = this.data.getFileName();
     const postData = this.data.getExportableString();
+
     const digest = new digestAuthRequest('PUT', this.currentUrlSrc.value + fileName, this.userName, this.password);
     digest.request((response: any) => {
       this.parseFSResponse(response);
