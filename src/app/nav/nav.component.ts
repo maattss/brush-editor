@@ -65,6 +65,11 @@ export class NavComponent implements OnInit {
     this.view.toggleFileInfoView();
   }
 
+  toggleBrushMapping() {
+    this.view.toggleBrushMappingView();
+    console.log('heeeey');
+  }
+
   toggleSettings() {
     this.hideConfirmation();
     this.view.toggleSettingsView();
