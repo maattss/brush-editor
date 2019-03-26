@@ -10,14 +10,7 @@ export class BrushMapFormulaComponent implements OnInit {
 
   constructor(private view: ViewService) { }
 
-  // Class variables
-  private showBrushMapping: boolean;
-
   ngOnInit() {
-    this.view.showBrushMapping.subscribe(showBrushMapping => {
-      this.showBrushMapping = showBrushMapping;
-      console.log(showBrushMapping);
-    });
   }
 
 }

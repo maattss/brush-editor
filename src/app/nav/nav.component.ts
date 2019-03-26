@@ -67,7 +67,6 @@ export class NavComponent implements OnInit {
 
   toggleBrushMapping() {
     this.view.toggleBrushMappingView();
-    console.log('heeeey');
   }
 
   toggleSettings() {
