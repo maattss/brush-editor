@@ -33,8 +33,8 @@ var digestAuthRequest = function (method, url, username, password) {
 	this.request = function(successFn, errorFn, data) {
 		// posts data as JSON if there is any
 		if (data) {
-			self.data = JSON.stringify(data);
-			// self.data = data;
+			//self.data = JSON.stringify(data);
+			self.data = data;
 		}
 		self.successFn = successFn;
 		self.errorFn = errorFn;
@@ -49,9 +49,9 @@ var digestAuthRequest = function (method, url, username, password) {
 		self.firstRequest = new XMLHttpRequest();
 		self.firstRequest.open(method, url, true);
 		self.firstRequest.timeout = self.timeout;
-		// if we are posting, add appropriate headers
+		// add appropriate headers
 		if (self.post) {
-			self.firstRequest.setRequestHeader('Content-type', 'application/json');
+			self.firstRequest.setRequestHeader('Content-type', 'application/octet-stream');
 		}
 
 		self.firstRequest.onreadystatechange = function() {
