@@ -77,8 +77,8 @@ export class BrushMap {
   }
 
   // Download and parse brush file from Robot Web Service API
-  getFile() {
-    this.getFileUrl(this.baseUrlSrc.value);
+  getFile(fileName: string) {
+    this.getFileUrl(fileName, this.baseUrlSrc.value);
   }
 
   getFileUrl(fileName: string, url: string) {
@@ -100,7 +100,7 @@ export class BrushMap {
     const fileName = this.data.getFileName();
     const postData = this.data.getExportableString();
 
-    const digest = new digestAuthRequest('PUT', this.currentUrlSrc.value + fileName, this.userName, this.password);
+    const digest = new digestAuthRequest('PUT', this.baseUrlSrc.value + fileName, this.userName, this.password);
     digest.request((response: any) => {
       this.parseFSResponse(response);
     }, function (errorCode: any) {

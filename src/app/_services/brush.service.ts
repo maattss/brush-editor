@@ -126,37 +126,4 @@ export class BrushService {
     }
   return text;
   }
-
-  // getDataAsCollection() {
-  //   const collection = [];
-  //   if (this.fileCommentSrc.value) {  // Add comment to file if it exists
-  //     collection.push('#' + this.fileCommentSrc.value + '');
-  //   }
-
-  //   // Add brushes to file
-  //   for (const brush of this.brushSrc.value) {
-  //     let text = '';
-  //     text += brush.ch1 + ',' + brush.ch2 + ',' + brush.ch3;
-  //     if (brush.ch4) {
-  //       text += ',' + brush.ch4;
-  //     }
-  //     if (brush.ch5) {
-  //       text += ',' + brush.ch5;
-  //     }
-  //     if (brush.desc !== '') {
-  //       text += '#' + brush.desc;
-  //     }
-  //     if (!(brush.brushId >= this.brushSrc.value.length)) {
-  //         text += '';
-  //     }
-  //     collection.push(text);
-  //   }
-  //   return collection;
-  // }
-
-  // getExportableFile() {
-  //   const text = this.getExportableString();
-  //   const data = new Blob([text], {type: 'text/plain;charset=utf-8'});
-  //   return data;
-  // }
 }
