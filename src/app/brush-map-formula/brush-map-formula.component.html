@@ -1,4 +1,64 @@
-<div>
-    <p>Brush-map-formula works!</p>
-</div>
+<div class="alert alert-primary fade show rounded-0 mt-0 mb-0" role="alert">
+  <button
+    type="button"
+    class="close mb-3 rounded-0"
+    aria-label="Close"
+    mat-raised-button
+    matTooltip="Close settings"
+    matTooltipShowDelay="1000"
+    matTooltipClass="primary-tooltip"
+  >
+    <!-- (click)="toggleBrushMapping()" -->
+    <span aria-hidden="true">&times;</span>
+  </button>
 
+  <h5>Brush Mapping</h5>
+  <div class="mr-1 d-md-inline-block d-block">
+    <form id="allSettings">
+      <div class="form-group d-md-inline-block d-block mr-2 mb-2">
+        <label for="brushDeviceSelect">Brush device</label>
+        <select id="brushDeviceSelect" class="custom-select rounded-0" disabled>
+          <!-- *ngFor loop here -->
+          <option value="1" selected>A1Brush</option>
+        </select>
+      </div>
+      <div class="form-group d-md-inline-block d-block mr-2 mb-2">
+        <label for="programSelect">Program</label>
+        <select id="programSelect" class="custom-select rounded-0">
+          <option value="0" selected>None</option>
+          <!-- *ngFor loop here -->
+          <option value="1">Tesla Model S</option>
+          <option value="2">Tesla Model 3</option>
+          <option value="3">Tesla Model X</option>
+          <option value="4">Tesla Model Y</option>
+        </select>
+      </div>
+      <div class="form-group d-md-inline-block d-block mr-2 mb-2">
+        <label for="materialSelect">Material</label>
+        <select id="materialSelect" class="custom-select rounded-0">
+          <option value="0" selected>None</option>
+          <!-- *ngFor loop here -->
+          <option value="1">Silver</option>
+          <option value="2">Grey</option>
+          <option value="3">Red</option>
+          <option value="4">Black</option>
+        </select>
+      </div>
+      <!--
+      <div class="form-group d-md-inline-block d-block mr-2 mb-2">
+        <label for="tableNumberInput">Table number</label>
+        <input
+          type="text"
+          class="form-control rounded-0 d-inline-block"
+          id="tableNumberInput"
+          placeholder="Ex: 101"
+        />
+        
+        <button class="btn btn-primary mt-1 rounded-0 d-inline-block">
+          Go
+        </button>
+      </div>
+      -->
+    </form>
+  </div>
+</div>
