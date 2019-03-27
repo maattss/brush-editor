@@ -8,24 +8,20 @@ declare const digestAuthRequest: any;
   providedIn: 'root'
 })
 
-export class ChooseFileService {
+export class BrushMap {
   private fileSrc = new BehaviorSubject<Array<string>>([]);
   private directorySrc = new BehaviorSubject<Array<string>>([]);
   private unknownSrc = new BehaviorSubject<Array<string>>([]);
-  private programSrc = new BehaviorSubject<Array<string>>([]);
-  private materialSrc = new BehaviorSubject<Array<string>>([]);
-  private backEnabledSrc = new BehaviorSubject<boolean>(false);
 
   // Http request values
-  private currentUrlSrc = new BehaviorSubject<string>('http://127.0.0.1/fileservice/$HOME/');
+  private baseUrlSrc = new BehaviorSubject<string>('http://127.0.0.1/fileservice/$HOME/');
   private userName = 'Default User';
   private password = 'robotics';
 
   files = this.fileSrc.asObservable();
   directories = this.directorySrc.asObservable();
   unknowns = this.unknownSrc.asObservable();
-  currentUrl = this.currentUrlSrc.asObservable();
-  backEnabled = this.backEnabledSrc.asObservable();
+  currentUrl = this.baseUrlSrc.asObservable();
 
   constructor(private data: BrushService) { }
 
@@ -38,39 +34,13 @@ export class ChooseFileService {
   changeUnknowns(unknowns: string[]) {
     this.unknownSrc.next(unknowns);
   }
-  changeCurrentUrl(url: string) {
-    this.currentUrlSrc.next(url);
-  }
-  addToUrl(url: string) {
-    this.changeCurrentUrl(this.currentUrlSrc.value + encodeURI(url) + '/');
-    this.backEnabledSrc.next(true);
-  }
-  moveBack() {
-    const urlSplitted = this.currentUrlSrc.value.split('/');
-
-    if (urlSplitted[urlSplitted.length - 2] !== '$home') {
-      let newUrl = '';
-      let newFolder = '';
-      for (let i = 0; i < urlSplitted.length - 2; i++) {
-        newUrl += urlSplitted[i] + '/';
-        newFolder = urlSplitted[i];
-      }
-
-      if (newFolder.toLowerCase() === '$home') {
-        this.backEnabledSrc.next(false);
-      }
-
-      this.changeCurrentUrl(newUrl);
-      this.getFSResource();
-    }
-  }
 
   getFSResource() {
-    this.getFSResourceUrl(this.currentUrlSrc.value);
+    this.getFSResourceUrl(this.baseUrlSrc.value);
   }
 
   getFSResourceUrl(url: string) {
-    const digest = new digestAuthRequest('GET', this.currentUrlSrc.value + '?json=1', this.userName, this.password);
+    const digest = new digestAuthRequest('GET', url + '?json=1', this.userName, this.password);
     digest.request((response: any) => {
       this.parseFSResponse(response);
     }, function (errorCode: any) {
@@ -107,8 +77,12 @@ export class ChooseFileService {
   }
 
   // Download and parse brush file from Robot Web Service API
-  getFile(fileName: string) {
-    const digest = new digestAuthRequest('GET', this.currentUrlSrc.value + encodeURI(fileName), this.userName, this.password);
+  getFile() {
+    this.getFileUrl(this.baseUrlSrc.value);
+  }
+
+  getFileUrl(fileName: string, url: string) {
+    const digest = new digestAuthRequest('GET', url + encodeURI(fileName), this.userName, this.password);
     digest.request((response: any) => {
       this.data.parseFile(response.toString());
       console.log('GET response', response);

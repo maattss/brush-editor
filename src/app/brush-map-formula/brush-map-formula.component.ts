@@ -13,4 +13,10 @@ export class BrushMapFormulaComponent implements OnInit {
   ngOnInit() {
   }
 
+  // TODO:
+  // Scan program.map and output to select list
+  // Scan material.map and output to select list
+  // Button on click calculate tablename and show file
+  // Need to extend choose-file.service to be able to read and store program and material
+
 }
