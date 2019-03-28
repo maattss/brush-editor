@@ -11,7 +11,7 @@ import { ChooseFileService } from '../_services/choose-file.service';
 })
 export class BrushSettingsComponent implements OnInit {
 
-  constructor(private fileChooser: ChooseFileService, private data: BrushService, 
+  constructor(private fileChooser: ChooseFileService, private data: BrushService,
     private view: ViewService, private cookieService: CookieService) { }
 
   // Class variables
@@ -54,7 +54,9 @@ export class BrushSettingsComponent implements OnInit {
     const newRobotIP = (<HTMLInputElement>document.getElementById('robotIP')).value;
     if (this.validateIPaddress(newRobotIP) === true) { // Valid address
       this.robotIP = newRobotIP;
+      // Update current and home folder URL
       this.fileChooser.changeCurrentUrl('http://' + newRobotIP + '/fileservice/$HOME/');
+      this.fileChooser.changeHomeUrl('http://' + newRobotIP + '/fileservice/$HOME/');
       this.toggleSettings();
       this.view.showInfoSuccess('You updated Robot IP successfully!');
     } else { // Not a valid address
@@ -76,7 +78,7 @@ export class BrushSettingsComponent implements OnInit {
   }
 
   resetChannelNames() {
-    const defaultNames = {ch1: 'Channel 1', ch2: 'Channel 2', ch3: 'Channel 3', ch4: 'Channel 4', ch5: 'Channel 5'};
+    const defaultNames = { ch1: 'Channel 1', ch2: 'Channel 2', ch3: 'Channel 3', ch4: 'Channel 4', ch5: 'Channel 5' };
     this.data.changeChannelName(defaultNames);
     this.toggleSettings();
     this.view.showInfoSuccess('You set channel names back to default successfully!');
@@ -101,7 +103,7 @@ export class BrushSettingsComponent implements OnInit {
     }
     this.data.changeBrush(this.brushes);
     this.view.showInfoSuccess('All values greater than ' + this.maxChannelValue
-    + ' are changed to ' + this.maxChannelValue + '!');
+      + ' are changed to ' + this.maxChannelValue + '!');
   }
 
   toggleSettings() {
