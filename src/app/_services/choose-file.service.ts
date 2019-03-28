@@ -164,10 +164,25 @@ export class ChooseFileService {
   }
 
   getFileName(program: string, material: string) {
-    const programNumber = 0;
+    let programNumber = 0;
     // Loop through program map and find programNumber
-    const materialNumber = 0;
+    console.log('Programs\n');
+    this.programSrc.value.forEach((name: string, num: number) => {
+      console.log('Name:' + name, ', Number:' + num);
+      if (name === program) {
+        programNumber = num;
+      }
+    });
+    let materialNumber = 0;
     // Loop through material map and find materialNumber
+    console.log('Materials\n');
+    this.materialSrc.value.forEach((name: string, num: number) => {
+      console.log('Name:' + name, ', Number:' + num);
+      if (name === material) {
+        materialNumber = num;
+      }
+    });
+    // Using P*100 + M as mapping function
     return 'Table' + programNumber * 100 + materialNumber + '.bt';
   }
 
