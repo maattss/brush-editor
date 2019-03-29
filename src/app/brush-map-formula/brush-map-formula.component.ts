@@ -14,9 +14,9 @@ export class BrushMapFormulaComponent implements OnInit {
   }
 
   // TODO:
-  // Scan program.map and output to select list
-  // Scan material.map and output to select list
-  // Button on click calculate tablename and show file
-  // Need to extend choose-file.service to be able to read and store program and material
+  // Subscribe to choose file service
+  // Fetch programs and map
+  // On button click -> Use mapping to find table name
+  // Show file in table on page
 
 }
