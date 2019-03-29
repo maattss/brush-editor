@@ -27,6 +27,8 @@ export class ChooseFileService {
   unknowns = this.unknownSrc.asObservable();
   currentUrl = this.currentUrlSrc.asObservable();
   backEnabled = this.backEnabledSrc.asObservable();
+  program = this.programSrc.asObservable();
+  material = this.materialSrc.asObservable();
 
   constructor(private data: BrushService) { }
 
@@ -138,6 +140,12 @@ export class ChooseFileService {
     }, postData);
   }
 
+  fetchAll() {
+    this.fetchBrushDevices();
+    this.fetchPrograms();
+    this.fetchMaterials();
+  }
+
   fetchPrograms() {
     const digest = new digestAuthRequest('GET', this.homeUrlSrc.value + 'alias/program.map?json=1', this.userName, this.password);
     digest.request((response: any) => {
@@ -163,7 +171,7 @@ export class ChooseFileService {
     // All folders in home directory = Brush device
   }
 
-  getFileName(program: string, material: string) {
+  private getFileName(program: string, material: string) {
     let programNumber = 0;
     // Loop through program map and find programNumber
     console.log('Programs\n');
