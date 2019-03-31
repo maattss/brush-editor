@@ -18,13 +18,14 @@ export class BrushMapFormulaComponent implements OnInit {
   private material: Map<number, string>;
   private programArray: string[];
   private materialArray: string[];
-
+  private brushDeviceArray: string[];
 
   ngOnInit() {
     // Fetch all program and material mapping
     this.fileChooser.fetchAll();
 
     // Subscribe
+    this.fileChooser.brushDevice.subscribe(brushDevice => this.brushDeviceArray = brushDevice);
     this.fileChooser.program.subscribe(program => {
       this.program = program;
       this.updateProgramArray();

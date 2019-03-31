@@ -12,6 +12,7 @@ export class ChooseFileService {
   private fileSrc = new BehaviorSubject<Array<string>>([]);
   private directorySrc = new BehaviorSubject<Array<string>>([]);
   private unknownSrc = new BehaviorSubject<Array<string>>([]);
+  private brushDeviceSrc = new BehaviorSubject<Array<string>>([]);
   private programSrc = new BehaviorSubject<Map<number, string>>(new Map());
   private materialSrc = new BehaviorSubject<Map<number, string>>(new Map());
   private backEnabledSrc = new BehaviorSubject<boolean>(false);
@@ -27,6 +28,7 @@ export class ChooseFileService {
   unknowns = this.unknownSrc.asObservable();
   currentUrl = this.currentUrlSrc.asObservable();
   backEnabled = this.backEnabledSrc.asObservable();
+  brushDevice = this.brushDeviceSrc.asObservable();
   program = this.programSrc.asObservable();
   material = this.materialSrc.asObservable();
 
@@ -149,7 +151,7 @@ export class ChooseFileService {
   fetchPrograms() {
     const digest = new digestAuthRequest('GET', this.homeUrlSrc.value + 'alias/program.map?json=1', this.userName, this.password);
     digest.request((response: any) => {
-      // Add programs to map here
+      // TODO: Add programs to map here
       console.log(response);
     }, function (errorCode: any) {
       console.log('Error: ', errorCode);
@@ -159,7 +161,7 @@ export class ChooseFileService {
   fetchMaterials() {
     const digest = new digestAuthRequest('GET', this.homeUrlSrc.value + 'alias/material.map?json=1', this.userName, this.password);
     digest.request((response: any) => {
-      // Add materials to map here
+      // TODO: Add materials to map here
       console.log(response);
     }, function (errorCode: any) {
       console.log('Error: ', errorCode);
@@ -168,7 +170,25 @@ export class ChooseFileService {
   }
 
   fetchBrushDevices() {
-    // All folders in home directory = Brush device
+    const digest = new digestAuthRequest('GET', this.homeUrlSrc.value + '?json=1', this.userName, this.password);
+    digest.request((response: any) => {
+      const fileInfoArray = response._embedded._state;
+      const fsDirs: string[] = [];  // Directories
+      for (let i = 0; i < fileInfoArray.length; i++) {
+        const element = fileInfoArray[i];
+        const name = element._title;
+
+        if (element._type === 'fs-dir') {
+          fsDirs.push(name);
+        }
+      }
+
+      fsDirs.sort();
+      this.brushDeviceSrc.next(fsDirs);
+
+    }, function (errorCode: any) {
+      console.log('Error: ', errorCode);
+    });
   }
 
   private getFileName(program: string, material: string) {
