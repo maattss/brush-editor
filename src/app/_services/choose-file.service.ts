@@ -227,7 +227,7 @@ export class ChooseFileService {
       this.userName, this.password);
     digest.request((response: any) => {
       this.data.parseFile(response.toString());
-
+      this.data.changeFileName(fileName);
       // Close brush mapping window
       this.view.toggleBrushMappingView();
     }, (errorCode: any) => {
@@ -243,7 +243,7 @@ export class ChooseFileService {
       this.userName, this.password);
     digest.request((response: any) => {
       this.data.parseFile(response.toString());
-
+      this.data.changeFileName('Table' + numb + '.bt');
       // Close brush mapping window
       this.view.toggleBrushMappingView();
     }, (errorCode: any) => {

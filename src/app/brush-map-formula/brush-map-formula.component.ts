@@ -52,7 +52,8 @@ export class BrushMapFormulaComponent implements OnInit {
 
   loadFile() {
     // Get user selections
-    const brushDevice = (<HTMLInputElement>document.getElementById('brushDeviceSelect')).value;
+    // const brushDevice = (<HTMLInputElement>document.getElementById('brushDeviceSelect')).value;
+    const brushDevice = 'A1Brush';
     const material = (<HTMLInputElement>document.getElementById('materialSelect')).value;
     const program = (<HTMLInputElement>document.getElementById('programSelect')).value;
 
@@ -61,7 +62,8 @@ export class BrushMapFormulaComponent implements OnInit {
   }
   loadFileFromNumber() {
     // Get user selections
-    const brushDevice = (<HTMLInputElement>document.getElementById('brushDeviceSelect')).value;
+    // const brushDevice = (<HTMLInputElement>document.getElementById('brushDeviceSelect')).value;
+    const brushDevice = 'A1Brush';
     const numb = (<HTMLInputElement>document.getElementById('tableNumberInput')).value;
     // Update brush table with file corresponding to tablenumber
     this.fileChooser.getFileFromNumber(+numb, brushDevice);
