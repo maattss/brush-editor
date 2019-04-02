@@ -58,7 +58,13 @@ export class BrushMapFormulaComponent implements OnInit {
 
     // Update brush table with file from mapping
     this.fileChooser.getFileFromMapping(program, material, brushDevice);
-
+  }
+  loadFileFromNumber() {
+    // Get user selections
+    const brushDevice = (<HTMLInputElement>document.getElementById('brushDeviceSelect')).value;
+    const numb = (<HTMLInputElement>document.getElementById('tableNumberInput')).value;
+    // Update brush table with file corresponding to tablenumber
+    this.fileChooser.getFileFromNumber(+numb, brushDevice);
   }
 
   toggleBrushMapping() {

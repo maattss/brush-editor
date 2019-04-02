@@ -237,4 +237,20 @@ export class ChooseFileService {
       }
     });
   }
+
+  getFileFromNumber(numb: number, brushDevice: string) {
+    const digest = new digestAuthRequest('GET', this.homeUrlSrc.value + brushDevice + '/Table' + numb + '.bt?json=1',
+      this.userName, this.password);
+    digest.request((response: any) => {
+      this.data.parseFile(response.toString());
+
+      // Close brush mapping window
+      this.view.toggleBrushMappingView();
+    }, (errorCode: any) => {
+      console.log('Error:', errorCode);
+      if (errorCode === '404') {
+        this.data.parseFile('');
+      }
+    });
+  }
 }
