@@ -37,19 +37,15 @@ export class BrushMapFormulaComponent implements OnInit {
   }
 
   updateProgramArray() {
+    this.programArray = [];
     this.program.forEach((name: string, num: number) => {
-      // Only for debug, remove later
-      console.log('Program, name:' + name, ', Number:' + num);
-
       this.programArray.push(name);
     });
   }
 
   updateMaterialArray() {
+    this.materialArray = [];
     this.material.forEach((name: string, num: number) => {
-      // Only for debug, remove later
-      console.log('Material, name:' + name, ', Number:' + num);
-
       this.materialArray.push(name);
     });
   }
@@ -60,11 +56,12 @@ export class BrushMapFormulaComponent implements OnInit {
     const material = (<HTMLInputElement>document.getElementById('materialSelect')).value;
     const program = (<HTMLInputElement>document.getElementById('programSelect')).value;
 
-    // Only for debug, remove later
-    console.log('Brushdevice: "' + brushDevice + '", material:"' + material + '", program:"' + program + '"');
-
     // Update brush table with file from mapping
-    this.fileChooser.getFileFromMapping(brushDevice, material, program);
+    this.fileChooser.getFileFromMapping(program, material, brushDevice);
 
+  }
+
+  toggleBrushMapping() {
+    this.view.toggleBrushMappingView();
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject} from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { Brush, ChannelNames, ChannelMaxValues } from '../brush';
 import { TestBed } from '@angular/core/testing';
 
@@ -7,19 +7,19 @@ import { TestBed } from '@angular/core/testing';
   providedIn: 'root'
 })
 export class BrushService {
-  private brushSrc           = new BehaviorSubject<Array<Brush>>([]);
-  private channelNamesSrc    = new BehaviorSubject<ChannelNames>
-  ({ch1: 'Channel 1', ch2: 'Channel 2', ch3: 'Channel 3', ch4: 'Channel 4', ch5: 'Channel 5'});
-  private currentBrushIdSrc  = new BehaviorSubject<number>(0);
-  private fileCommentSrc     = new BehaviorSubject<string>('');
-  private fileNameSrc        = new BehaviorSubject<string>('');
+  private brushSrc = new BehaviorSubject<Array<Brush>>([]);
+  private channelNamesSrc = new BehaviorSubject<ChannelNames>
+    ({ ch1: 'Channel 1', ch2: 'Channel 2', ch3: 'Channel 3', ch4: 'Channel 4', ch5: 'Channel 5' });
+  private currentBrushIdSrc = new BehaviorSubject<number>(0);
+  private fileCommentSrc = new BehaviorSubject<string>('');
+  private fileNameSrc = new BehaviorSubject<string>('');
   private maxChannelValueSrc = new BehaviorSubject<number>(1000);
 
-  currentBrush    = this.brushSrc.asObservable();
-  channelNames    = this.channelNamesSrc.asObservable();
-  fileComment     = this.fileCommentSrc.asObservable();
-  fileName        = this.fileNameSrc.asObservable();
-  currentBrushId  = this.currentBrushIdSrc.asObservable();
+  currentBrush = this.brushSrc.asObservable();
+  channelNames = this.channelNamesSrc.asObservable();
+  fileComment = this.fileCommentSrc.asObservable();
+  fileName = this.fileNameSrc.asObservable();
+  currentBrushId = this.currentBrushIdSrc.asObservable();
   maxChannelValue = this.maxChannelValueSrc.asObservable();
 
   constructor() { }
@@ -47,12 +47,12 @@ export class BrushService {
   }
 
   parseFile(text: string) {
-    const brushes = [];
-
-    // Handle JSON file format - kinda
-    if (text.substring(0, 1) === '\"' && text.slice(-1) === '\"') {
-      text = text.substring(1, text.length - 1);
+    if (text === '') {
+      this.changeBrush([]);
+      return;
     }
+
+    const brushes = [];
 
     const list: string[] = text.split(/\r?\n/);
     let counter = 1;
@@ -74,23 +74,22 @@ export class BrushService {
 
         // Add the correct amount of channels from file
         brushes.push({
-            brushId: counter,
-            ch1: +channels[0],
-            ch2: +channels[1],
-            ch3: +channels[2],
-            ch4: +channels[3],
-            ch5: +channels[4],
-            desc: description
+          brushId: counter,
+          ch1: +channels[0],
+          ch2: +channels[1],
+          ch3: +channels[2],
+          ch4: +channels[3],
+          ch5: +channels[4],
+          desc: description
         });
         counter++;
       }
     });
-    console.log('Parsed file', brushes);
     this.changeBrush(brushes);
   }
 
   getExportableString() {
-   let text = '';
+    let text = '';
     if (this.fileCommentSrc.value) {  // Add comment to file if it exists
       text += '#' + this.fileCommentSrc.value + '\r\n';
     }
@@ -121,9 +120,9 @@ export class BrushService {
         text += '#' + brush.desc;
       }
       if (!(brush.brushId >= this.brushSrc.value.length)) {
-          text += '\r\n';
+        text += '\r\n';
       }
     }
-  return text;
+    return text;
   }
 }

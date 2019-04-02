@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { BrushService } from './brush.service';
+import { ViewService } from './view.service';
 
 declare const digestAuthRequest: any;
 
@@ -32,7 +33,7 @@ export class ChooseFileService {
   program = this.programSrc.asObservable();
   material = this.materialSrc.asObservable();
 
-  constructor(private data: BrushService) { }
+  constructor(private view: ViewService, private data: BrushService) { }
 
   changeFiles(files: string[]) {
     this.fileSrc.next(files);
@@ -119,6 +120,7 @@ export class ChooseFileService {
     const digest = new digestAuthRequest('GET', this.currentUrlSrc.value + encodeURI(fileName), this.userName, this.password);
     digest.request((response: any) => {
       this.data.parseFile(response.toString());
+      console.log('Response: ', response.toString());
       console.log('GET response', response);
     }, function (errorCode: any) {
       console.log('Error: ', errorCode);
@@ -151,8 +153,14 @@ export class ChooseFileService {
   fetchPrograms() {
     const digest = new digestAuthRequest('GET', this.homeUrlSrc.value + 'alias/program.map?json=1', this.userName, this.password);
     digest.request((response: any) => {
-      // TODO: Add programs to map here
-      console.log(response);
+      const programs = response.split('\n');
+      for (let i = 0; i < programs.length; i++) {
+        const id = programs[i].split(',')[0];
+        const name = programs[i].split(',')[1];
+        const mapCopy = this.programSrc.value;
+        mapCopy.set(id, name);
+        this.programSrc.next(mapCopy);
+      }
     }, function (errorCode: any) {
       console.log('Error: ', errorCode);
     });
@@ -161,8 +169,14 @@ export class ChooseFileService {
   fetchMaterials() {
     const digest = new digestAuthRequest('GET', this.homeUrlSrc.value + 'alias/material.map?json=1', this.userName, this.password);
     digest.request((response: any) => {
-      // TODO: Add materials to map here
-      console.log(response);
+      const materials = response.split('\n');
+      for (let i = 0; i < materials.length; i++) {
+        const id = materials[i].split(',')[0];
+        const name = materials[i].split(',')[1];
+        const mapCopy = this.materialSrc.value;
+        mapCopy.set(id, name);
+        this.materialSrc.next(mapCopy);
+      }
     }, function (errorCode: any) {
       console.log('Error: ', errorCode);
     });
@@ -178,14 +192,12 @@ export class ChooseFileService {
         const element = fileInfoArray[i];
         const name = element._title;
 
-        if (element._type === 'fs-dir') {
+        if (element._type === 'fs-dir' && name !== 'Alias') {
           fsDirs.push(name);
         }
       }
-
       fsDirs.sort();
       this.brushDeviceSrc.next(fsDirs);
-
     }, function (errorCode: any) {
       console.log('Error: ', errorCode);
     });
@@ -193,35 +205,36 @@ export class ChooseFileService {
 
   private getFileName(program: string, material: string) {
     let programNumber = 0;
-    // Loop through program map and find programNumber
-    console.log('Programs\n');
+    // Loop through program map and find correct programNumber
     this.programSrc.value.forEach((name: string, num: number) => {
-      console.log('Name:' + name, ', Number:' + num);
       if (name === program) {
         programNumber = num;
       }
     });
     let materialNumber = 0;
-    // Loop through material map and find materialNumber
-    console.log('Materials\n');
     this.materialSrc.value.forEach((name: string, num: number) => {
-      console.log('Name:' + name, ', Number:' + num);
       if (name === material) {
         materialNumber = num;
       }
     });
-    // Using P*100 + M as mapping function
-    return 'Table' + programNumber * 100 + materialNumber + '.bt';
+    const calc = programNumber * 100 + Number(materialNumber);
+    return 'Table' + calc + '.bt';
   }
 
   getFileFromMapping(program: string, material: string, brushDevice: string) {
     const fileName = this.getFileName(program, material);
-    const digest = new digestAuthRequest('GET', this.homeUrlSrc.value + brushDevice + fileName + '?json=1', this.userName, this.password);
+    const digest = new digestAuthRequest('GET', this.homeUrlSrc.value + brushDevice + '/' + fileName + '?json=1',
+      this.userName, this.password);
     digest.request((response: any) => {
       this.data.parseFile(response.toString());
-      console.log(response);
-    }, function (errorCode: any) {
-      console.log('Error: ', errorCode);
+
+      // Close brush mapping window
+      this.view.toggleBrushMappingView();
+    }, (errorCode: any) => {
+      console.log('Error:', errorCode);
+      if (errorCode === '404') {
+        this.data.parseFile('');
+      }
     });
   }
 }

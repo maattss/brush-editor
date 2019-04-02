@@ -1,14 +1,7 @@
 <div class="alert alert-primary fade show rounded-0 mt-0 mb-0" role="alert">
-  <button
-    type="button"
-    class="close mb-3 rounded-0"
-    aria-label="Close"
-    mat-raised-button
-    matTooltip="Close brush mapping"
-    matTooltipShowDelay="1000"
-    matTooltipClass="primary-tooltip"
-  >
-    <!-- (click)="toggleBrushMapping()" -->
+  <button type="button" class="close mb-3 rounded-0" aria-label="Close" mat-raised-button
+    matTooltip="Close brush mapping" matTooltipShowDelay="1000" matTooltipClass="primary-tooltip"
+    (click)="toggleBrushMapping()">
     <span aria-hidden="true">&times;</span>
   </button>
 
@@ -18,8 +11,7 @@
       <div class="form-group d-md-inline-block d-block mr-2 mb-2">
         <label for="brushDeviceSelect">Brush device</label>
         <select id="brushDeviceSelect" class="custom-select rounded-0" disabled>
-          <!-- *ngFor loop here -->
-          <option value="A1Brush" selected>A1Brush</option>
+          <option *ngFor="let brushDevice of brushDeviceArray" value="{{brushDevice}}">{{brushDevice}}</option>
         </select>
       </div>
       <div class="form-group d-md-inline-block d-block mr-2 mb-2">
@@ -27,21 +19,13 @@
         <select id="programSelect" class="custom-select rounded-0">
           <option value="0" selected>None</option>
           <option *ngFor="let program of programArray" value="{{program}}">{{program}}</option>
-          <option value="TeslaModel3">TeslaModelS (static)</option>
-          <option value="TeslaModel3">TeslaModel3 (static)</option>
-          <option value="TeslaModelX">TeslaModelX (static)</option>
-          <option value="TeslaModelY">TeslaModelY (static)</option>
-        </select> 
+        </select>
       </div>
       <div class="form-group d-md-inline-block d-block mr-2 mb-2">
         <label for="materialSelect">Material</label>
         <select id="materialSelect" class="custom-select rounded-0">
           <option value="0" selected>None</option>
           <option *ngFor="let material of materialArray" value="{{material}}">{{material}}</option>
-          <option value="Silver">Silver (static)</option>
-          <option value="Grey">Grey (static)</option>
-          <option value="Red">Red (static)</option>
-          <option value="Black">Black (static)</option>
         </select>
       </div>
       <div class="form-group d-md-inline-block d-block mr-2 mb-2">
