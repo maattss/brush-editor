@@ -46,7 +46,6 @@ export class BrushSettingsComponent implements OnInit {
   }
 
   addChoices() { // When user has chosen a channel
-    console.log('Addchoices');
     document.getElementById('channelMaxValue').hidden = false;
     document.getElementById('updateMaxBtn').hidden = false;
     document.getElementById('resetMaxBtn').hidden = false;
@@ -56,10 +55,8 @@ export class BrushSettingsComponent implements OnInit {
   }
 
   showMaxValue() { // Display max value for chosen channel
-    console.log('Showmaxvalue');
     for (const obj in this.channelMaxValues) {
       if (obj.toString() === this.currentChannel.toString()) {
-        console.log('New maxchannelval: ' + this.channelMaxValues[obj]);
         this.currentChannelMaxValue = this.channelMaxValues[obj];
       }
     }
