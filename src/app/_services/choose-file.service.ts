@@ -135,12 +135,15 @@ export class ChooseFileService {
   postFile() {
     const fileName = this.data.getFileName();
     const postData = this.data.getExportableString();
+    console.log('heey');
+    this.view.showInfoSuccess('File exported successfully!');
 
     const digest = new digestAuthRequest('PUT', this.currentUrlSrc.value + fileName, this.userName, this.password);
     digest.request((response: any) => {
-      this.parseFSResponse(response);
-    }, function (errorCode: any) {
+      // Response handling not needed
+    }, (errorCode: any) => {
       console.log('Error: ', errorCode);
+      this.view.showInfoError('There was a problem with the file export. Check your connection.');
     }, postData);
   }
 
