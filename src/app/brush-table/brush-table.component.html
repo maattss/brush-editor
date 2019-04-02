@@ -1,9 +1,7 @@
 <div *ngIf="brushes.length>0" class="card rounded-0 bg-light"> <!-- Show table and graph only if a file has been uploaded -->
   <div id="tableContainer" class="card-body pb-0">
     <h5 class="card-title">Data</h5>
-    <div *ngIf="inputError" class="custom-tooltip alert alert-danger">
-        Maximum input value is {{maxChannelValue}}! You can change this value in settings.
-    </div>
+    <div *ngIf="inputError" class="custom-tooltip alert alert-danger">Maximum input value is {{currentChannelMaxValue}} for this channel! You can change this value in settings.</div>
   <div>
     <div class="table-responsive">
       <table class="table table-hover table-sm">
@@ -34,7 +32,7 @@
                 value="{{brush.ch1 || ''}}"
                 [(ngModel)]="brush.ch1"
                 (keypress)="inputValidation(brush.brushId, 'ch1')"
-                (keyup)="updateBrushes(brush.brushId, 'ch1'); inputValidation(brush.brushId, 'ch1')" 
+                (keyup)="inputValidation(brush.brushId, 'ch1')" 
                 (focus)="markRow(brush.brushId)" 
                 (blur)="inputError=false">
               </td>
@@ -46,7 +44,7 @@
                 placeholder="0"
                 [(ngModel)]="brush.ch2"
                 (keypress)="inputValidation(brush.brushId, 'ch2')"
-                (keyup)="updateBrushes(brush.brushId, 'ch2'); inputValidation(brush.brushId, 'ch2')" 
+                (keyup)="inputValidation(brush.brushId, 'ch2')" 
                 (focus)="markRow(brush.brushId)"
                 (blur)="inputError=false">
               </td>
@@ -58,7 +56,7 @@
                 placeholder="0"
                 [(ngModel)]="brush.ch3"
                 (keypress)="inputValidation(brush.brushId, 'ch3')"
-                (keyup)="updateBrushes(brush.brushId, 'ch3'); inputValidation(brush.brushId, 'ch3')" 
+                (keyup)="inputValidation(brush.brushId, 'ch3')" 
                 (focus)="markRow(brush.brushId)"
                 (blur)="inputError=false">
               </td>
@@ -70,7 +68,7 @@
                 placeholder="0"
                 [(ngModel)]="brush.ch4"
                 (keypress)="inputValidation(brush.brushId, 'ch4')"
-                (keyup)="updateBrushes(brush.brushId, 'ch4'); inputValidation(brush.brushId, 'ch4')" 
+                (keyup)="inputValidation(brush.brushId, 'ch4')" 
                 (focus)="markRow(brush.brushId)"
                 (blur)="inputError=false">
               </td>
@@ -82,7 +80,7 @@
                 placeholder="0"
                 [(ngModel)]="brush.ch5"
                 (keypress)="inputValidation(brush.brushId, 'ch5')"
-                (keyup)="updateBrushes(brush.brushId, 'ch5'); inputValidation(brush.brushId, 'ch5')" 
+                (keyup)="inputValidation(brush.brushId, 'ch5')" 
                 (focus)="markRow(brush.brushId)"
                 (blur)="inputError=false">
               </td>
@@ -92,7 +90,7 @@
                 id="{{brush.brushId}}desc" 
                 class="desc" 
                 [(ngModel)]="brush.desc"
-                (keyup)="updateBrushes(brush.brushId, 'desc')"
+                (keyup)="updateBrushObject()"
                 (focus)="markRow(brush.brushId)">
               </td>
               <td class="clearField align-middle">
