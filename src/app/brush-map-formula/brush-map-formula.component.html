@@ -1,0 +1,57 @@
+<div class="alert alert-primary fade show rounded-0 mt-0 mb-0" role="alert">
+  <button type="button" class="close mb-3 rounded-0" aria-label="Close" mat-raised-button
+    matTooltip="Close brush mapping" matTooltipShowDelay="1000" matTooltipClass="primary-tooltip"
+    (click)="toggleBrushMapping()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+
+  <h5>Brush Mapping</h5>
+  <div>
+    <p class="mb-1 mr-1 d-inline-block">Device: <i>A1Brush</i>.</p><br class="d-sm-none">
+    <p class="mr-1 d-inline-block">Formula: <i>Program*100 + Material</i>.</p>
+  </div>
+  <div class="mr-1 d-md-inline-block d-block">
+    <form>
+      <!--
+      <div class="form-group d-md-inline-block d-block mr-2 mb-2">
+        <label for="brushDeviceSelect">Brush device</label>
+        <select id="brushDeviceSelect" class="custom-select rounded-0" disabled>
+          <option *ngFor="let brushDevice of brushDeviceArray" value="{{brushDevice}}">{{brushDevice}}</option>
+        </select>
+      </div>
+      -->
+      <div class="form-group d-md-inline-block d-block mr-2 mb-2">
+        <label for="programSelect">Program</label>
+        <select id="programSelect" class="custom-select rounded-0">
+          <option value="0" selected>None</option>
+          <option *ngFor="let program of programArray" value="{{program}}">{{program}}</option>
+        </select>
+      </div>
+      <div class="form-group d-md-inline-block d-block mr-2 mb-2">
+        <label for="materialSelect">Material</label>
+        <select id="materialSelect" class="custom-select rounded-0">
+          <option value="0" selected>None</option>
+          <option *ngFor="let material of materialArray" value="{{material}}">{{material}}</option>
+        </select>
+      </div>
+      <div class="form-group d-md-inline-block d-block mr-2 mb-2">
+        <button class="btn btn-primary rounded-0 d-inline-block" (click)="loadFile()">
+          Load file
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="d-block">
+    <form>
+      <label for="tableNumberInput">Table number</label>
+      <div class="input-group col-md-4 col-lg-3 p-0">
+        <input type="text" class="form-control d-inline-block rounded-0" placeholder="Ex: 101" id="tableNumberInput">
+        <span class="input-group-btn">
+          <button class="btn btn-primary rounded-0 border ml-2" type="button" (click)="loadFileFromNumber()">
+            Load file
+          </button>
+        </span>
+      </div>
+    </form>
+  </div>
+</div>

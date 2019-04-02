@@ -30,11 +30,11 @@ var digestAuthRequest = function (method, url, username, password) {
 	// successFn - will be passed data
 	// errorFn - will be passed error status code
 	// data - optional, for POSTS
-	this.request = function(successFn, errorFn, data) {
+	this.request = function (successFn, errorFn, data) {
 		// posts data if there is any
 		if (data) {
 			// If JSON: JSON.stringify(data) and add appropriate headers
-			self.data = data; 
+			self.data = data;
 		}
 		self.successFn = successFn;
 		self.errorFn = errorFn;
@@ -45,7 +45,7 @@ var digestAuthRequest = function (method, url, username, password) {
 			self.makeAuthenticatedRequest();
 		}
 	}
-	this.makeUnauthenticatedRequest = function(data) {
+	this.makeUnauthenticatedRequest = function (data) {
 		self.firstRequest = new XMLHttpRequest();
 		self.firstRequest.open(method, url, true);
 		self.firstRequest.timeout = self.timeout;
@@ -55,7 +55,7 @@ var digestAuthRequest = function (method, url, username, password) {
 			self.firstRequest.setRequestHeader('Content-type', 'application/octet-stream');
 		}
 
-		self.firstRequest.onreadystatechange = function() {
+		self.firstRequest.onreadystatechange = function () {
 
 			// 2: received headers,  3: loading, 4: done
 			if (self.firstRequest.readyState === 2) {
@@ -64,7 +64,7 @@ var digestAuthRequest = function (method, url, username, password) {
 				responseHeaders = responseHeaders.split('\n');
 				// get authenticate header
 				var digestHeaders;
-				for(var i = 0; i < responseHeaders.length; i++) {
+				for (var i = 0; i < responseHeaders.length; i++) {
 					if (responseHeaders[i].match(/www-authenticate/i) != null) {
 						digestHeaders = responseHeaders[i];
 					}
@@ -102,17 +102,17 @@ var digestAuthRequest = function (method, url, username, password) {
 					self.nc++;
 					// if logging, show headers received:
 					self.log('received headers:');
-					self.log('	realm: '+self.realm);
-					self.log('	nonce: '+self.nonce);
-					self.log('	opaque: '+self.opaque);
-					self.log('	qop: '+self.qop);
+					self.log('	realm: ' + self.realm);
+					self.log('	nonce: ' + self.nonce);
+					self.log('	opaque: ' + self.opaque);
+					self.log('	qop: ' + self.qop);
 					// now we can make an authenticated request
 					self.makeAuthenticatedRequest();
 				}
 			}
 			if (self.firstRequest.readyState === 4) {
 				if (self.firstRequest.status === 200) {
-					self.log('Authentication not required for '+url);
+					self.log('Authentication not required for ' + url);
 					if (self.firstRequest.responseText !== 'undefined') {
 						if (self.firstRequest.responseText.length > 0) {
 							// If JSON, parse and return object
@@ -126,7 +126,12 @@ var digestAuthRequest = function (method, url, username, password) {
 						self.successFn();
 					}
 				}
+				if (self.firstRequest.status === 404) {
+					self.errorFn('404');
+				}
 			}
+
+
 		}
 		// send
 		if (self.post) {
@@ -135,32 +140,32 @@ var digestAuthRequest = function (method, url, username, password) {
 		} else {
 			self.firstRequest.send();
 		}
-		self.log('Unauthenticated request to '+url);
+		self.log('Unauthenticated request to ' + url);
 
 		// handle error
-		self.firstRequest.onerror = function() {
+		self.firstRequest.onerror = function () {
 			if (self.firstRequest.status !== 401) {
-				self.log('Error ('+self.firstRequest.status+') on unauthenticated request to '+url);
+				self.log('Error (' + self.firstRequest.status + ') on unauthenticated request to ' + url);
 				self.errorFn(self.firstRequest.status);
 			}
 		}
 	}
-	this.makeAuthenticatedRequest = function() {
+	this.makeAuthenticatedRequest = function () {
 
 		self.response = self.formulateResponse();
 		self.authenticatedRequest = new XMLHttpRequest();
 		self.authenticatedRequest.open(method, url, true);
 		self.authenticatedRequest.timeout = self.timeout;
-		var digestAuthHeader = self.scheme+' '+
-			'username="'+username+'", '+
-			'realm="'+self.realm+'", '+
-			'nonce="'+self.nonce+'", '+
-			'uri="'+url+'", '+
-			'response="'+self.response+'", '+
-			'opaque="'+self.opaque+'", '+
-			'qop='+self.qop+', '+
-			'nc='+('00000000' + self.nc).slice(-8)+', '+
-			'cnonce="'+self.cnonce+'"';
+		var digestAuthHeader = self.scheme + ' ' +
+			'username="' + username + '", ' +
+			'realm="' + self.realm + '", ' +
+			'nonce="' + self.nonce + '", ' +
+			'uri="' + url + '", ' +
+			'response="' + self.response + '", ' +
+			'opaque="' + self.opaque + '", ' +
+			'qop=' + self.qop + ', ' +
+			'nc=' + ('00000000' + self.nc).slice(-8) + ', ' +
+			'cnonce="' + self.cnonce + '"';
 		self.authenticatedRequest.setRequestHeader('Authorization', digestAuthHeader);
 		self.log('digest auth header response to be sent:');
 		self.log(digestAuthHeader);
@@ -168,13 +173,13 @@ var digestAuthRequest = function (method, url, username, password) {
 		if (self.post) {
 			self.authenticatedRequest.setRequestHeader('Content-type', 'application/json');
 		}
-		self.authenticatedRequest.onload = function() {
+		self.authenticatedRequest.onload = function () {
 			// success
 			if (self.authenticatedRequest.status >= 200 && self.authenticatedRequest.status < 400) {
 				// increment nonce count
 				self.nc++;
 				// return data
-				if (self.authenticatedRequest.responseText !== 'undefined' && self.authenticatedRequest.responseText.length > 0 ) {
+				if (self.authenticatedRequest.responseText !== 'undefined' && self.authenticatedRequest.responseText.length > 0) {
 					// If JSON, parse and return object
 					if (self.isJson(self.authenticatedRequest.responseText)) {
 						self.successFn(JSON.parse(self.authenticatedRequest.responseText));
@@ -192,8 +197,8 @@ var digestAuthRequest = function (method, url, username, password) {
 			}
 		}
 		// handle errors
-		self.authenticatedRequest.onerror = function() {
-			self.log('Error ('+self.authenticatedRequest.status+') on authenticated request to '+url);
+		self.authenticatedRequest.onerror = function () {
+			self.log('Error (' + self.authenticatedRequest.status + ') on authenticated request to ' + url);
 			self.nonce = null;
 			self.errorFn(self.authenticatedRequest.status);
 		};
@@ -203,22 +208,22 @@ var digestAuthRequest = function (method, url, username, password) {
 		} else {
 			self.authenticatedRequest.send();
 		}
-		self.log('Authenticated request to '+url);
+		self.log('Authenticated request to ' + url);
 	}
 	// hash response based on server challenge
-	this.formulateResponse = function() {
-		var HA1 = CryptoJS.MD5(username+':'+self.realm+':'+password).toString();
-		var HA2 = CryptoJS.MD5(method+':'+url).toString();
-		var response = CryptoJS.MD5(HA1+':'+
-			self.nonce+':'+
-			('00000000' + self.nc).slice(-8)+':'+
-			self.cnonce+':'+
-			self.qop+':'+
+	this.formulateResponse = function () {
+		var HA1 = CryptoJS.MD5(username + ':' + self.realm + ':' + password).toString();
+		var HA2 = CryptoJS.MD5(method + ':' + url).toString();
+		var response = CryptoJS.MD5(HA1 + ':' +
+			self.nonce + ':' +
+			('00000000' + self.nc).slice(-8) + ':' +
+			self.cnonce + ':' +
+			self.qop + ':' +
 			HA2).toString();
 		return response;
 	}
 	// generate 16 char client nonce
-	this.generateCnonce = function() {
+	this.generateCnonce = function () {
 		var characters = 'abcdef0123456789';
 		var token = '';
 		for (var i = 0; i < 16; i++) {
@@ -227,8 +232,8 @@ var digestAuthRequest = function (method, url, username, password) {
 		}
 		return token;
 	}
-	this.abort = function() {
-		self.log('[digestAuthRequest] Aborted request to '+url);
+	this.abort = function () {
+		self.log('[digestAuthRequest] Aborted request to ' + url);
 		if (self.firstRequest != null) {
 			if (self.firstRequest.readyState != 4) self.firstRequest.abort();
 		}
@@ -236,18 +241,18 @@ var digestAuthRequest = function (method, url, username, password) {
 			if (self.authenticatedRequest.readyState != 4) self.authenticatedRequest.abort();
 		}
 	}
-	this.isJson = function(str) {
+	this.isJson = function (str) {
 		try {
-		JSON.parse(str);
+			JSON.parse(str);
 		} catch (e) {
-		return false;
+			return false;
 		}
 		return true;
 	}
-	this.log = function(str) {
+	this.log = function (str) {
 		if (self.loggingOn) {
-			console.log('[digestAuthRequest] '+str);
+			console.log('[digestAuthRequest] ' + str);
 		}
 	}
-	this.version = function() { return '0.8.0' }
+	this.version = function () { return '0.8.0' }
 }

@@ -10,6 +10,17 @@
     
     <div class="collapse show navbar-collapse mt-2" id="navbarNav">
         <ul class="navbar-nav ml-auto">
+            <!-- Brush map formula-->
+            <li class="nav-item" (click)="toggleBrushMapping()">
+                <a class="nav-link d-lg-none text-white" href="#" mat-raised-button matTooltip="Show/hide brush mapping" matTooltipShowDelay="1000" matTooltipPosition="right" matTooltipClass="primary-tooltip">
+                    <span data-toggle="collapse" data-target=".navbar-collapse.show">Brush map formula</span> <!-- Navbar collapsed: Text only --> 
+                </a>
+                <a class="nav-link pt-0 pb-0 d-none d-lg-block ml-2" href="#" mat-raised-button matTooltip="Show/hide brush mapping" matTooltipShowDelay="1000" matTooltipClass="primary-tooltip"> <!-- Navbar expandes: Icon and text --> 
+                    <i class="fas fa-search navbar-icons-2 text-center d-block text-white"></i> 
+                </a>
+                <span class="h6 text-white mt-1 mb-1 d-none d-lg-block text-white ml-2">Brush map</span>
+            </li>
+
             <!-- File upload/download setting large screen-->
             <li class="nav-item d-none d-lg-block ml-2"> 
                 <div>

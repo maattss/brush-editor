@@ -19,6 +19,7 @@ import { InfoMsgComponent } from './info-msg/info-msg.component';
 import { CookieService } from 'ngx-cookie-service';
 import { PagerService } from './_services/index';
 import { ChooseFileRobotComponent } from './choose-file-robot/choose-file-robot.component';
+import { BrushMapFormulaComponent } from './brush-map-formula/brush-map-formula.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ChooseFileRobotComponent } from './choose-file-robot/choose-file-robot.
     BrushGraphComponent,
     BrushInfoComponent,
     InfoMsgComponent,
-    ChooseFileRobotComponent
+    ChooseFileRobotComponent,
+    BrushMapFormulaComponent
   ],
   imports: [
     BrowserModule,
