@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BrushService } from '../_services/index';
-import { Brush, ChannelNames } from '../brush';
+import { Brush, ChannelNames, ChannelMaxValues } from '../brush';
 
 @Component({
   selector: 'app-brush-graph',
@@ -67,7 +67,7 @@ export class BrushGraphComponent implements OnInit {
   private chart: [];
   private initialized = false;
   private currentBrushId: number;
-  private maxChannelValue: number;
+  private channelMaxValues: ChannelMaxValues;
 
   ngOnInit() {
     // Subscriptions
@@ -92,11 +92,11 @@ export class BrushGraphComponent implements OnInit {
         this.addData();
       }
     });
-    this.data.maxChannelValue.subscribe(maxChannelValue => {
-        this.maxChannelValue = maxChannelValue;
-        if (this.initialized === true) {
-          this.addData();
-        }
+    this.data.channelMaxValues.subscribe(channelMaxValues => {
+      this.channelMaxValues = channelMaxValues;
+      if (this.initialized === true) {
+        this.addData();
+      }
     });
   }
 
@@ -125,16 +125,16 @@ export class BrushGraphComponent implements OnInit {
       this.isDataAvailable = true;
       this.barChartData = [];
       const br: Brush = this.brushes[this.currentBrushId - 1];
-      const ch1Percent: number = (br.ch1 / this.maxChannelValue) * 100;
-      const ch2Percent: number = (br.ch2 / this.maxChannelValue) * 100;
-      const ch3Percent: number = (br.ch3 / this.maxChannelValue) * 100;
+      const ch1Percent: number = (br.ch1 / this.channelMaxValues.ch1) * 100;
+      const ch2Percent: number = (br.ch2 / this.channelMaxValues.ch2) * 100;
+      const ch3Percent: number = (br.ch3 / this.channelMaxValues.ch3) * 100;
       const values: number[] = [ch1Percent, ch2Percent, ch3Percent];
       if (br.ch4 >= 0) {
-        const ch4Percent: number = (br.ch4 / this.maxChannelValue) * 100;
+        const ch4Percent: number = (br.ch4 / this.channelMaxValues.ch4) * 100;
         values.push(ch4Percent);
       }
       if (br.ch5 >= 0) {
-        const ch5Percent: number = (br.ch5 / this.maxChannelValue) * 100;
+        const ch5Percent: number = (br.ch5 / this.channelMaxValues.ch5) * 100;
         values.push(ch5Percent);
       }
 

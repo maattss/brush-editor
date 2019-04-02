@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { Brush, ChannelNames } from '../brush';
+import { Brush, ChannelNames, ChannelMaxValues } from '../brush';
 import { PagerService, BrushService, ViewService } from '../_services/index';
 
 @Component({
@@ -15,8 +15,10 @@ export class BrushTableComponent implements OnInit {
   private brushes: Brush[];
   private channelNames: ChannelNames;
   private initialized = false;
-  private maxChannelValue: number;
+  private channelMaxValues: ChannelMaxValues;
+  private currentChannelMaxValue: number;
   private currentBrushId: number; // Need this when moving to a page where the active row is
+  private currentChannel: string;
 
   // Pagination
   private currentPage = 1;
@@ -49,40 +51,51 @@ export class BrushTableComponent implements OnInit {
       this.initialized = true;
     });
 
-    this.data.maxChannelValue.subscribe(maxChannelValue => this.maxChannelValue = maxChannelValue);
+    this.data.channelMaxValues.subscribe(channelMaxValues => {
+      this.channelMaxValues = channelMaxValues;
+    });
 
     // Check if a cookie named chNames exist
     if (this.cookieService.check('chNames')) {
       this.data.changeChannelName(JSON.parse(this.cookieService.get('chNames')));
     }
 
-    // Check if a cookie named maxChannelValue exist
-    if (this.cookieService.check('maxChannelValue')) {
-      const cookieVal = JSON.parse(this.cookieService.get('maxChannelValue'));
-      this.data.changeMaxChannelValue(cookieVal);
-    } else {
-      this.data.changeMaxChannelValue(1000);
+    if (this.cookieService.check('channelMaxValues')) {
+      const cookieValue = JSON.parse(this.cookieService.get('channelMaxValues'));
+      console.log('Updating channelMaxValues cookie: ' + this.cookieService.get('channelMaxValues'));
+      this.data.updateChannelMaxValue(cookieValue);
     }
   }
 
-  private inputValidation(brushId: number, channel): boolean {
+  inputValidation(brushId: number, channel): boolean {
+    // Update the current max value to current channel
+    for (const obj in this.channelMaxValues) {
+      if (obj.toString() === channel) {
+        this.currentChannelMaxValue = this.channelMaxValues[obj];
+      }
+    }
+
     const brush = this.brushes[brushId - 1];
     for (const channelX in brush) { // Loops through channel names in current brush object
       if (channelX.toString() === channel) {
-        if (brush[channelX] > this.maxChannelValue) {
+        if (brush[channelX] > this.channelMaxValues[channelX]) {
           this.inputError = true;
         }
 
-        while (brush[channelX] > this.maxChannelValue) { // Reduce by 10 until demand is met
+        while (brush[channelX] > this.channelMaxValues[channelX]) { // Reduce by 10 until demand is met
           brush[channelX] = Math.floor(brush[channelX] / 10);
-          if (brush[channelX] <= this.maxChannelValue) {
+          if (brush[channelX] <= this.channelMaxValues[channelX]) {
             return;
           }
         }
       }
     }
-    this.data.changeBrush(this.brushes);
+    this.updateBrushObject();
     this.inputError = false;
+  }
+
+  updateBrushObject() {
+    this.data.changeBrush(this.brushes);
   }
 
   setPage(page: number) {
@@ -128,22 +141,6 @@ export class BrushTableComponent implements OnInit {
     this.cookieService.set('chNames', jsonChannelNames, 365); // Expires after 1 year
   }
 
-  updateBrushes(brushId: number, channel: string) {
-    const elementId = '' + brushId + channel;
-    const inputValue = (<HTMLInputElement>document.getElementById(elementId)).value;
-    const brush = this.brushes[brushId - 1];
-
-    for (const obj in brush) { // Loops through channel names in brush
-      if (obj.toString() === channel) {
-        if (channel === 'desc') {
-          brush[obj] = inputValue;
-        } else { // ch1, ch2, ch3, ch4 or ch5
-          brush[obj] = +inputValue;
-        }
-      }
-    }
-  }
-
   deleteRow(brushId: number) {
     const brush = this.brushes[brushId - 1];
     for (const obj in brush) { // Loops through channel names in brush
@@ -155,7 +152,7 @@ export class BrushTableComponent implements OnInit {
         }
       }
     }
-    this.data.changeBrush(this.brushes);
+    this.updateBrushObject();
   }
 
   isNumber(n: any) {

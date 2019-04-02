@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Brush } from '../brush';
+import { Brush, ChannelMaxValues, ChannelNames } from '../brush';
 import { BrushService, ViewService } from '../_services/index';
 import { saveAs } from 'file-saver';
 import { ChooseFileService } from '../_services/choose-file.service';
@@ -17,8 +17,8 @@ export class NavComponent implements OnInit {
 
   // Class variables
   private brushes: Brush[];
-  // private maxChannelValues: {};
-  private maxChannelValue: number;
+  private channelMaxValues: ChannelMaxValues;
+  private channelNames: ChannelNames;
   private file: any;
   private fileComment: string;
   private fileName: string;
@@ -26,17 +26,18 @@ export class NavComponent implements OnInit {
   ngOnInit() {
     // Subscribe
     this.data.currentBrush.subscribe(brushes => this.brushes = brushes);
-    this.data.maxChannelValue.subscribe(maxChannelValue => this.maxChannelValue = maxChannelValue);
+    this.data.channelMaxValues.subscribe(channelMaxValues => this.channelMaxValues = channelMaxValues);
+    this.data.channelNames.subscribe(channelNames => this.channelNames = channelNames);
     this.data.fileComment.subscribe(fileComment => this.fileComment = fileComment);
     this.data.fileName.subscribe(fileName => this.fileName = fileName);
   }
 
-  userChoice() {
+  showDecisionBoxIfNeeded() {
     loop1:
     for (let brushId = 1; brushId <= this.brushes.length; brushId++) {
       const brush = this.brushes[brushId - 1];
       for (const channel in brush) { // Loops through channel names in current brush object
-        if (brush[channel] > this.maxChannelValue) {
+        if (brush[channel] > this.channelMaxValues[channel]) {
           document.getElementById('userDecision').hidden = false;
           break loop1;
         }
@@ -44,12 +45,12 @@ export class NavComponent implements OnInit {
     }
   }
 
-  adjustBrushToMaxvalue() {
+  adjustChannelsToMaxvalue() {
     for (let brushId = 1; brushId <= this.brushes.length; brushId++) {
       const brush = this.brushes[brushId - 1];
       for (const channel in brush) { // Loops through channel names in current brush object
-        if (brush[channel] > this.maxChannelValue && brush[channel] > this.maxChannelValue) {
-          brush[channel] = this.maxChannelValue;
+        if (brush[channel] > this.channelMaxValues[channel]) {
+          brush[channel] = this.channelMaxValues[channel];
         }
       }
     }
@@ -87,7 +88,7 @@ export class NavComponent implements OnInit {
     fileReader.onload = () => {
       this.data.parseFile(fileReader.result.toString());
       this.data.changeCurrentBrushID(0);
-      this.userChoice();
+      this.showDecisionBoxIfNeeded();
     };
 
     // Prevents error in console when canceling file upload

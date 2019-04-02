@@ -141,11 +141,9 @@
         <span aria-hidden="true">&times;</span>
     </button>
 
-    <p>Your max channel value is set to: <span style="font-weight:bold">{{maxChannelValue}}</span>! You can change this
-        in settings.</p>
-    <p>Do you want all values in the table that are greater than <span
-            style="font-weight:bold">{{maxChannelValue}}</span> to be changed to <span
-            style="font-weight:bold">{{maxChannelValue}}</span>?</p>
-    <button id="yes" (click)="adjustBrushToMaxvalue()" class="btn btn-primary ml-1">Yes</button>
-    <button id="no" (click)="hideConfirmation()" class="btn btn-primary ml-1">No, let them stay like this</button>
+    <p style="font-weight:bold">{{channelNames.ch1}}: {{channelMaxValues.ch1}}, {{channelNames.ch2}}: {{channelMaxValues.ch2}}, 
+        {{channelNames.ch3}}: {{channelMaxValues.ch3}}, {{channelNames.ch4}}: {{channelMaxValues.ch4}}, {{channelNames.ch5}}: {{channelMaxValues.ch5}}</p>
+    <p>Should the channels in the table be adjusted so that all values greater than the max values above is set equal to the max value?</p>
+    <button id="yes" (click)="adjustChannelsToMaxvalue()" class="btn btn-primary rounded-0">Yes</button>
+    <button id="no" (click)="hideConfirmation()" class="btn btn-primary ml-1 rounded-0">No</button>
 </div>

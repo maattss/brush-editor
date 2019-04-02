@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Brush } from '../brush';
+import { Brush, ChannelMaxValues, ChannelNames } from '../brush';
 import { BrushService, ViewService } from '../_services/index';
 import { CookieService } from 'ngx-cookie-service';
 import { ChooseFileService } from '../_services/choose-file.service';
+import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_directives/form_group_name';
 
 @Component({
   selector: 'app-brush-settings',
@@ -16,35 +17,70 @@ export class BrushSettingsComponent implements OnInit {
 
   // Class variables
   private brushes: Brush[];
-  private maxChannelValue: number;
+  private channelNames: ChannelNames;
+  private channelMaxValues: ChannelMaxValues;
+  private currentUserChannel: string; // Users channel names
+  private currentChannel: string; // Stock channel names
+  private currentChannelMaxValue: number;
   private initialized: boolean;
   private url: string;
   private robotIP: string;
 
   ngOnInit() {
     // Subscriptions
+    this.data.channelNames.subscribe(chNames => {
+      this.channelNames = chNames;
+    });
     this.data.currentBrush.subscribe(brushes => this.brushes = brushes);
     this.fileChooser.currentUrl.subscribe(url => this.url = url);
-    this.data.maxChannelValue.subscribe(maxChannelValue => {
-      this.maxChannelValue = maxChannelValue;
-      if (this.initialized) {
-        this.addChannelCookie();
-      }
+    this.data.channelMaxValues.subscribe(channelMaxValues => {
+      this.channelMaxValues = channelMaxValues;
+      if (this.initialized) { this.addMaxChannelValuesCookie(); }
       this.initialized = true;
     });
 
-    // Strip the IP from the url
+    // Get the IP from the url
     let robotStripArr = [];
     robotStripArr = this.url.split('/').map(String);
     this.robotIP = robotStripArr[2]; // This is the robotIP stripped from the url
   }
 
+  addChoices() { // When user has chosen a channel
+    console.log('Addchoices');
+    document.getElementById('channelMaxValue').hidden = false;
+    document.getElementById('updateMaxBtn').hidden = false;
+    document.getElementById('resetMaxBtn').hidden = false;
+    const channelElement        = <HTMLSelectElement>document.getElementById('channelChosen');
+    this.updateCurrentUserChannel(channelElement.options[channelElement.selectedIndex].text);
+    this.updateCurrentChannel(channelElement.options[channelElement.selectedIndex].value);
+  }
+
+  showMaxValue() { // Display max value for chosen channel
+    console.log('Showmaxvalue');
+    for (const obj in this.channelMaxValues) {
+      if (obj.toString() === this.currentChannel.toString()) {
+        console.log('New maxchannelval: ' + this.channelMaxValues[obj]);
+        this.currentChannelMaxValue = this.channelMaxValues[obj];
+      }
+    }
+  }
+
   updateMaxChannelValue() {
-    const maxChannelValueNew = +(<HTMLInputElement>document.getElementById('maxChannelvalue')).value;
-    if (maxChannelValueNew >= 0) {
-      this.data.changeMaxChannelValue(maxChannelValueNew);
-      this.addChannelCookie();
-      document.getElementById('confirmation').hidden = false;
+    const channelElement        = <HTMLSelectElement>document.getElementById('channelChosen');
+    const channelMaxValueNew    = +(<HTMLInputElement>document.getElementById('channelMaxValue')).value;
+    const channelName           = channelElement.options[channelElement.selectedIndex].value;
+
+    this.updateCurrentChannelMaxValue(channelMaxValueNew);
+
+    if (channelMaxValueNew >= 0) {
+      for (const channelX in this.channelMaxValues) {
+        if (channelX.toString() === channelName.toString()) {
+          this.channelMaxValues[channelX] = channelMaxValueNew;
+        }
+      }
+      this.data.updateChannelMaxValue(this.channelMaxValues);
+      this.addMaxChannelValuesCookie();
+      this.showConfirmationSingleChannel();
     } else {
       this.view.showInfoError('Your max channel value must be greater than 0!');
     }
@@ -70,15 +106,15 @@ export class BrushSettingsComponent implements OnInit {
     this.view.showInfoSuccess('You updated Robot IP successfully!');
   }
 
-  resetMaxChannel() {
-    document.getElementById('allSettings').hidden = true;
-    this.data.changeMaxChannelValue(1000);
-    this.addChannelCookie();
-    document.getElementById('confirmation').hidden = false;
+  resetChannelMaxValues() {
+    this.channelMaxValues = {ch1: 1000, ch2: 1000, ch3: 1000, ch4: 1000, ch5: 1000};
+    this.data.updateChannelMaxValue(this.channelMaxValues);
+    this.addMaxChannelValuesCookie();
+    this.showConfirmationAllChannels(); // Because all channels are changed
   }
 
   resetChannelNames() {
-    const defaultNames = { ch1: 'Channel 1', ch2: 'Channel 2', ch3: 'Channel 3', ch4: 'Channel 4', ch5: 'Channel 5' };
+    const defaultNames = {ch1: 'Atom', ch2: 'Fluid', ch3: 'Shape 1', ch4: 'Shape 2', ch5: 'High volt'};
     this.data.changeChannelName(defaultNames);
     this.toggleSettings();
     this.view.showInfoSuccess('You set channel names back to default successfully!');
@@ -92,34 +128,63 @@ export class BrushSettingsComponent implements OnInit {
     return false;
   }
 
-  adjustBrushToMaxvalue() {
+  adjustChannelsToMaxvalue() {
+    const channelElement        = <HTMLSelectElement>document.getElementById('channelChosen');
+    const channelName           = channelElement.options[channelElement.selectedIndex].value;
+
     for (let brushId = 1; brushId <= this.brushes.length; brushId++) {
       const brush = this.brushes[brushId - 1];
-      for (const channel in brush) { // Loops through channel names in current brush object
-        if (brush[channel] > this.maxChannelValue && brush[channel] > this.maxChannelValue) {
-          brush[channel] = this.maxChannelValue;
+      // Loops through channel names in current brush object
+      for (const obj in brush) {
+        // Updates only users chosen channel
+        if (brush[obj] === brush[channelName] && brush[obj] > this.channelMaxValues[obj]) {
+          brush[obj] = this.channelMaxValues[obj];
         }
       }
     }
     this.data.changeBrush(this.brushes);
-    this.view.showInfoSuccess('All values greater than ' + this.maxChannelValue
-      + ' are changed to ' + this.maxChannelValue + '!');
+    this.hideConfirmationSingleChannel();
+    this.toggleSettings();
+  }
+
+  updateCurrentUserChannel(newUserChannel) { // User specified channel: Atom, fluid, etc.
+    this.currentUserChannel = newUserChannel;
+  }
+
+  updateCurrentChannel(newStockChannel) { // Only stock channels: ch1, ch2, ch3, ch4, ch5
+    this.currentChannel = newStockChannel;
+  }
+
+  updateCurrentChannelMaxValue(newChannelMaxValue) {
+    this.currentChannelMaxValue = newChannelMaxValue;
   }
 
   toggleSettings() {
     this.view.toggleSettingsView();
   }
 
-  hideConfirmation() {
-    document.getElementById('confirmation').hidden = true;
+  hideConfirmationSingleChannel() {
+    document.getElementById('confirmationSingleChannel').hidden = true;
+  }
+
+  showConfirmationSingleChannel() { // User decides if he wants to update values for single channel
+    document.getElementById('confirmationSingleChannel').hidden = false;
+  }
+
+  hideConfirmationAllChannels() {
+    document.getElementById('confirmationAllChannels').hidden = true;
+  }
+
+  showConfirmationAllChannels() { // User decides if he wants to update values for all channels
+    document.getElementById('confirmationAllChannels').hidden = false;
   }
 
   hideSettingsDiv() {
     document.getElementById('allSettings').hidden = true;
   }
 
-  addChannelCookie() {
-    const jsonMaxChannelValue = JSON.stringify(this.maxChannelValue);
-    this.cookieService.set('maxChannelValue', jsonMaxChannelValue, 365); // Expires after 1 year
+  addMaxChannelValuesCookie() {
+    const jsonChannelMaxValues = JSON.stringify(this.channelMaxValues);
+    this.cookieService.set('channelMaxValues', jsonChannelMaxValues, 365); // Expires after 1 year
   }
 }

@@ -7,20 +7,21 @@ import { TestBed } from '@angular/core/testing';
   providedIn: 'root'
 })
 export class BrushService {
-  private brushSrc = new BehaviorSubject<Array<Brush>>([]);
-  private channelNamesSrc = new BehaviorSubject<ChannelNames>
-    ({ ch1: 'Channel 1', ch2: 'Channel 2', ch3: 'Channel 3', ch4: 'Channel 4', ch5: 'Channel 5' });
-  private currentBrushIdSrc = new BehaviorSubject<number>(0);
-  private fileCommentSrc = new BehaviorSubject<string>('');
-  private fileNameSrc = new BehaviorSubject<string>('');
-  private maxChannelValueSrc = new BehaviorSubject<number>(1000);
+  private brushSrc            = new BehaviorSubject<Array<Brush>>([]);
+  private channelNamesSrc     = new BehaviorSubject<ChannelNames>
+  ({ch1: 'Atom', ch2: 'Fluid', ch3: 'Shape 1', ch4: 'Shape 2', ch5: 'High volt'});
+  private channelMaxValuesSrc = new BehaviorSubject<ChannelMaxValues>
+  ({ch1: 1000, ch2: 1000, ch3: 1000, ch4: 1000, ch5: 1000});
+  private currentBrushIdSrc   = new BehaviorSubject<number>(0);
+  private fileCommentSrc      = new BehaviorSubject<string>('');
+  private fileNameSrc         = new BehaviorSubject<string>('');
 
-  currentBrush = this.brushSrc.asObservable();
-  channelNames = this.channelNamesSrc.asObservable();
-  fileComment = this.fileCommentSrc.asObservable();
-  fileName = this.fileNameSrc.asObservable();
-  currentBrushId = this.currentBrushIdSrc.asObservable();
-  maxChannelValue = this.maxChannelValueSrc.asObservable();
+  currentBrush     = this.brushSrc.asObservable();
+  channelNames     = this.channelNamesSrc.asObservable();
+  channelMaxValues = this.channelMaxValuesSrc.asObservable();
+  fileComment      = this.fileCommentSrc.asObservable();
+  fileName         = this.fileNameSrc.asObservable();
+  currentBrushId   = this.currentBrushIdSrc.asObservable();
 
   constructor() { }
 
@@ -42,8 +43,8 @@ export class BrushService {
   changeCurrentBrushID(id: number) {
     this.currentBrushIdSrc.next(id);
   }
-  changeMaxChannelValue(value: number) {
-    this.maxChannelValueSrc.next(value);
+  updateChannelMaxValue(channelMaxValuesNew: ChannelMaxValues) {
+    this.channelMaxValuesSrc.next(channelMaxValuesNew);
   }
 
   parseFile(text: string) {
