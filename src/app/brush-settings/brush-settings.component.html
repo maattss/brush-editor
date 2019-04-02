@@ -7,13 +7,21 @@
     <div class="mr-1 d-md-inline-block d-block">
         <form id="allSettings">
             <div class="form-group">
-                <label for="maxChannelvalue">Max channel value</label>
-                <input type="number" class="form-control rounded-0" id="maxChannelvalue" aria-describedby="maxChannelValue" placeholder="0" value="{{maxChannelValue}}">
-                <button class="btn btn-primary mt-1 rounded-0" (click)="updateMaxChannelValue(); hideSettingsDiv()">
+                <label for="channelMaxvalue">Change max value for channel: </label>
+                <select id="channelChosen" (change)="addChoices(); showMaxValue()" class="form-control">
+                    <option disabled selected value> -- Select a channel -- </option>
+                    <option value="ch1">{{channelNames.ch1}}</option>
+                    <option value="ch2">{{channelNames.ch2}}</option>
+                    <option value="ch3">{{channelNames.ch3}}</option>
+                    <option value="ch4">{{channelNames.ch4}}</option>
+                    <option value="ch5">{{channelNames.ch5}}</option>
+                </select>
+                <input hidden id="channelMaxValue" type="number" class="form-control mt-1 rounded-0" aria-describedby="channelMaxValue" placeholder="0" value="{{currentChannelMaxValue}}">
+                <button hidden id="updateMaxBtn" type="submit" class="btn btn-primary mt-1 rounded-0" (click)="updateMaxChannelValue(); hideSettingsDiv()">
                     Update value
                 </button>
-                <button id="resetMaxBtn" class="btn btn-secondary ml-1 mt-1 rounded-0" (click)="resetMaxChannel()" mat-raised-button matTooltip="Reset max channel value to 1000" matTooltipShowDelay="1000" matTooltipClass="primary-tooltip">
-                    Reset value
+                <button hidden id="resetMaxBtn" class="btn btn-secondary ml-1 mt-1 rounded-0" (click)="resetChannelMaxValues(); hideSettingsDiv()" mat-raised-button matTooltip="Reset max values to 1000" matTooltipShowDelay="1000" matTooltipClass="primary-tooltip">
+                    Reset all
                 </button>
             </div>
 
@@ -33,11 +41,18 @@
             </div>
         </form>
 
-        <div id="confirmation" hidden>
-            <p>Your max channel value is set to: <span style="font-weight:bold">{{maxChannelValue}}</span>!</p>
-            <p>Do you want all values in the table that are greater than <span style="font-weight:bold">{{maxChannelValue}}</span> to be changed to <span style="font-weight:bold">{{maxChannelValue}}</span>?</p>
-            <button id="yes" (click)="adjustBrushToMaxvalue(); hideConfirmation()" class="btn btn-primary ml-1 rounded-0">Yes</button>
-            <button id="no" (click)="hideConfirmation(); toggleSettings()" class="btn btn-primary ml-1 rounded-0">No, let them stay like this</button>
+        <div id="confirmationSingleChannel" hidden>
+            <p>Your max channel value for channel {{currentUserChannel}} is set to: <span style="font-weight:bold">{{currentChannelMaxValue}}</span>!</p>
+            <p>Should {{currentUserChannel}} in the table be adjusted so that all values greater than <span style="font-weight:bold">{{currentChannelMaxValue}}</span> is set to <span style="font-weight:bold">{{currentChannelMaxValue}}</span>?</p>
+            <button id="yes" (click)="adjustChannelsToMaxvalue(); hideConfirmationSingleChannel()" class="btn btn-primary ml-1 rounded-0">Yes</button>
+            <button id="no" (click)="hideConfirmationSingleChannel(); toggleSettings()" class="btn btn-primary ml-1 rounded-0">No</button>
+        </div>
+        <div id="confirmationAllChannels" hidden>
+                <p style="font-weight:bold">{{channelNames.ch1}}: {{channelMaxValues.ch1}}, {{channelNames.ch2}}: {{channelMaxValues.ch2}}, 
+                    {{channelNames.ch3}}: {{channelMaxValues.ch3}}, {{channelNames.ch4}}: {{channelMaxValues.ch4}}, {{channelNames.ch5}}: {{channelMaxValues.ch5}}</p>
+                <p>Should the channels in the table be adjusted so that all values greater than the max values above is set equal to the max value?</p>
+            <button id="yes" (click)="adjustChannelsToMaxvalue(); hideConfirmationAllChannels()" class="btn btn-primary ml-1 rounded-0">Yes</button>
+            <button id="no" (click)="hideConfirmationAllChannels(); toggleSettings()" class="btn btn-primary ml-1 rounded-0">No</button>
         </div>
     </div>
 
