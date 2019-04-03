@@ -16,16 +16,20 @@ export class BrushMapFormulaComponent implements OnInit {
   // Class variables
   private program: Map<number, string>;
   private material: Map<number, string>;
+  private option: Map<number, string>;
   private programArray: string[];
   private materialArray: string[];
-  private brushDeviceArray: string[];
+  private optionArray: string[];
 
   ngOnInit() {
     // Fetch all program and material mapping
     this.fileChooser.fetchAll();
 
     // Subscribe
-    this.fileChooser.brushDevice.subscribe(brushDevice => this.brushDeviceArray = brushDevice);
+    this.fileChooser.option.subscribe(option => {
+      this.option = option;
+      this.updateOptionArray();
+    });
     this.fileChooser.program.subscribe(program => {
       this.program = program;
       this.updateProgramArray();
@@ -33,6 +37,13 @@ export class BrushMapFormulaComponent implements OnInit {
     this.fileChooser.material.subscribe(material => {
       this.material = material;
       this.updateMaterialArray();
+    });
+  }
+
+  updateOptionArray() {
+    this.optionArray = [];
+    this.option.forEach((name: string, num: number) => {
+      this.optionArray.push(name);
     });
   }
 
@@ -51,20 +62,25 @@ export class BrushMapFormulaComponent implements OnInit {
   }
 
   loadFile() {
-    // Get user selections
-    // const brushDevice = (<HTMLInputElement>document.getElementById('brushDeviceSelect')).value;
+    // Fetch brush device and formula from API
     const brushDevice = 'A1Brush';
+    const formula = 'P*100+M';
+    // Get user selections
     const material = (<HTMLInputElement>document.getElementById('materialSelect')).value;
     const program = (<HTMLInputElement>document.getElementById('programSelect')).value;
+    const option = (<HTMLInputElement>document.getElementById('optionSelect')).value;
 
     // Update brush table with file from mapping
     this.fileChooser.getFileFromMapping(program, material, brushDevice);
   }
   loadFileFromNumber() {
-    // Get user selections
-    // const brushDevice = (<HTMLInputElement>document.getElementById('brushDeviceSelect')).value;
+    // Fetch brush device and formula from API
     const brushDevice = 'A1Brush';
+    const formula = 'P*100+M';
+
+    // Get user selection
     const numb = (<HTMLInputElement>document.getElementById('tableNumberInput')).value;
+
     // Update brush table with file corresponding to tablenumber
     this.fileChooser.getFileFromNumber(+numb, brushDevice);
   }

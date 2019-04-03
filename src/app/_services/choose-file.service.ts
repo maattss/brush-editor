@@ -13,7 +13,7 @@ export class ChooseFileService {
   private fileSrc = new BehaviorSubject<Array<string>>([]);
   private directorySrc = new BehaviorSubject<Array<string>>([]);
   private unknownSrc = new BehaviorSubject<Array<string>>([]);
-  private brushDeviceSrc = new BehaviorSubject<Array<string>>([]);
+  private optionSrc = new BehaviorSubject<Map<number, string>>(new Map());
   private programSrc = new BehaviorSubject<Map<number, string>>(new Map());
   private materialSrc = new BehaviorSubject<Map<number, string>>(new Map());
   private backEnabledSrc = new BehaviorSubject<boolean>(false);
@@ -29,7 +29,7 @@ export class ChooseFileService {
   unknowns = this.unknownSrc.asObservable();
   currentUrl = this.currentUrlSrc.asObservable();
   backEnabled = this.backEnabledSrc.asObservable();
-  brushDevice = this.brushDeviceSrc.asObservable();
+  option = this.optionSrc.asObservable();
   program = this.programSrc.asObservable();
   material = this.materialSrc.asObservable();
 
@@ -148,21 +148,42 @@ export class ChooseFileService {
   }
 
   fetchAll() {
-    this.fetchBrushDevices();
+    this.fetchOptions();
     this.fetchPrograms();
     this.fetchMaterials();
+  }
+
+  fetchOptions() {
+    const digest = new digestAuthRequest('GET', this.homeUrlSrc.value + 'alias/option.map?json=1', this.userName, this.password);
+    digest.request((response: any) => {
+      const option = response.split('\n');
+      for (let i = 0; i < option.length; i++) {
+        const id = option[i].split(',')[0];
+        const name = option[i].split(',')[1];
+        if (name !== '' && name !== undefined) {
+          const mapCopy = this.optionSrc.value;
+          mapCopy.set(id, name);
+          console.log('Name:' + name, 'id:' + id);
+          this.optionSrc.next(mapCopy);
+        }
+      }
+    }, function (errorCode: any) {
+      console.log('Error: ', errorCode);
+    });
   }
 
   fetchPrograms() {
     const digest = new digestAuthRequest('GET', this.homeUrlSrc.value + 'alias/program.map?json=1', this.userName, this.password);
     digest.request((response: any) => {
-      const programs = response.split('\n');
-      for (let i = 0; i < programs.length; i++) {
-        const id = programs[i].split(',')[0];
-        const name = programs[i].split(',')[1];
+      const program = response.split('\n');
+      for (let i = 0; i < program.length; i++) {
+        const id = program[i].split(',')[0];
+        const name = program[i].split(',')[1];
         const mapCopy = this.programSrc.value;
         mapCopy.set(id, name);
-        this.programSrc.next(mapCopy);
+        if (name !== '') {
+          this.programSrc.next(mapCopy);
+        }
       }
     }, function (errorCode: any) {
       console.log('Error: ', errorCode);
@@ -172,13 +193,15 @@ export class ChooseFileService {
   fetchMaterials() {
     const digest = new digestAuthRequest('GET', this.homeUrlSrc.value + 'alias/material.map?json=1', this.userName, this.password);
     digest.request((response: any) => {
-      const materials = response.split('\n');
-      for (let i = 0; i < materials.length; i++) {
-        const id = materials[i].split(',')[0];
-        const name = materials[i].split(',')[1];
+      const material = response.split('\n');
+      for (let i = 0; i < material.length; i++) {
+        const id = material[i].split(',')[0];
+        const name = material[i].split(',')[1];
         const mapCopy = this.materialSrc.value;
         mapCopy.set(id, name);
-        this.materialSrc.next(mapCopy);
+        if (name !== '') {
+          this.materialSrc.next(mapCopy);
+        }
       }
     }, function (errorCode: any) {
       console.log('Error: ', errorCode);
@@ -186,24 +209,9 @@ export class ChooseFileService {
 
   }
 
-  fetchBrushDevices() {
-    const digest = new digestAuthRequest('GET', this.homeUrlSrc.value + '?json=1', this.userName, this.password);
-    digest.request((response: any) => {
-      const fileInfoArray = response._embedded._state;
-      const fsDirs: string[] = [];  // Directories
-      for (let i = 0; i < fileInfoArray.length; i++) {
-        const element = fileInfoArray[i];
-        const name = element._title;
-
-        if (element._type === 'fs-dir' && name !== 'Alias') {
-          fsDirs.push(name);
-        }
-      }
-      fsDirs.sort();
-      this.brushDeviceSrc.next(fsDirs);
-    }, function (errorCode: any) {
-      console.log('Error: ', errorCode);
-    });
+  private calculateFromFormula() {
+    // Fetch for
+    // Todo: Implement
   }
 
   private getFileName(program: string, material: string) {
@@ -224,7 +232,7 @@ export class ChooseFileService {
     return 'Table' + calc + '.bt';
   }
 
-  getFileFromMapping(program: string, material: string, brushDevice: string) {
+  getFileFromMapping(program: string, material: string, option: string, brushDevice: string) {
     const fileName = this.getFileName(program, material);
     const digest = new digestAuthRequest('GET', this.homeUrlSrc.value + brushDevice + '/' + fileName + '?json=1',
       this.userName, this.password);
