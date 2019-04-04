@@ -145,6 +145,7 @@ export class BrushSettingsComponent implements OnInit {
     this.data.changeBrush(this.brushes);
     this.hideConfirmationSingleChannel();
     this.toggleSettings();
+    this.view.showInfoSuccess('You successfully updated the table!');
   }
 
   updateCurrentUserChannel(newUserChannel) { // User specified channel: Atom, fluid, etc.

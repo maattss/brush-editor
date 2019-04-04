@@ -56,6 +56,7 @@ export class NavComponent implements OnInit {
     }
     this.data.changeBrush(this.brushes);
     this.hideConfirmation();
+    this.view.showInfoSuccess('You successfully updated the table!');
   }
 
   hideConfirmation() {
