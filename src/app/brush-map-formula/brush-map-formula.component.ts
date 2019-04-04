@@ -62,16 +62,17 @@ export class BrushMapFormulaComponent implements OnInit {
   }
 
   loadFile() {
-    // Fetch brush device and formula from API
+    // Fetch brush device and formula from API. Preferrably do this in choose-file-service
     const brushDevice = 'A1Brush';
     const formula = 'P*100+M';
+
     // Get user selections
     const material = (<HTMLInputElement>document.getElementById('materialSelect')).value;
     const program = (<HTMLInputElement>document.getElementById('programSelect')).value;
     const option = (<HTMLInputElement>document.getElementById('optionSelect')).value;
 
     // Update brush table with file from mapping
-    this.fileChooser.getFileFromMapping(program, material, brushDevice);
+    this.fileChooser.getFileFromMapping(program, material, option, brushDevice, formula);
   }
   loadFileFromNumber() {
     // Fetch brush device and formula from API
@@ -82,7 +83,7 @@ export class BrushMapFormulaComponent implements OnInit {
     const numb = (<HTMLInputElement>document.getElementById('tableNumberInput')).value;
 
     // Update brush table with file corresponding to tablenumber
-    this.fileChooser.getFileFromNumber(+numb, brushDevice);
+    this.fileChooser.getFileFromNumber(+numb, brushDevice, formula);
   }
 
   toggleBrushMapping() {
