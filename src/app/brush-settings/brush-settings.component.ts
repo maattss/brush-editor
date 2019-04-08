@@ -48,7 +48,9 @@ export class BrushSettingsComponent implements OnInit {
   addChoices() { // When user has chosen a channel
     document.getElementById('channelMaxValue').hidden = false;
     document.getElementById('updateMaxBtn').hidden = false;
+    // Two identical buttons, but on different columns
     document.getElementById('resetMaxBtn').hidden = false;
+    document.getElementById('resetMaxBtn2').hidden = true;
     const channelElement        = <HTMLSelectElement>document.getElementById('channelChosen');
     this.updateCurrentUserChannel(channelElement.options[channelElement.selectedIndex].text);
     this.updateCurrentChannel(channelElement.options[channelElement.selectedIndex].value);
