@@ -232,7 +232,7 @@ export class ChooseFileService {
     return 'Table' + calc + '.bt';
   }
 
-  getFileFromMapping(program: string, material: string, option: string, brushDevice: string) {
+  getFileFromMapping(program: string, material: string, option: string, brushDevice: string, formula: string) {
     const fileName = this.getFileName(program, material);
     const digest = new digestAuthRequest('GET', this.homeUrlSrc.value + brushDevice + '/' + fileName + '?json=1',
       this.userName, this.password);
@@ -249,7 +249,7 @@ export class ChooseFileService {
     });
   }
 
-  getFileFromNumber(numb: number, brushDevice: string) {
+  getFileFromNumber(numb: number, brushDevice: string, formula: string) {
     const digest = new digestAuthRequest('GET', this.homeUrlSrc.value + brushDevice + '/Table' + numb + '.bt?json=1',
       this.userName, this.password);
     digest.request((response: any) => {
