@@ -22,28 +22,25 @@ import { ChooseFileRobotComponent } from './choose-file-robot/choose-file-robot.
 import { BrushMapFormulaComponent } from './brush-map-formula/brush-map-formula.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    BrushTableComponent,
-    NavComponent,
-    BrushSettingsComponent,
-    BrushGraphComponent,
-    BrushInfoComponent,
-    InfoMsgComponent,
-    ChooseFileRobotComponent,
-    BrushMapFormulaComponent
-  ],
-  imports: [
-    BrowserModule,
-    ChartsModule,
-    FormsModule,
-    MatTooltipModule,
-    BrowserAnimationsModule
-  ],
-  providers: [
-    CookieService,
-    PagerService
-  ],
-  bootstrap: [ AppComponent ]
+    declarations: [
+        AppComponent,
+        BrushTableComponent,
+        NavComponent,
+        BrushSettingsComponent,
+        BrushGraphComponent,
+        BrushInfoComponent,
+        InfoMsgComponent,
+        ChooseFileRobotComponent,
+        BrushMapFormulaComponent,
+    ],
+    imports: [
+        BrowserModule,
+        ChartsModule,
+        FormsModule,
+        MatTooltipModule,
+        BrowserAnimationsModule,
+    ],
+    providers: [CookieService, PagerService],
+    bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

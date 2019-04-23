@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root',
 })
-
 export class PagerService {
-    getPager(totalItems: number, currentPage: number = 1, pageSize: number = 10) {
+    getPager(
+        totalItems: number,
+        currentPage: number = 1,
+        pageSize: number = 10
+    ) {
         // calculate total pages
         const totalPages = Math.ceil(totalItems / pageSize);
 
@@ -41,7 +44,9 @@ export class PagerService {
 
         // create an array of pages to ng-repeat in the pager control
         // tslint:disable-next-line:prefer-const
-        let pages = Array.from(Array((endPage + 1) - startPage).keys()).map(i => startPage + i);
+        let pages = Array.from(Array(endPage + 1 - startPage).keys()).map(
+            i => startPage + i
+        );
 
         // return object with all pager properties required by the view
         return {
@@ -53,7 +58,7 @@ export class PagerService {
             endPage: endPage,
             startIndex: startIndex,
             endIndex: endIndex,
-            pages: pages
+            pages: pages,
         };
     }
 }

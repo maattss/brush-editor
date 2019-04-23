@@ -1,14 +1,36 @@
-<div class="alert alert-danger fade show rounded-0 mt-0 mb-0" role="alert" *ngIf="showError">
-    <button type="button" class="close" (click)="closeError()"
-        mat-raised-button matTooltip="Close error message" matTooltipShowDelay="1000" matTooltipClass="primary-tooltip">
+<div
+    class="alert alert-danger fade show rounded-0 mt-0 mb-0"
+    role="alert"
+    *ngIf="showError"
+>
+    <button
+        type="button"
+        class="close"
+        (click)="closeError()"
+        mat-raised-button
+        matTooltip="Close error message"
+        matTooltipShowDelay="1000"
+        matTooltipClass="primary-tooltip"
+    >
         <span aria-hidden="true">&times;</span>
     </button>
-    {{infoMsg || 'Undefined error'}}
+    {{ infoMsg || 'Undefined error' }}
 </div>
-<div class="alert alert-success fade show rounded-0 mt-0 mb-0" role="alert" *ngIf="showSuccess">
-    <button type="button" class="close" (click)="closeSuccess()"
-        mat-raised-button matTooltip="Close message" matTooltipShowDelay="1000" matTooltipClass="primary-tooltip">
+<div
+    class="alert alert-success fade show rounded-0 mt-0 mb-0"
+    role="alert"
+    *ngIf="showSuccess"
+>
+    <button
+        type="button"
+        class="close"
+        (click)="closeSuccess()"
+        mat-raised-button
+        matTooltip="Close message"
+        matTooltipShowDelay="1000"
+        matTooltipClass="primary-tooltip"
+    >
         <span aria-hidden="true">&times;</span>
     </button>
-    {{infoMsg || 'Undefined success'}}
+    {{ infoMsg || 'Undefined success' }}
 </div>

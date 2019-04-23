@@ -3,10 +3,11 @@
     text-align: center;
 }
 .menuElement:hover {
-    background-color: rgba(0,0,0,.2);
+    background-color: rgba(0, 0, 0, 0.2);
     cursor: pointer;
 }
-i, #currentPath {
+i,
+#currentPath {
     color: black;
 }
 i.disabled {
