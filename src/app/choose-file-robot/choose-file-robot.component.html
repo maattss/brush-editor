@@ -35,7 +35,7 @@
     </nav>
     <p *ngIf="fileName">Current file opened: <i>{{ fileName }}</i></p>
     <p *ngIf="navDirectories.length === 0 && navFiles.length === 0">
-        No files or directories
+        No files or directories. There may be some problems connection to Robot Web Services.
     </p>
     <p *ngFor="let dir of navDirectories" class="menuElement rounded p-0 pt-2 pb-2 m-0" (click)="moveIntoDirectory(dir)"
         mat-raised-button matTooltip="Move into directory" matTooltipShowDelay="1000" matTooltipPosition="above" matTooltipClass="primary-tooltip">
@@ -45,7 +45,4 @@
         mat-raised-button matTooltip="Open file" matTooltipShowDelay="1000" matTooltipPosition="above" matTooltipClass="primary-tooltip">
         <i class="far fa-file fa-lg icon"></i><span>{{ file }}</span>
     </p>
-    <div class="dialog">
-
-    </div>
 </div>

@@ -38,7 +38,7 @@ export class ChooseFileService {
   program = this.programSrc.asObservable();
   material = this.materialSrc.asObservable();
   formula = this.formulaSrc.asObservable();
-  burshDevice = this.brushDeviceSrc.asObservable();
+  brushDevice = this.brushDeviceSrc.asObservable();
 
   constructor(private view: ViewService, private data: BrushService) { }
 

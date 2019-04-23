@@ -49,25 +49,23 @@ export class BrushSettingsComponent implements OnInit {
     document.getElementById('channelMaxValue').hidden = false;
     document.getElementById('updateMaxBtn').hidden = false;
     document.getElementById('resetMaxBtn').hidden = false;
-    const channelElement        = <HTMLSelectElement>document.getElementById('channelChosen');
+    const channelElement = <HTMLSelectElement>document.getElementById('channelChosen');
     this.updateCurrentUserChannel(channelElement.options[channelElement.selectedIndex].text);
     this.updateCurrentChannel(channelElement.options[channelElement.selectedIndex].value);
   }
 
   showMaxValue() { // Display max value for chosen channel
-    console.log('Showmaxvalue');
     for (const obj in this.channelMaxValues) {
       if (obj.toString() === this.currentChannel.toString()) {
-        console.log('New maxchannelval: ' + this.channelMaxValues[obj]);
         this.currentChannelMaxValue = this.channelMaxValues[obj];
       }
     }
   }
 
   updateMaxChannelValue() {
-    const channelElement        = <HTMLSelectElement>document.getElementById('channelChosen');
-    const channelMaxValueNew    = +(<HTMLInputElement>document.getElementById('channelMaxValue')).value;
-    const channelName           = channelElement.options[channelElement.selectedIndex].value;
+    const channelElement = <HTMLSelectElement>document.getElementById('channelChosen');
+    const channelMaxValueNew = +(<HTMLInputElement>document.getElementById('channelMaxValue')).value;
+    const channelName = channelElement.options[channelElement.selectedIndex].value;
 
     this.updateCurrentChannelMaxValue(channelMaxValueNew);
 

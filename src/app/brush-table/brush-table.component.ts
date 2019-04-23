@@ -31,7 +31,7 @@ export class BrushTableComponent implements OnInit {
   constructor(
     private cookieService: CookieService,
     private data: BrushService,
-    private view: ViewService,
+    // private view: ViewService,
     private pagerService: PagerService) { }
 
   ngOnInit() {
