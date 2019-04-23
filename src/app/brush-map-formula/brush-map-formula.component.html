@@ -6,52 +6,62 @@
   </button><!--Remove mb-3 from button-->
 
   <h5>Brush Mapping</h5>
-  <div>
-    <p class="mb-1 mr-1 d-inline-block">Device: <i>A1Brush</i>.</p><br class="d-sm-none">
-    <p class="mr-1 d-inline-block">Formula: <i>Program*100 + Material</i>.</p>
-  </div>
-  <div class="mr-1 d-md-inline-block d-block">
+  <!-- Only show mapping options if there is at least one mapping file, formula and brush device present -->
+  <div *ngIf="(programArray.length > 0 || materialArray.length > 0 || optionArray.length > 0) && formula != '' && brushDevice != ''">
+    <p *ngIf="brushDevice" class="mb-2 mr-2 d-inline-block">Device: <i>'{{brushDevice}}'</i>.</p>
+    <br class="d-md-none">
+    <p *ngIf="formula" class="mb-2 m2-1 d-inline-block">Formula: <i>'{{formula}}'</i>.</p>
     <form>
-      <!--
-      <div class="form-group d-md-inline-block d-block mr-2 mb-2">
-        <label for="brushDeviceSelect">Brush device</label>
-        <select id="brushDeviceSelect" class="custom-select rounded-0" disabled>
-          <option *ngFor="let brushDevice of brushDeviceArray" value="{{brushDevice}}">{{brushDevice}}</option>
-        </select>
-      </div>
-      -->
-      <div class="form-group d-md-inline-block d-block mr-2 mb-2"> <!-- remove d-md-inline-block d-block from all elements-->
+      <div class="form-group d-md-inline-block d-block mb-2 mr-2" *ngIf="programArray.length > 0">
         <label for="programSelect">Program</label>
         <select id="programSelect" class="custom-select rounded-0">
-          <option value="0" selected>None</option>
+          <option value="0" disabled selected value>None</option>
           <option *ngFor="let program of programArray" value="{{program}}">{{program}}</option>
         </select>
       </div>
-      <div class="form-group d-md-inline-block d-block mr-2 mb-2">
+      <div class="form-group d-md-inline-block d-block mb-2 mr-2" *ngIf="materialArray.length > 0">
         <label for="materialSelect">Material</label>
         <select id="materialSelect" class="custom-select rounded-0">
-          <option value="0" selected>None</option>
+          <option value="0" disabled selected value>None</option>
           <option *ngFor="let material of materialArray" value="{{material}}">{{material}}</option>
         </select>
       </div>
-      <div class="form-group d-md-inline-block d-block mr-2 mb-2">
+      <div class="form-group d-md-inline-block d-block mb-2 mr-2" *ngIf="optionArray.length > 0">
+        <label for="optionSelect">Option</label>
+        <select id="optionSelect" class="custom-select rounded-0">
+          <option value="0" disabled selected value>None</option>
+          <option *ngFor="let option of optionArray" value="{{option}}">{{option}}</option>
+        </select>
+      </div>
+      <div class="form-group d-md-inline-block d-block mb-2 mr-2">
         <button class="btn btn-primary rounded-0 d-inline-block" (click)="loadFile()">
           Load file
         </button>
       </div>
     </form>
   </div>
-  <div class="d-block">
+
+  <div *ngIf="(programArray.length <= 0 && materialArray.length <= 0 && optionArray.length <= 0) || formula === '' || brushDevice === ''"
+    class="mr-2 mb-2">
+    <p *ngIf="programArray.length <= 0 && materialArray.length <= 0 && optionArray.length <= 0" class="d-inline">
+      No mapping files found.
+    </p>
+    <p *ngIf="formula === ''" class="d-inline">No Mapping formula.</p>
+    <p *ngIf="brushDevice === ''" class="d-inline">No Brush Device.</p>
+    <p class="d-inline">Navigate to a file using table number below, or the file explorer.</p>
+  </div>
+
+  <h5>Table number</h5>
+  <div>
     <form>
-      <label for="tableNumberInput">Table number</label>
-      <div class="input-group col-md-4 col-lg-3 p-0">
-        <input type="text" class="form-control d-inline-block rounded-0" placeholder="Ex: 101" id="tableNumberInput">
-        <span class="input-group-btn">
-          <button class="btn btn-primary rounded-0 border ml-2" type="button" (click)="loadFileFromNumber()">
-            Load file
+        <div class="form-group d-md-inline-block d-block mb-2 mr-2">
+          <input type="text" class="form-control d-inline-block rounded-0" placeholder="Ex: 101" id="tableNumberInput">
+        </div>
+        <div class="form-group d-md-inline-block d-block mb-2 mr-2">
+          <button class="btn btn-primary rounded-0 d-inline-block" (click)="loadFileFromNumber()">
+            Load file directly
           </button>
-        </span>
-      </div>
+        </div>
     </form>
   </div>
 </div>

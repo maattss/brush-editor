@@ -3,7 +3,6 @@ import { Brush, ChannelMaxValues, ChannelNames } from '../brush';
 import { BrushService, ViewService } from '../_services/index';
 import { CookieService } from 'ngx-cookie-service';
 import { ChooseFileService } from '../_services/choose-file.service';
-import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_directives/form_group_name';
 
 @Component({
   selector: 'app-brush-settings',
@@ -65,9 +64,9 @@ export class BrushSettingsComponent implements OnInit {
   }
 
   updateMaxChannelValue() {
-    const channelElement        = <HTMLSelectElement>document.getElementById('channelChosen');
-    const channelMaxValueNew    = +(<HTMLInputElement>document.getElementById('channelMaxValue')).value;
-    const channelName           = channelElement.options[channelElement.selectedIndex].value;
+    const channelElement = <HTMLSelectElement>document.getElementById('channelChosen');
+    const channelMaxValueNew = +(<HTMLInputElement>document.getElementById('channelMaxValue')).value;
+    const channelName = channelElement.options[channelElement.selectedIndex].value;
 
     this.updateCurrentChannelMaxValue(channelMaxValueNew);
 

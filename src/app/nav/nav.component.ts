@@ -4,8 +4,6 @@ import { BrushService, ViewService } from '../_services/index';
 import { saveAs } from 'file-saver';
 import { ChooseFileService } from '../_services/choose-file.service';
 
-declare const digestAuthRequest: any;
-
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
@@ -33,13 +31,13 @@ export class NavComponent implements OnInit {
   }
 
   showDecisionBoxIfNeeded() {
-    loop1:
+    loop:
     for (let brushId = 1; brushId <= this.brushes.length; brushId++) {
       const brush = this.brushes[brushId - 1];
       for (const channel in brush) { // Loops through channel names in current brush object
         if (brush[channel] > this.channelMaxValues[channel]) {
           document.getElementById('userDecision').hidden = false;
-          break loop1;
+          break loop;
         }
       }
     }
