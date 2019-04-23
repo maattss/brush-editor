@@ -20,6 +20,8 @@ export class BrushMapFormulaComponent implements OnInit {
   private programArray: string[];
   private materialArray: string[];
   private optionArray: string[];
+  private formula: string;
+  private brushDevice: string;
 
   ngOnInit() {
     // Fetch all program and material mapping
@@ -37,6 +39,12 @@ export class BrushMapFormulaComponent implements OnInit {
     this.fileChooser.material.subscribe(material => {
       this.material = material;
       this.updateMaterialArray();
+    });
+    this.fileChooser.formula.subscribe(formula => {
+      this.formula = formula;
+    });
+    this.fileChooser.burshDevice.subscribe(brushDevice => {
+      this.brushDevice = brushDevice;
     });
   }
 
@@ -67,9 +75,18 @@ export class BrushMapFormulaComponent implements OnInit {
     const formula = 'P*100+M';
 
     // Get user selections
-    const material = (<HTMLInputElement>document.getElementById('materialSelect')).value;
-    const program = (<HTMLInputElement>document.getElementById('programSelect')).value;
-    const option = (<HTMLInputElement>document.getElementById('optionSelect')).value;
+    let material = '0';
+    let program = '0';
+    let option = '0';
+    if (<HTMLInputElement>document.getElementById('materialSelect')) {
+      material = (<HTMLInputElement>document.getElementById('materialSelect')).value;
+    }
+    if (<HTMLInputElement>document.getElementById('programSelect')) {
+      program = (<HTMLInputElement>document.getElementById('programSelect')).value;
+    }
+    if (<HTMLInputElement>document.getElementById('optionSelect')) {
+      option = (<HTMLInputElement>document.getElementById('optionSelect')).value;
+    }
 
     // Update brush table with file from mapping
     this.fileChooser.getFileFromMapping(program, material, option);

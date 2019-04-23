@@ -158,6 +158,8 @@ export class ChooseFileService {
     this.fetchOptions();
     this.fetchPrograms();
     this.fetchMaterials();
+    this.fetchFormula();
+    this.fetchBrushDevice();
   }
 
   fetchOptions() {
@@ -216,15 +218,53 @@ export class ChooseFileService {
   }
 
   private fetchBrushDevice() {
-    // Fetch from Robot Web Service
-    // Todo: Implement
-    this.brushDeviceSrc.next('A1Brush');
+    let brushDevice = '';
+    // Fetch Brush Device from Robot Web Service
+    // Todo: Fix implementation below
+    // const digest = new digestAuthRequest('GET', this.homeUrlSrc.value + this.brushDeviceSrc.value + '/' + fileName + '?json=1',
+    //   this.userName, this.password);
+    // digest.request((response: any) => {
+    //   this.data.parseFile(response.toString());
+    //   this.data.changeFileName(fileName);
+    //   // Close brush mapping window
+    //   this.view.toggleBrushMappingView();
+    // }, (errorCode: any) => {
+    //   console.log('Error:', errorCode);
+    //   if (errorCode === '404') {
+    //     this.data.parseFile('');
+    //   }
+    // });
+
+    if (brushDevice === '') {
+      this.brushDeviceSrc.next('A1Brush'); // Default value
+    } else {
+      this.brushDeviceSrc.next(brushDevice);
+    }
   }
 
   private fetchFormula() {
-    // Fetch from Robot Web Service
-    // Todo: Implement
-    this.formulaSrc.next('P*100+M');
+    let formula = '';
+    // Fetch formula from Robot Web Service
+    // Todo: Fix implementation below
+    // const digest = new digestAuthRequest('GET', this.homeUrlSrc.value + this.brushDeviceSrc.value + '/' + fileName + '?json=1',
+    //   this.userName, this.password);
+    // digest.request((response: any) => {
+    //   this.data.parseFile(response.toString());
+    //   this.data.changeFileName(fileName);
+    //   // Close brush mapping window
+    //   this.view.toggleBrushMappingView();
+    // }, (errorCode: any) => {
+    //   console.log('Error:', errorCode);
+    //   if (errorCode === '404') {
+    //     this.data.parseFile('');
+    //   }
+    // });
+
+    if (formula === '') {
+      this.formulaSrc.next('P*100+M'); // Default value
+    } else {
+      this.formulaSrc.next(formula);
+    }
   }
 
   private getFileName(program: string, material: string) {
@@ -258,8 +298,6 @@ export class ChooseFileService {
       }
     });
 
-    scope.M = 2;
-    scope.P = 3;
     // Evaluate expression wiht chosen variables to find correct file
     const calc = math.eval(this.formulaSrc.value, scope);
     console.log('Loading file: Table' + calc + '.bt');

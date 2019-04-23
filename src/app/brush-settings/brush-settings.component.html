@@ -8,8 +8,8 @@
         <form id="allSettings">
             <div class="form-group">
                 <label for="channelMaxvalue">Change max value for channel: </label>
-                <select id="channelChosen" (change)="addChoices(); showMaxValue()" class="form-control">
-                    <option disabled selected value> -- Select a channel -- </option>
+                <select id="channelChosen" (change)="addChoices(); showMaxValue()" class="form-control rounded-0">
+                    <option disabled selected value>Select a channel</option>
                     <option value="ch1">{{channelNames.ch1}}</option>
                     <option value="ch2">{{channelNames.ch2}}</option>
                     <option value="ch3">{{channelNames.ch3}}</option>
