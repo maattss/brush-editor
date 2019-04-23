@@ -72,18 +72,14 @@ export class BrushMapFormulaComponent implements OnInit {
     const option = (<HTMLInputElement>document.getElementById('optionSelect')).value;
 
     // Update brush table with file from mapping
-    this.fileChooser.getFileFromMapping(program, material, option, brushDevice, formula);
+    this.fileChooser.getFileFromMapping(program, material, option);
   }
   loadFileFromNumber() {
-    // Fetch brush device and formula from API
-    const brushDevice = 'A1Brush';
-    const formula = 'P*100+M';
-
     // Get user selection
-    const numb = (<HTMLInputElement>document.getElementById('tableNumberInput')).value;
+    const num = (<HTMLInputElement>document.getElementById('tableNumberInput')).value;
 
     // Update brush table with file corresponding to tablenumber
-    this.fileChooser.getFileFromNumber(+numb, brushDevice, formula);
+    this.fileChooser.getFileFromNumber(+num);
   }
 
   toggleBrushMapping() {

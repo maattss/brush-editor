@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { BrushService } from './brush.service';
 import { ViewService } from './view.service';
+import * as math from 'mathjs';
 
 declare const digestAuthRequest: any;
 
@@ -24,6 +25,10 @@ export class ChooseFileService {
   private userName = 'Default User';
   private password = 'robotics';
 
+  // Brush mapping values
+  private formulaSrc = new BehaviorSubject<string>('');
+  private brushDeviceSrc = new BehaviorSubject<string>('');
+
   files = this.fileSrc.asObservable();
   directories = this.directorySrc.asObservable();
   unknowns = this.unknownSrc.asObservable();
@@ -32,6 +37,8 @@ export class ChooseFileService {
   option = this.optionSrc.asObservable();
   program = this.programSrc.asObservable();
   material = this.materialSrc.asObservable();
+  formula = this.formulaSrc.asObservable();
+  burshDevice = this.brushDeviceSrc.asObservable();
 
   constructor(private view: ViewService, private data: BrushService) { }
 
@@ -163,7 +170,6 @@ export class ChooseFileService {
         if (name !== '' && name !== undefined) {
           const mapCopy = this.optionSrc.value;
           mapCopy.set(id, name);
-          console.log('Name:' + name, 'id:' + id);
           this.optionSrc.next(mapCopy);
         }
       }
@@ -209,32 +215,62 @@ export class ChooseFileService {
 
   }
 
-  private calculateFromFormula() {
-    // Fetch for
+  private fetchBrushDevice() {
+    // Fetch from Robot Web Service
     // Todo: Implement
+    this.brushDeviceSrc.next('A1Brush');
+  }
+
+  private fetchFormula() {
+    // Fetch from Robot Web Service
+    // Todo: Implement
+    this.formulaSrc.next('P*100+M');
   }
 
   private getFileName(program: string, material: string) {
-    let programNumber = 0;
-    // Loop through program map and find correct programNumber
+    this.fetchFormula();
+
+    // Provide scope
+    const scope = {
+      P: 0,
+      M: 0,
+      O: 0
+    };
+
+    // Loop through program map and find correct program number
     this.programSrc.value.forEach((name: string, num: number) => {
       if (name === program) {
-        programNumber = num;
+        scope.P = num;
       }
     });
-    let materialNumber = 0;
+
+    // Loop through material map and find correct material number
     this.materialSrc.value.forEach((name: string, num: number) => {
       if (name === material) {
-        materialNumber = num;
+        scope.M = num;
       }
     });
-    const calc = programNumber * 100 + Number(materialNumber);
+
+    // Loop through option map and find correct option number
+    this.optionSrc.value.forEach((name: string, num: number) => {
+      if (name === material) {
+        scope.O = num;
+      }
+    });
+
+    scope.M = 2;
+    scope.P = 3;
+    // Evaluate expression wiht chosen variables to find correct file
+    const calc = math.eval(this.formulaSrc.value, scope);
+    console.log('Loading file: Table' + calc + '.bt');
     return 'Table' + calc + '.bt';
   }
 
-  getFileFromMapping(program: string, material: string, option: string, brushDevice: string, formula: string) {
+  getFileFromMapping(program: string, material: string, option: string) {
+    this.fetchBrushDevice();
+
     const fileName = this.getFileName(program, material);
-    const digest = new digestAuthRequest('GET', this.homeUrlSrc.value + brushDevice + '/' + fileName + '?json=1',
+    const digest = new digestAuthRequest('GET', this.homeUrlSrc.value + this.brushDeviceSrc.value + '/' + fileName + '?json=1',
       this.userName, this.password);
     digest.request((response: any) => {
       this.data.parseFile(response.toString());
@@ -249,8 +285,10 @@ export class ChooseFileService {
     });
   }
 
-  getFileFromNumber(numb: number, brushDevice: string, formula: string) {
-    const digest = new digestAuthRequest('GET', this.homeUrlSrc.value + brushDevice + '/Table' + numb + '.bt?json=1',
+  getFileFromNumber(numb: number) {
+    this.fetchBrushDevice();
+
+    const digest = new digestAuthRequest('GET', this.homeUrlSrc.value + this.brushDeviceSrc.value + '/Table' + numb + '.bt?json=1',
       this.userName, this.password);
     digest.request((response: any) => {
       this.data.parseFile(response.toString());

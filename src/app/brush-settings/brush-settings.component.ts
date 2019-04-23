@@ -3,7 +3,6 @@ import { Brush, ChannelMaxValues, ChannelNames } from '../brush';
 import { BrushService, ViewService } from '../_services/index';
 import { CookieService } from 'ngx-cookie-service';
 import { ChooseFileService } from '../_services/choose-file.service';
-import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_directives/form_group_name';
 
 @Component({
   selector: 'app-brush-settings',

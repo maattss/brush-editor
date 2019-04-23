@@ -6,35 +6,26 @@
   </button>
 
   <h5>Brush Mapping</h5>
-  <div>
+  <div *ngIf="programArray.length > 0 && materialArray.length > 0 && optionArray.length > 0"
+  class="mr-1 d-md-inline-block d-block">
     <p class="mb-1 mr-1 d-inline-block">Device: <i>A1Brush</i>.</p><br class="d-sm-none">
     <p class="mr-1 d-inline-block">Formula: <i>Program*100 + Material</i>.</p>
-  </div>
-  <div class="mr-1 d-md-inline-block d-block">
     <form>
-      <!--
-      <div class="form-group d-md-inline-block d-block mr-2 mb-2">
-        <label for="brushDeviceSelect">Brush device</label>
-        <select id="brushDeviceSelect" class="custom-select rounded-0" disabled>
-          <option *ngFor="let brushDevice of brushDeviceArray" value="{{brushDevice}}">{{brushDevice}}</option>
-        </select>
-      </div>
-      -->
-      <div class="form-group d-md-inline-block d-block mr-2 mb-2">
+      <div *ngIf="programArray.length > 0" class="form-group d-md-inline-block d-block mr-2 mb-2">
         <label for="programSelect">Program</label>
         <select id="programSelect" class="custom-select rounded-0">
           <option value="0" selected>None</option>
           <option *ngFor="let program of programArray" value="{{program}}">{{program}}</option>
         </select>
       </div>
-      <div class="form-group d-md-inline-block d-block mr-2 mb-2">
+      <div *ngIf="materialArray.length > 0" class="form-group d-md-inline-block d-block mr-2 mb-2">
         <label for="materialSelect">Material</label>
         <select id="materialSelect" class="custom-select rounded-0">
           <option value="0" selected>None</option>
           <option *ngFor="let material of materialArray" value="{{material}}">{{material}}</option>
         </select>
       </div>
-      <div class="form-group d-md-inline-block d-block mr-2 mb-2">
+      <div *ngIf="optionArray.length > 0" class="form-group d-md-inline-block d-block mr-2 mb-2">
         <label for="optionSelect">Option</label>
         <select id="optionSelect" class="custom-select rounded-0">
           <option value="0" selected>None</option>
@@ -47,6 +38,9 @@
         </button>
       </div>
     </form>
+  </div>
+  <div *ngIf="programArray.length <= 0 && materialArray.length <= 0 && optionArray.length <= 0">
+    <p>No mapping files found. You can still navigate directly to the file using table number or file explorer.</p>
   </div>
   <div class="d-block">
     <form>
