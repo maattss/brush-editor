@@ -1,5 +1,5 @@
 <div class="alert alert-primary fade show rounded-0 mt-0 mb-0" role="alert">
-    <button type="button" class="close mb-3 rounded-0" aria-label="Close" (click)="toggleSettings()"
+    <button type="button" class="close rounded-0" aria-label="Close" (click)="toggleSettings()"
         mat-raised-button matTooltip="Close settings" matTooltipShowDelay="1000" matTooltipClass="primary-tooltip">
         <span aria-hidden="true">&times;</span>
     </button>
@@ -32,68 +32,61 @@
                 <button class="btn btn-secondary ml-1 mt-1 rounded-0" (click)="setRobotIPtoLocal()">Use local IP</button>
             </div>
 
-            <div class="form-group">
-                <label for="resetChNames">Channel names</label>
-                <br>
-                <button id="resetChNames" class="btn btn-primary mt-1 rounded-0" (click)="resetChannelNames()" mat-raised-button matTooltip="Reset the channel names to default (Channel 1, Channel 2, etc.)" matTooltipShowDelay="1000" matTooltipClass="primary-tooltip">
-                    Reset to default
-                </button>
-            </div>
-        </form>
+    <h5>Settings</h5>
 
-        <div id="confirmationSingleChannel" hidden>
-            <p>Your max channel value for channel {{currentUserChannel}} is set to: <span style="font-weight:bold">{{currentChannelMaxValue}}</span>!</p>
-            <p>Should {{currentUserChannel}} in the table be adjusted so that all values greater than <span style="font-weight:bold">{{currentChannelMaxValue}}</span> is set to <span style="font-weight:bold">{{currentChannelMaxValue}}</span>?</p>
-            <button id="yes" (click)="adjustChannelsToMaxvalue(); hideConfirmationSingleChannel()" class="btn btn-primary ml-1 rounded-0">Yes</button>
-            <button id="no" (click)="hideConfirmationSingleChannel(); toggleSettings()" class="btn btn-primary ml-1 rounded-0">No</button>
-        </div>
-        <div id="confirmationAllChannels" hidden>
-                <p style="font-weight:bold">{{channelNames.ch1}}: {{channelMaxValues.ch1}}, {{channelNames.ch2}}: {{channelMaxValues.ch2}}, 
-                    {{channelNames.ch3}}: {{channelMaxValues.ch3}}, {{channelNames.ch4}}: {{channelMaxValues.ch4}}, {{channelNames.ch5}}: {{channelMaxValues.ch5}}</p>
-                <p>Should the channels in the table be adjusted so that all values greater than the max values above is set equal to the max value?</p>
-            <button id="yes" (click)="adjustChannelsToMaxvalue(); hideConfirmationAllChannels()" class="btn btn-primary ml-1 rounded-0">Yes</button>
-            <button id="no" (click)="hideConfirmationAllChannels(); toggleSettings()" class="btn btn-primary ml-1 rounded-0">No</button>
-        </div>
-    </div>
-
-    <!-- Brush table settings. Uncomment and add logic to implement
-    <div class="dropdown mb-1 mr-1 d-md-inline-block d-block">
-        <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true">
-            Brush Device
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">A1Brush</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">A2Brush</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">A3Brush</a>
-        </div>
-    </div> 
-
-    <div class="dropdown mb-1 mr-1 d-md-inline-block d-block">
-        <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true">
-            Brush Table
+    <div id="allSettings" class="row form-group">
+        <div class="col-lg mt-3">
+            <h6><label for="channelMaxvalue">Maximum value</label></h6>
+            <select id="channelChosen" (change)="addChoices(); showMaxValue()" class="custom-select rounded-0">
+                <option disabled selected value> -- Select a channel -- </option>
+                <option value="ch1">{{channelNames.ch1}}</option>
+                <option value="ch2">{{channelNames.ch2}}</option>
+                <option value="ch3">{{channelNames.ch3}}</option>
+                <option value="ch4">{{channelNames.ch4}}</option>
+                <option value="ch5">{{channelNames.ch5}}</option>
+            </select>
+            <input hidden id="channelMaxValue" type="number" class="form-control mt-1 rounded-0" aria-describedby="channelMaxValue" placeholder="0" value="{{currentChannelMaxValue}}">
+            <button id="resetMaxBtn2" class="btn btn-secondary mt-1 rounded-0" (click)="resetChannelMaxValues(); hideSettingsDiv()" mat-raised-button matTooltip="Reset max values to 1000" matTooltipShowDelay="1000" matTooltipClass="primary-tooltip">
+                Reset max values
             </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">Table1</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">Table2</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">Table3</a>
+            <button hidden id="updateMaxBtn" type="submit" class="btn btn-primary mt-1 rounded-0" (click)="updateMaxChannelValue(); hideSettingsDiv()">
+                Update value
+            </button>
+            <button hidden id="resetMaxBtn" class="btn btn-secondary ml-1 mt-1 rounded-0" (click)="resetChannelMaxValues(); hideSettingsDiv()" mat-raised-button matTooltip="Reset max values to 1000" matTooltipShowDelay="1000" matTooltipClass="primary-tooltip">
+                Reset max values
+            </button>
         </div>
-    </div> 
-
-    <div class="dropdown mb-1 mr-1 d-md-inline-block d-block">
-        <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true">
-            Material
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">Material1</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">Material2</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#" data-toggle="collapse" data-target=".navbar-collapse.show">Material3</a>
+        <div class="col-lg mt-3">
+            <h6><label for="robotIP">Robot IP address</label></h6>
+            <input type="text" class="form-control rounded-0" id="robotIP" aria-describedby="robotIP" placeholder="Ex: 127.0.0.1" value="{{robotIP}}">
+            <button class="btn btn-primary mt-1 rounded-0" (click)="updateRobotIP()">
+                Update IP
+            </button>
+            <button class="btn btn-secondary ml-1 mt-1 rounded-0" (click)="setRobotIPtoLocal()">
+                Use local IP
+            </button>
+        </div>
+        <div class="col-lg mt-3">
+            <h6><label for="resetChNames">Channel names</label></h6>
+            <button id="resetChNames" class="btn btn-primary mt-1 rounded-0" (click)="resetChannelNames()" mat-raised-button matTooltip="Reset the channel names to default (Atom, Fluid, Shape 1, Shape 2, High volt)" matTooltipShowDelay="1000" matTooltipClass="primary-tooltip">
+                Reset channel names
+            </button>
+            <br>
+            <h6 style="font-size:75%">Edit names by clicking them in the table</h6>
         </div>
     </div>
-    -->
+
+    <div id="confirmationSingleChannel" hidden>
+        <p>Your max channel value for channel {{currentUserChannel}} is set to: <span style="font-weight:bold">{{currentChannelMaxValue}}</span>!</p>
+        <p>Should {{currentUserChannel}} in the table be adjusted so that all values greater than <span style="font-weight:bold">{{currentChannelMaxValue}}</span> is set to <span style="font-weight:bold">{{currentChannelMaxValue}}</span>?</p>
+        <button id="yes" (click)="adjustChannelsToMaxvalue(); hideConfirmationSingleChannel()" class="btn btn-primary ml-1 rounded-0">Yes</button>
+        <button id="no" (click)="hideConfirmationSingleChannel(); toggleSettings()" class="btn btn-primary ml-1 rounded-0">No</button>
+    </div>
+    <div id="confirmationAllChannels" hidden>
+            <p style="font-weight:bold">{{channelNames.ch1}}: {{channelMaxValues.ch1}}, {{channelNames.ch2}}: {{channelMaxValues.ch2}}, 
+                {{channelNames.ch3}}: {{channelMaxValues.ch3}}, {{channelNames.ch4}}: {{channelMaxValues.ch4}}, {{channelNames.ch5}}: {{channelMaxValues.ch5}}</p>
+            <p>Should the channels in the table be adjusted so that all values greater than the max values above is set equal to the max value?</p>
+        <button id="yes" (click)="adjustChannelsToMaxvalue(); hideConfirmationAllChannels()" class="btn btn-primary ml-1 rounded-0">Yes</button>
+        <button id="no" (click)="hideConfirmationAllChannels(); toggleSettings()" class="btn btn-primary ml-1 rounded-0">No</button>
+    </div>
 </div>

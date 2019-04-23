@@ -45,11 +45,12 @@ export class BrushSettingsComponent implements OnInit {
   }
 
   addChoices() { // When user has chosen a channel
-    console.log('Addchoices');
     document.getElementById('channelMaxValue').hidden = false;
     document.getElementById('updateMaxBtn').hidden = false;
+    // Two identical buttons, but on different columns
     document.getElementById('resetMaxBtn').hidden = false;
-    const channelElement = <HTMLSelectElement>document.getElementById('channelChosen');
+    document.getElementById('resetMaxBtn2').hidden = true;
+    const channelElement        = <HTMLSelectElement>document.getElementById('channelChosen');
     this.updateCurrentUserChannel(channelElement.options[channelElement.selectedIndex].text);
     this.updateCurrentChannel(channelElement.options[channelElement.selectedIndex].value);
   }
@@ -142,6 +143,7 @@ export class BrushSettingsComponent implements OnInit {
     this.data.changeBrush(this.brushes);
     this.hideConfirmationSingleChannel();
     this.toggleSettings();
+    this.view.showInfoSuccess('You successfully updated the table!');
   }
 
   updateCurrentUserChannel(newUserChannel) { // User specified channel: Atom, fluid, etc.
