@@ -67,6 +67,17 @@ export class BrushGraphComponent implements OnInit {
             ],
         },
     ];
+    // public chartColors: any[] = [
+    //     {
+    //         backgroundColor: [
+    //             'rgba(195,230,203,1)',
+    //             'rgba(184,218,255,1)',
+    //             'rgba(248,215,218,1)',
+    //             'rgba(190,229,235,1)',
+    //             'rgba(255,243,205,1)',
+    //         ],
+    //     },
+    // ]; // Colours: Success(Green), Primary(Dark blue), Danger(Red), Info(Light blue), Warning (Yellow)
     public isDataAvailable = false; // Controls if graph is displayed or not
 
     constructor(private data: BrushService) {}
