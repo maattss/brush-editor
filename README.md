@@ -2,7 +2,7 @@
 Built with [Angular v7.2](https://angular.io/docs) by [Mats Tyldum](https://github.com/maattss) and [Tobias Sætre](https://github.com/Tobiasns). 
 
 ## Dependecies
-Run `npm install` to install all dependecies
+Run `npm install` to install all dependecies.
 - ng2-charts
 - chart.js
 - ngx-cookie-service
