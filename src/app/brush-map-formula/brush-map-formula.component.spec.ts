@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ChooseFileRobotComponent } from './choose-file-robot.component';
+import { BrushMapFormulaComponent } from './brush-map-formula.component';
 
-describe('ChooseFileRobotComponent', () => {
-    let component: ChooseFileRobotComponent;
-    let fixture: ComponentFixture<ChooseFileRobotComponent>;
+describe('BrushMapFormulaComponent', () => {
+    let component: BrushMapFormulaComponent;
+    let fixture: ComponentFixture<BrushMapFormulaComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [ChooseFileRobotComponent],
+            declarations: [BrushMapFormulaComponent],
         }).compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ChooseFileRobotComponent);
+        fixture = TestBed.createComponent(BrushMapFormulaComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

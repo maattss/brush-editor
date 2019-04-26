@@ -1,0 +1,135 @@
+<div class="alert alert-primary fade show rounded-0 mt-0 mb-0" role="alert">
+    <button
+        type="button"
+        class="close mb-3 rounded-0"
+        aria-label="Close"
+        mat-raised-button
+        matTooltip="Close brush mapping"
+        matTooltipShowDelay="1000"
+        matTooltipClass="primary-tooltip"
+        (click)="toggleBrushMapping()"
+    >
+        <span aria-hidden="true">&times;</span></button
+    ><!--Remove mb-3 from button-->
+
+    <h5>Brush Mapping</h5>
+    <!-- Only show mapping options if there is at least one mapping file, formula and brush device present -->
+    <div
+        *ngIf="
+            (programArray.length > 0 ||
+                materialArray.length > 0 ||
+                optionArray.length > 0) &&
+            formula != '' &&
+            brushDevice != ''
+        "
+    >
+        <p *ngIf="brushDevice" class="mb-2 mr-2 d-inline-block">
+            Device: <i>'{{ brushDevice }}'</i>.
+        </p>
+        <br class="d-md-none" />
+        <p *ngIf="formula" class="mb-2 m2-1 d-inline-block">
+            Formula: <i>'{{ formula }}'</i>.
+        </p>
+        <form>
+            <div
+                class="form-group d-md-inline-block d-block mb-2 mr-2"
+                *ngIf="programArray.length > 0"
+            >
+                <label for="programSelect">Program</label>
+                <select id="programSelect" class="custom-select rounded-0">
+                    <option value="0" disabled selected value>None</option>
+                    <option
+                        *ngFor="let program of programArray"
+                        value="{{ program }}"
+                        >{{ program }}</option
+                    >
+                </select>
+            </div>
+            <div
+                class="form-group d-md-inline-block d-block mb-2 mr-2"
+                *ngIf="materialArray.length > 0"
+            >
+                <label for="materialSelect">Material</label>
+                <select id="materialSelect" class="custom-select rounded-0">
+                    <option value="0" disabled selected value>None</option>
+                    <option
+                        *ngFor="let material of materialArray"
+                        value="{{ material }}"
+                        >{{ material }}</option
+                    >
+                </select>
+            </div>
+            <div
+                class="form-group d-md-inline-block d-block mb-2 mr-2"
+                *ngIf="optionArray.length > 0"
+            >
+                <label for="optionSelect">Option</label>
+                <select id="optionSelect" class="custom-select rounded-0">
+                    <option value="0" disabled selected value>None</option>
+                    <option
+                        *ngFor="let option of optionArray"
+                        value="{{ option }}"
+                        >{{ option }}</option
+                    >
+                </select>
+            </div>
+            <div class="form-group d-md-inline-block d-block mb-2 mr-2">
+                <button
+                    class="btn btn-primary rounded-0 d-inline-block"
+                    (click)="loadFile()"
+                >
+                    Load file
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div
+        *ngIf="
+            (programArray.length <= 0 &&
+                materialArray.length <= 0 &&
+                optionArray.length <= 0) ||
+            formula === '' ||
+            brushDevice === ''
+        "
+        class="mr-2 mb-2"
+    >
+        <p
+            *ngIf="
+                programArray.length <= 0 &&
+                materialArray.length <= 0 &&
+                optionArray.length <= 0
+            "
+            class="d-inline"
+        >
+            No mapping files found.
+        </p>
+        <p *ngIf="formula === ''" class="d-inline">No Mapping formula.</p>
+        <p *ngIf="brushDevice === ''" class="d-inline">No Brush Device.</p>
+        <p class="d-inline">
+            Navigate to a file using table number below, or the file explorer.
+        </p>
+    </div>
+
+    <h5>Table number</h5>
+    <div>
+        <form>
+            <div class="form-group d-md-inline-block d-block mb-2 mr-2">
+                <input
+                    type="text"
+                    class="form-control d-inline-block rounded-0"
+                    placeholder="Ex: 101"
+                    id="tableNumberInput"
+                />
+            </div>
+            <div class="form-group d-md-inline-block d-block mb-2 mr-2">
+                <button
+                    class="btn btn-primary rounded-0 d-inline-block"
+                    (click)="loadFileFromNumber()"
+                >
+                    Load file directly
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

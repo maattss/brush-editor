@@ -1,53 +1,63 @@
 <div class="container-fluid">
-  <!-- Nav -->
-  <div class="row">
-    <app-nav id="app-nav"></app-nav>  
-  </div>
+    <!-- Nav -->
+    <div class="row">
+        <app-nav id="app-nav"></app-nav>
+    </div>
 </div>
 
 <div class="container-fluid">
-  <!-- Choose file from robot -->
-  <div class="row mt-3" *ngIf="showFileChooser">
-    <div class="col-12">
-      <app-choose-file-robot id="app-choose-file-robot"></app-choose-file-robot>
-    </div>
-  </div>
-
-  <!-- Info messages -->
-  <div class="row mt-3" *ngIf="showError || showSuccess">
-    <div class="col-12">
-      <app-info-msg id="app-info"></app-info-msg>
-    </div>
-  </div>
-
-  <!-- Settings -->
-  <div class="row mt-3"  *ngIf="showSettings">
-    <div class="col-12">
-      <app-brush-settings id="app-settings"></app-brush-settings>
-    </div>
-  </div>
-
-  <!-- File info -->
-  <div class="row mt-3" *ngIf="showFileInfo">
-    <div class="col-12">
-      <app-brush-info id="app-info"></app-brush-info>
-    </div>
-  </div>
-
-  <div class="row align-items-center mb-2">
-    <!-- Table -->
-    <div class="col-12 col-sm-12 col-lg-8 mt-3">
-      <app-brush-table id="app-table"></app-brush-table>
+    <!-- Info messages -->
+    <div class="row mt-3" *ngIf="showError || showSuccess">
+        <div class="col-12">
+            <app-info-msg id="app-info"></app-info-msg>
+        </div>
     </div>
 
-    <!-- Graph -->
-    <div class="col-12 col-sm-12 col-lg-4 mt-3">
-      <app-brush-graph id="app-graph"></app-brush-graph>
+    <!-- Choose file from robot -->
+    <div class="row mt-3" *ngIf="showBrushMapping">
+        <div class="col-12">
+            <app-brush-map-formula
+                id="app-brush-map-formula"
+            ></app-brush-map-formula>
+        </div>
     </div>
-  </div>
+
+    <!-- Choose file from robot -->
+    <div class="row mt-3" *ngIf="showFileChooser">
+        <div class="col-12">
+            <app-choose-file-robot
+                id="app-choose-file-robot"
+            ></app-choose-file-robot>
+        </div>
+    </div>
+
+    <!-- Settings -->
+    <div class="row mt-3" *ngIf="showSettings">
+        <div class="col-12">
+            <app-brush-settings id="app-settings"></app-brush-settings>
+        </div>
+    </div>
+
+    <!-- File info -->
+    <div class="row mt-3" *ngIf="showFileInfo">
+        <div class="col-12">
+            <app-brush-info id="app-info"></app-brush-info>
+        </div>
+    </div>
+    <div class="row align-items-center mb-2">
+        <!-- Table -->
+        <div class="col-12 col-sm-12 col-lg-8 mt-3">
+            <app-brush-table id="app-table"></app-brush-table>
+        </div>
+
+        <!-- Graph -->
+        <div class="col-12 col-sm-12 col-lg-4 mt-3">
+            <app-brush-graph id="app-graph"></app-brush-graph>
+        </div>
+    </div>
 </div>
 
 <!-- If no brushfile is choosed -->
-<div class="container mt-5 text-center" *ngIf="brushes.length<=0">
-  <h3>Please choose a file to show</h3>
+<div class="container mt-5 text-center" *ngIf="brushes.length <= 0">
+    <h3>Please choose a file to show</h3>
 </div>

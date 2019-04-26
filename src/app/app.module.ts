@@ -19,29 +19,28 @@ import { InfoMsgComponent } from './info-msg/info-msg.component';
 import { CookieService } from 'ngx-cookie-service';
 import { PagerService } from './_services/index';
 import { ChooseFileRobotComponent } from './choose-file-robot/choose-file-robot.component';
+import { BrushMapFormulaComponent } from './brush-map-formula/brush-map-formula.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    BrushTableComponent,
-    NavComponent,
-    BrushSettingsComponent,
-    BrushGraphComponent,
-    BrushInfoComponent,
-    InfoMsgComponent,
-    ChooseFileRobotComponent
-  ],
-  imports: [
-    BrowserModule,
-    ChartsModule,
-    FormsModule,
-    MatTooltipModule,
-    BrowserAnimationsModule
-  ],
-  providers: [
-    CookieService,
-    PagerService
-  ],
-  bootstrap: [ AppComponent ]
+    declarations: [
+        AppComponent,
+        BrushTableComponent,
+        NavComponent,
+        BrushSettingsComponent,
+        BrushGraphComponent,
+        BrushInfoComponent,
+        InfoMsgComponent,
+        ChooseFileRobotComponent,
+        BrushMapFormulaComponent,
+    ],
+    imports: [
+        BrowserModule,
+        ChartsModule,
+        FormsModule,
+        MatTooltipModule,
+        BrowserAnimationsModule,
+    ],
+    providers: [CookieService, PagerService],
+    bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
