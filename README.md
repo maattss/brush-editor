@@ -3,8 +3,7 @@ Built with [Angular v7.2](https://angular.io/docs) by [Mats Tyldum](https://gith
 
 ## Dependecies
 Run `npm install` to install all dependecies
-- ng2-charts
-- chart.js
+- chart.js/ng2-charts
 - ngx-cookie-service
 - FileSaver.js
 - popper.js

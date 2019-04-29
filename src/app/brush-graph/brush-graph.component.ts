@@ -55,29 +55,18 @@ export class BrushGraphComponent implements OnInit {
         },
     ];
     public barChartType = 'bar';
-    public barChartLegend = true;
+    public barChartLegend = false;
     public chartColors: any[] = [
         {
             backgroundColor: [
-                'rgba(0, 123, 255, 0.6)',
-                'rgba(0, 123, 255, 0.6)',
-                'rgba(0, 123, 255, 0.6)',
-                'rgba(0, 123, 255, 0.6)',
-                'rgba(0, 123, 255, 0.6)',
+                'rgba(40, 167, 69, 0.6)', // Green
+                'rgba(0, 123, 255, 0.6)', // Dark blue
+                'rgba(220, 53, 69, 0.6)', // Red
+                'rgba(23, 162, 184, 0.6)', // Light blue
+                'rgba(255, 193, 7, 0.6)', // Yellow
             ],
         },
     ];
-    // public chartColors: any[] = [
-    //     {
-    //         backgroundColor: [
-    //             'rgba(195,230,203,1)',
-    //             'rgba(184,218,255,1)',
-    //             'rgba(248,215,218,1)',
-    //             'rgba(190,229,235,1)',
-    //             'rgba(255,243,205,1)',
-    //         ],
-    //     },
-    // ]; // Colours: Success(Green), Primary(Dark blue), Danger(Red), Info(Light blue), Warning (Yellow)
     public isDataAvailable = false; // Controls if graph is displayed or not
 
     constructor(private data: BrushService) {}
