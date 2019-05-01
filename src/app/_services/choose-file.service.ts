@@ -25,8 +25,8 @@ export class ChooseFileService {
     private homeUrlSrc = new BehaviorSubject<string>(
         'http://127.0.0.1/fileservice/$HOME/'
     );
-    private userName = 'Default User';
-    private password = 'robotics';
+    private userName = 'Default User'; // Default username, do NOt use this in production
+    private password = 'robotics'; // Default password, do NOT use this in production
 
     // Brush mapping values
     private formulaSrc = new BehaviorSubject<string>('');
@@ -162,7 +162,6 @@ export class ChooseFileService {
     postFile() {
         const fileName = this.data.getFileName();
         const postData = this.data.getExportableString();
-        console.log('heey');
         this.view.showInfoSuccess('File exported successfully!');
 
         const digest = new digestAuthRequest(
