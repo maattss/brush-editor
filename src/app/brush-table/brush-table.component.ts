@@ -29,7 +29,6 @@ export class BrushTableComponent implements OnInit {
     constructor(
         private cookieService: CookieService,
         private data: BrushService,
-        // private view: ViewService,
         private pagerService: PagerService
     ) {}
 
@@ -112,10 +111,10 @@ export class BrushTableComponent implements OnInit {
 
     setPage(page: number) {
         this.currentPage = page;
-        // get pager object from service
+        // Get pager object from service
         this.pager = this.pagerService.getPager(this.brushes.length, page);
 
-        // get current page of items
+        // Get current page of items
         this.pagedItems = this.brushes.slice(
             this.pager.startIndex,
             this.pager.endIndex + 1

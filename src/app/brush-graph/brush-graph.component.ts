@@ -130,8 +130,8 @@ export class BrushGraphComponent implements OnInit {
 
     // Add/update data the graph
     addData() {
+        // Do not draw graph if no brush is selected
         if (this.currentBrushId > 0) {
-            // Do not draw graph if no brush is selected
             this.addLabels();
             this.isDataAvailable = true;
             this.barChartData = [];
