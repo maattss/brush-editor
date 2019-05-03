@@ -68,6 +68,7 @@ export class ViewService {
         this.showSuccessSrc.next(true);
 
         this.showFileChooserSrc.next(false);
+        this.showBrushMappingSrc.next(false);
         this.showSettingsSrc.next(false);
         this.showFileInfoSrc.next(false);
         this.showErrorSrc.next(false);
@@ -80,6 +81,7 @@ export class ViewService {
         this.showErrorSrc.next(true);
 
         this.showFileChooserSrc.next(false);
+        this.showBrushMappingSrc.next(false);
         this.showSettingsSrc.next(false);
         this.showSuccessSrc.next(false);
         this.showFileInfoSrc.next(false);

@@ -99,7 +99,7 @@ export class BrushSettingsComponent implements OnInit {
             this.showConfirmationSingleChannel();
         } else {
             this.view.showInfoError(
-                'Your max channel value must be greater than 0!'
+                'Max channel value must be greater than 0!'
             );
         }
     }
@@ -119,10 +119,12 @@ export class BrushSettingsComponent implements OnInit {
                 'http://' + newRobotIP + '/fileservice/$HOME/'
             );
             this.toggleSettings();
-            this.view.showInfoSuccess('You updated Robot IP successfully!');
+            this.view.showInfoSuccess(
+                'Robot IP updated to ' + newRobotIP + ' successfully!'
+            );
         } else {
             // Not a valid address
-            this.view.showInfoError('Your robot IP address is not valid!');
+            this.view.showInfoError(newRobotIP + ' is not a valid IP address!');
         }
     }
 
@@ -131,7 +133,9 @@ export class BrushSettingsComponent implements OnInit {
             'http://127.0.0.1/fileservice/$HOME/'
         );
         this.toggleSettings();
-        this.view.showInfoSuccess('You updated Robot IP successfully!');
+        this.view.showInfoSuccess(
+            'Robot IP updated to default value (127.0.0.1)!'
+        );
     }
 
     resetChannelMaxValues() {
@@ -158,13 +162,13 @@ export class BrushSettingsComponent implements OnInit {
         this.data.changeChannelName(defaultNames);
         this.toggleSettings();
         this.view.showInfoSuccess(
-            'You set channel names back to default successfully!'
+            'Channel named set back to default successfully!'
         );
     }
 
     validateIPaddress(ipaddress) {
-        // tslint:disable-next-line:max-line-length
         if (
+            // tslint:disable-next-line:max-line-length
             /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(
                 ipaddress
             )
@@ -197,7 +201,7 @@ export class BrushSettingsComponent implements OnInit {
         this.data.changeBrush(this.brushes);
         this.hideConfirmationSingleChannel();
         this.toggleSettings();
-        this.view.showInfoSuccess('You successfully updated the table!');
+        this.view.showInfoSuccess('Maximum values updated succesfully!');
     }
 
     updateCurrentUserChannel(newUserChannel) {
@@ -215,6 +219,7 @@ export class BrushSettingsComponent implements OnInit {
     }
 
     toggleSettings() {
+        this.view.showInfoSuccess('Maximum value updated successfully!');
         this.view.toggleSettingsView();
     }
 

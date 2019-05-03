@@ -376,7 +376,7 @@ export class ChooseFileService {
                 this.data.parseFile(response.toString());
                 this.data.changeFileName(fileName);
                 // Close brush mapping window
-                this.view.toggleBrushMappingView();
+                // this.view.toggleBrushMappingView();
             },
             (errorCode: any) => {
                 console.log('Error:', errorCode);
@@ -404,8 +404,8 @@ export class ChooseFileService {
             (response: any) => {
                 this.data.parseFile(response.toString());
                 this.data.changeFileName('Table' + numb + '.bt');
-                // Close brush mapping window
-                this.view.toggleBrushMappingView();
+                // Show success message and close brush mapping window
+                this.view.showInfoSuccess('File loaded successfully!');
             },
             (errorCode: any) => {
                 console.log('Error:', errorCode);

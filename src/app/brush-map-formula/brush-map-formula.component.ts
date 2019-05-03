@@ -111,15 +111,6 @@ export class BrushMapFormulaComponent implements OnInit {
 
         // Update brush table with file corresponding to tablenumber
         this.fileChooser.getFileFromNumber(+num);
-
-        // Show success message if file is valid
-        if (this.brushes.length > 0) {
-            this.view.showInfoSuccess('File loaded successfully!');
-        } else {
-            this.view.showInfoError(
-                'A file corresponding to this number does not exist!'
-            );
-        }
     }
 
     toggleBrushMapping() {
