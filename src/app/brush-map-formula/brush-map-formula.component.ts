@@ -99,9 +99,9 @@ export class BrushMapFormulaComponent implements OnInit {
         this.fileChooser.getFileFromMapping(program, material, option);
 
         // Show success message if file is valid
-        if (this.brushes.length > 0) {
-            this.view.showInfoSuccess('File loaded successfully!');
-        }
+        // if (this.brushes.length > 0) {
+        //     this.view.showInfoSuccess('File loaded successfully!');
+        // }
     }
     loadFileFromNumber() {
         // Get user selection
