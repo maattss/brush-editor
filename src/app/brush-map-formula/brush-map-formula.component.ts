@@ -99,9 +99,9 @@ export class BrushMapFormulaComponent implements OnInit {
         this.fileChooser.getFileFromMapping(program, material, option);
 
         // Show success message if file is valid
-        if (this.brushes.length > 0) {
-            this.view.showInfoSuccess('File loaded successfully!');
-        }
+        // if (this.brushes.length > 0) {
+        //     this.view.showInfoSuccess('File loaded successfully!');
+        // }
     }
     loadFileFromNumber() {
         // Get user selection
@@ -111,15 +111,6 @@ export class BrushMapFormulaComponent implements OnInit {
 
         // Update brush table with file corresponding to tablenumber
         this.fileChooser.getFileFromNumber(+num);
-
-        // Show success message if file is valid
-        if (this.brushes.length > 0) {
-            this.view.showInfoSuccess('File loaded successfully!');
-        } else {
-            this.view.showInfoError(
-                'A file corresponding to this number does not exist!'
-            );
-        }
     }
 
     toggleBrushMapping() {

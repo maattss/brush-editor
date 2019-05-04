@@ -112,24 +112,20 @@
     </div>
 
     <h5>Table number</h5>
-    <div>
-        <form>
-            <div class="form-group d-md-inline-block d-block mb-2 mr-2">
-                <input
-                    type="text"
-                    class="form-control d-inline-block rounded-0"
-                    placeholder="Ex: 101"
-                    id="tableNumberInput"
-                />
-            </div>
-            <div class="form-group d-md-inline-block d-block mb-2 mr-2">
-                <button
-                    class="btn btn-primary rounded-0 d-inline-block"
-                    (click)="loadFileFromNumber()"
-                >
-                    Load file directly
-                </button>
-            </div>
-        </form>
+    <div class="d-md-inline-block d-block mr-2 mt-2">
+        <input
+            type="text"
+            class="form-control rounded-0"
+            placeholder="Ex: 101"
+            id="tableNumberInput"
+        />
+    </div>
+    <div class="d-md-inline-block d-block mr-2 mt-2">
+        <button
+            class="btn btn-primary rounded-0"
+            (click)="loadFileFromNumber()"
+        >
+            Load file directly
+        </button>
     </div>
 </div>
