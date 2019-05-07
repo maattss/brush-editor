@@ -145,6 +145,7 @@ export class ChooseFileService {
         digest.request(
             (response: any) => {
                 this.data.parseFile(response.toString());
+                this.view.showInfoSuccess('File loaded successfully!');
             },
             function(errorCode: any) {
                 console.log('Error: ', errorCode);
