@@ -219,7 +219,6 @@ export class BrushSettingsComponent implements OnInit {
     }
 
     toggleSettings() {
-        this.view.showInfoSuccess('Maximum value updated successfully!');
         this.view.toggleSettingsView();
     }
 

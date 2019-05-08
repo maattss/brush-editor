@@ -104,6 +104,7 @@ export class NavComponent implements OnInit {
         // Prevents error in console when canceling file upload
         try {
             fileReader.readAsText(this.file);
+            this.view.showInfoSuccess('File loaded successfully!');
         } catch (error) {
             return;
         }
