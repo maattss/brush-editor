@@ -6,11 +6,11 @@ Built with [Angular v7.2](https://angular.io/docs) by [Mats Tyldum](https://gith
 - Run `ng serve` for a dev server. 
 - Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Dependecies
-- bootstrap
-- chart.js/ng2-charts
+## External dependecies
+- bootstrap4
+- ng2-charts
 - ngx-cookie-service
-- FileSaver.js
+- filesaver.js
 - popper.js
 - math.js
 
