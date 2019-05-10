@@ -1,4 +1,4 @@
-# Brush Editor for ABB Paint Robots [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/your/your-project/blob/master/LICENSE)
+# Brush Editor for ABB Paint Robots [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/maattss/brush-editor/master/LICENSE)
 Built with [Angular v7.2](https://angular.io/docs) by [Mats Tyldum](https://github.com/maattss) and [Tobias Sætre](https://github.com/Tobiasns). 
 
 ## Start development
