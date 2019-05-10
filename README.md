@@ -1,7 +1,7 @@
 # Brush Editor for ABB Paint Robots [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/maattss/brush-editor/blob/master/LICENSE)
 Built with [Angular v7.2](https://angular.io/docs) by [Mats Tyldum](https://github.com/maattss) and [Tobias Sætre](https://github.com/Tobiasns). 
 
-## Set up development environment
+## Set up dev environment
 - Make sure you have Node.js and NPM installed. If not download and install it from [here](https://nodejs.org/en/).
 - Clone repository.
 - Change directory to the location of the project in your terminal.
