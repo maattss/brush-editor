@@ -2,7 +2,10 @@
 Built with [Angular v7.2](https://angular.io/docs) by [Mats Tyldum](https://github.com/maattss) and [Tobias Sætre](https://github.com/Tobiasns). 
 
 ## Start development
-- Run `npm install` to install all dependecies
+- Clone repository.
+- Change directory to the location of the project in your terminal.
+- Make sure you have Node.js and NPM installed. If not download and install it from [here](https://nodejs.org/en/).
+- Run `npm install` to install all dependecies.
 - Run `ng serve` for a dev server. 
 - Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files changes.
 
