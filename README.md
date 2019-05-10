@@ -8,6 +8,7 @@ Built with [Angular v7.2](https://angular.io/docs) by [Mats Tyldum](https://gith
 - Run `npm install` to install all dependecies.
 - Run `ng serve` for a dev server. 
 - Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files changes.
+- Example brush-files for testing the application are found [here](./brush-files)
 
 *Development setup tested in MacOS Mojave and Windows 10, May 10th 2019*
 
