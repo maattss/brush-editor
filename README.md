@@ -33,5 +33,5 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 #### Application overview large screen
 ![Application overview large screen](https://i.imgur.com/6LNMGjg.png)
 
-#### Application overview small screen <br>
+#### Application overview small screen
 <img src="https://i.imgur.com/9S3vUyl.png" alt="Application overview small screen" width="50%"/>
