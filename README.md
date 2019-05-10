@@ -4,7 +4,11 @@ Built with [Angular v7.2](https://angular.io/docs) by [Mats Tyldum](https://gith
 ## Start development
 - Run `npm install` to install all dependecies
 - Run `ng serve` for a dev server. 
-- Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+- Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files- 
+
+#### Remark: Some functionality relies on a open connection to [Robot Web Service REST API](http://developercenter.robotstudio.com/blobproxy/devcenter/Robot_Web_Services/html/index.html) and a browser with CORS restrictions disabled.
+- For testing purposes, [Robot Studio](https://new.abb.com/products/robotics/robotstudio) can be used for creating an instance of Robot Web Service. 
+- See [this post](https://stackoverflow.com/questions/3102819/disable-same-origin-policy-in-chrome) for information on how to run Chrome with disabled web-security (CORS disabled). **Warning: Only use this for development!**
 
 ## External dependecies
 - bootstrap4
